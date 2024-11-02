@@ -16,26 +16,23 @@ const pacient2 = new Pacient({id: 2, user: userPacient2, records: [], appointmen
 const doctor2 = new Doctor({id: 2, user: userDoctor2, department: "kickboxer", appointments: []})
 
 const appointments = [
-    new Appointment({
-        id: 1,
-        startDate: new Date('2027-10-30'),
-        endDate: new Date('2027-11-30'),
-        comment: "Mild heart burn, sore throat.",
-        pacient: pacient1,
-        doctor: doctor1,
-    }),
-    new Appointment({
-        id: 2,
-        startDate: new Date('2028-10-30'),
-        endDate: new Date('2028-11-30'),
-        comment: "He is displaying signs of fever.",
-        pacient: pacient2,
-        doctor: doctor2,
-    }),
+    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", pacient: pacient1, doctor: doctor1}),
+    new Appointment({id: 2, startDate: new Date('2028-10-30'), endDate: new Date('2028-11-30'), comment: "He is displaying signs of fever.", pacient: pacient2, doctor: doctor2}),
 ];
 
 const getAllAppointments = (): Appointment[] => appointments;
 
+const deleteAppointmentById = (id: number): void => {
+    const appointment = appointments.find(appointment => appointment.getId() === id);
+    if (appointment) {
+        const index = appointments.indexOf(appointment, 1);
+        if (index) {
+            appointments.splice(index, 1);
+        }
+    }
+};
+
 export default {
     getAllAppointments,
+    deleteAppointmentById,
 };

@@ -34,7 +34,7 @@ const appointmentRouter = express.Router();
 
 /**
  * @swagger
- * /appointment:
+ * /appointments:
  *   get:
  *     summary: Get a list of all appointments.
  *     description: Returns an array of appointments. Each item in the array is of type Appointment.
@@ -52,6 +52,55 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
     try {
         const appointments = await appointmentService.getAllAppointments();
         res.status(200).json(appointments);
+    } catch (error) {
+        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
+*      /appointments/{id}:
+*        delete:
+*          summary: Delete an appointment by ID
+*          parameters:
+*            - in: path
+*              name: id
+*              required: true
+*              schema:
+*                type: integer
+*              description: The appointment ID
+*          responses:
+*            200:
+*              description: Appointment deleted successfully
+*              content:
+*                application/json:
+*                  schema:
+*                    type: object
+*                    properties:
+*                      status:
+*                        type: string
+*                        example: success
+*                      message:
+*                        type: string
+*                        example: Appointment deleted successfully
+*            400:
+*              description: Bad request
+*              content:
+*                application/json:
+*                  schema:
+*                    type: object
+*                    properties:
+*                      status:
+*                        type: string
+*                        example: error
+*                      errorMessage:
+*                        type: string
+*                        example: Error message
+*/
+appointmentRouter.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        const appointment = await appointmentService.deleteAppointmentById(Number(req.params.id))
+        res.status(200).json(appointment);
     } catch (error) {
         res.status(400).json({status: 'error', errorMessage: (error as Error).message});
     }

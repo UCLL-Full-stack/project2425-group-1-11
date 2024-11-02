@@ -37,18 +37,18 @@ export class Pacient {
         return this.appointments;
     }
 
-    validate(user: {
+    validate(pacient: {
         user: User;
         records: Record[];
         appointments: Appointment[];
     }) {
-        if (!user.user) {
+        if (!pacient.user) {
             throw new Error('No User defined.');
         }
-        if (!user.records) {
+        if (!pacient.records) {
             throw new Error('There are no records for this user.');
         }
-        if (!user.appointments) {
+        if (!pacient.appointments) {
             throw new Error('There are no appointments for this user.');
         }
     }
