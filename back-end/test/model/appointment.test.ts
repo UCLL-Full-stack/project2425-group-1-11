@@ -1,4 +1,3 @@
-import { set } from "date-fns"
 import { Appointment } from "../../model/appointment"
 import { Doctor } from "../../model/doctor"
 import { Pacient } from "../../model/pacient"
@@ -41,9 +40,8 @@ test('given: invalid values for appointment, when: appointment endDate is empty,
 });
 
 test('given: invalid values for appointment, when: appointment startDate is after endDate, then: appropriated error is returned', () => {
-    const invalidEndDate = set(new Date(), { hours: 7, minutes: 30 });
     const appointment = () => 
-        new Appointment({ startDate: start, endDate: invalidEndDate, comment: comment, pacient: pacient, doctor: doctor });
+        new Appointment({ startDate: start, endDate: new Date("2027-9-30"), comment: comment, pacient: pacient, doctor: doctor });
 
     expect(appointment).toThrow('Start date cannot be after end date.');
 });
