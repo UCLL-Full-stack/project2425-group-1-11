@@ -1,16 +1,28 @@
 const getAllAppointments = async () => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL + "/appointments";
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`;
   
-    return fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        "content-type": "application/json"
-      }
-    });
+  return fetch(apiUrl, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  });
+};
+
+const deleteAppointment = (id: number) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`;
+
+  return fetch(`${apiUrl}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 };
 
 const AppointmentService = {
-    getAllAppointments
+  getAllAppointments,
+  deleteAppointment
 };
 
 export default AppointmentService;

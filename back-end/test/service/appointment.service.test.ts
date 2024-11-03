@@ -15,8 +15,8 @@ const appointments = [
     new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", pacient: pacient, doctor: doctor}),
 ];
 
-let mockAppointmentDbGetAllAppointments: jest.Mock
-let mockAppointmentDbDeleteAppointmentById: jest.Mock
+let mockAppointmentDbGetAllAppointments: jest.Mock;
+let mockAppointmentDbDeleteAppointmentById: jest.Mock;
 
 beforeEach(() => {
     mockAppointmentDbGetAllAppointments = jest.fn().mockReturnValue(appointments);
