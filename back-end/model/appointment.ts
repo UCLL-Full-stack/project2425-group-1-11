@@ -58,26 +58,26 @@ export class Appointment {
         doctor: Doctor;
     }) {
         if (!appointment.startDate || !appointment.endDate) {
-            throw new Error('Start and end date are required');
+            throw new Error('Start and end date are required.');
         }
         if (appointment.startDate > appointment.endDate) {
-            throw new Error('Start date cannot be after end date');
+            throw new Error('Start date cannot be after end date.');
         }
-        if (!appointment.comment?.trim()) {
-            throw new Error('comment is required');
+        if (!appointment.comment.trim()) {
+            throw new Error('Comment is required.');
         }
         if (!appointment.pacient) {
-            throw new Error('pacient is required');
+            throw new Error('Pacient is required.');
         }
         if (!appointment.doctor) {
-            throw new Error('doctor is required');
+            throw new Error('Doctor is required.');
         }
     }
 
     equals(appointment: Appointment): boolean {
         return (
-            this.startDate === appointment.getStartDate() &&
-            this.endDate === appointment.getEndDate() &&
+            this.startDate.getTime() === appointment.getStartDate().getTime() &&
+            this.endDate.getTime() === appointment.getEndDate().getTime() &&
             this.comment === appointment.getComment() &&
             this.pacient === appointment.getPacient() &&
             this.doctor === appointment.getDoctor()

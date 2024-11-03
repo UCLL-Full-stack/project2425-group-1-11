@@ -17,3 +17,24 @@ test('given: valid values for record, when: record is created, then: record is c
     expect(record.getTitle()).toEqual(title);
     expect(record.getDescription()).toEqual(description);
 });
+
+test('given: invalid values for record, when: record pacient is missing, then: appropriated error is returned', () => {
+    const record = () => 
+        new Record({pacient: undefined as unknown as Pacient, title: title, description: description})
+
+    expect(record).toThrow('Pacient is required.');
+});
+
+test('given: invalid values for record, when: record title is missing, then: appropriated error is returned', () => {
+    const record = () => 
+        new Record({pacient: pacient, title: "", description: description})
+
+    expect(record).toThrow('Title is required.');
+});
+
+test('given: invalid values for record, when: record description is missing, then: appropriated error is returned', () => {
+    const record = () => 
+        new Record({pacient: pacient, title: title, description: ""})
+
+    expect(record).toThrow('Description is required.');
+});

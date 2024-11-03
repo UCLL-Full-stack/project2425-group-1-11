@@ -25,3 +25,24 @@ test('given: valid values for pacient, when: pacient is created, then: pacient i
     expect(pacient.getRecords()).toEqual(records);
     expect(pacient.getAppointments()).toEqual(appointments);
 });
+
+test('given: invalid values for pacient, when: pacient user is missing, then: appropriated error is returned', () => {
+    const pacient = () => 
+        new Pacient({user: undefined as unknown as User, records: records, appointments: appointments})
+
+    expect(pacient).toThrow('No User defined.');
+});
+
+test('given: invalid values for pacient, when: pacient records are missing, then: appropriated error is returned', () => {
+    const pacient = () => 
+        new Pacient({user: user, records: null as unknown as Record[], appointments: appointments})
+
+    expect(pacient).toThrow('There are no records for this user.');
+});
+
+test('given: invalid values for pacient, when: pacient appointments are missing, then: appropriated error is returned', () => {
+    const pacient = () => 
+        new Pacient({user: user, records: records, appointments: null as unknown as Appointment[]})
+
+    expect(pacient).toThrow('There are no appointments for this user.');
+});

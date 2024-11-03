@@ -55,10 +55,10 @@ export class Clinic {
             throw new Error('No address defined.');
         }
         if (!clinic.contactNumber) {
-            throw new Error('There are no contactNumber.');
+            throw new Error('There is no contactNumber.');
         }
         if (!clinic.rating) {
-            throw new Error('There are no rating.');
+            throw new Error('There is no rating.');
         }
     }
 

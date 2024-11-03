@@ -64,23 +64,23 @@ export class User {
         password: string;
         role: Role;
     }) {
-        if (!user.userName?.trim()) {
-            throw new Error('Username is required');
+        if (!user.userName.trim()) {
+            throw new Error('Username is required.');
         }
-        if (!user.firstName?.trim()) {
-            throw new Error('First name is required');
+        if (!user.firstName.trim()) {
+            throw new Error('First name is required.');
         }
-        if (!user.lastName?.trim()) {
-            throw new Error('Last name is required');
+        if (!user.lastName.trim()) {
+            throw new Error('Last name is required.');
         }
-        if (!user.email?.trim()) {
-            throw new Error('Email is required');
+        if (!user.email.trim()) {
+            throw new Error('Email is required.');
         }
-        if (!user.password?.trim()) {
-            throw new Error('Password is required');
+        if (!user.password.trim()) {
+            throw new Error('Password is required.');
         }
         if (!user.role) {
-            throw new Error('Role is required');
+            throw new Error('Role is required.');
         }
     }
 

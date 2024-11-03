@@ -10,10 +10,6 @@ const userDoctor1 = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", las
 const pacient1 = new Pacient({id: 1, user: userPacient1, records: [], appointments: []})
 const doctor1 = new Doctor({id: 1, user: userDoctor1, department: "clinical psychology", appointments: []})
 
-const appointments = [
-    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", pacient: pacient1, doctor: doctor1}),
-];
-
 const start = new Date('2027-10-30');
 const end = new Date('2027-11-30');
 const comment = "Mild heart burn, sore throat."
@@ -21,8 +17,6 @@ const pacient = pacient1
 const doctor = doctor1
 
 const appointment = new Appointment({startDate: start, endDate: end, comment: comment, pacient: pacient, doctor: doctor})
-
-// const validate = Appointment.validate;
 
 test('given: valid values for appointment, when: appointment is created, then: appointment is created with those values', () => {
     expect(appointment.getStartDate()).toEqual(start);
@@ -32,36 +26,45 @@ test('given: valid values for appointment, when: appointment is created, then: a
     expect(appointment.getDoctor()).toEqual(doctor);
 });
 
-// test('validate should throw an error if startDate is missing', () => {
-//     const invalidEndDate = set(new Date(), { hours: 0, minutes: 0 });
-//     const invalidAppointment = () => new Appointment({ startDate: invalidEndDate, endDate: end, comment: comment, pacient: pacient, doctor: doctor });
+test('given: invalid values for appointment, when: appointment startDate is empty, then: appropriated error is returned', () => {
+    const appointment = () => 
+        new Appointment({ startDate: undefined as unknown as Date, endDate: end, comment: comment, pacient: pacient, doctor: doctor });
 
-//     expect(invalidAppointment).toThrow('Start and end date are required');
-// });
-
-// test('validate should throw an error if endDate is missing', () => {
-//     const invalidAppointment = { ...validAppointment, endDate: undefined };
-//     expect(() => validate(invalidAppointment)).toThrow('Start and end date are required');
-// });
-
-test('given: ', () => {
-    const invalidEndDate = set(new Date(), { hours: 7, minutes: 30 });
-    const invalidAppointment = () => new Appointment({ startDate: invalidEndDate, endDate: end, comment: comment, pacient: pacient, doctor: doctor });
-
-    expect(invalidAppointment).toThrow('Start date cannot be after end date');
+    expect(appointment).toThrow('Start and end date are required.');
 });
 
-// test('validate should throw an error if comment is missing', () => {
-//     const invalidAppointment = { ...validAppointment, comment: '' };
-//     expect(() => validate(invalidAppointment)).toThrow('comment is required');
-// });
+test('given: invalid values for appointment, when: appointment endDate is empty, then: appropriated error is returned', () => {
+    const appointment = () => 
+        new Appointment({ startDate: start, endDate: undefined as unknown as Date, comment: comment, pacient: pacient, doctor: doctor });
 
-// test('validate should throw an error if pacient is missing', () => {
-//     const invalidAppointment = { ...validAppointment, pacient: undefined };
-//     expect(() => validate(invalidAppointment)).toThrow('pacient is required');
-// });
+    expect(appointment).toThrow('Start and end date are required.');
+});
 
-// test('validate should throw an error if doctor is missing', () => {
-//     const invalidAppointment = { ...validAppointment, doctor: undefined };
-//     expect(() => validate(invalidAppointment)).toThrow('doctor is required');
-// });
+test('given: invalid values for appointment, when: appointment startDate is after endDate, then: appropriated error is returned', () => {
+    const invalidEndDate = set(new Date(), { hours: 7, minutes: 30 });
+    const appointment = () => 
+        new Appointment({ startDate: start, endDate: invalidEndDate, comment: comment, pacient: pacient, doctor: doctor });
+
+    expect(appointment).toThrow('Start date cannot be after end date.');
+});
+
+test('given: invalid values for appointment, when: appointment Comment is empty, then: appropriated error is returned', () => {
+    const appointment = () => 
+        new Appointment({ startDate: start, endDate: end, comment: "", pacient: pacient, doctor: doctor });
+
+    expect(appointment).toThrow('Comment is required.');
+});
+
+test('given: invalid values for appointment, when: appointment Pacient is empty, then: appropriated error is returned', () => {
+    const appointment = () => 
+        new Appointment({ startDate: start, endDate: end, comment: comment, pacient: undefined as unknown as Pacient, doctor: doctor });
+
+    expect(appointment).toThrow('Pacient is required.');
+});
+
+test('given: invalid values for appointment, when: appointment Doctor is empty, then: appropriated error is returned', () => {
+    const appointment = () => 
+        new Appointment({ startDate: start, endDate: end, comment: comment, pacient: pacient, doctor: undefined as unknown as Doctor});
+
+    expect(appointment).toThrow('Doctor is required.');
+});

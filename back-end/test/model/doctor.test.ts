@@ -22,3 +22,24 @@ test('given: valid values for doctor, when: doctor is created, then: doctor is c
     expect(doctor.getDepartment()).toEqual(department);
     expect(doctor.getAppointments()).toEqual(appointments);
 });
+
+test('given: invalid values for doctor, when: doctor user is missing, then: appropriated error is returned', () => {
+    const doctor = () => 
+        new Doctor({user: undefined as unknown as User, department: department, appointments: appointments})
+
+    expect(doctor).toThrow('No User defined.');
+});
+
+test('given: invalid values for doctor, when: doctor department is missing, then: appropriated error is returned', () => {
+    const doctor = () => 
+        new Doctor({user: user, department: "", appointments: appointments})
+
+    expect(doctor).toThrow('Department is required.');
+});
+
+test('given: invalid values for doctor, when: doctor appointments are missing, then: appropriated error is returned', () => {
+    const doctor = () => 
+        new Doctor({user: user, department: department, appointments: null as unknown as Appointment[]})
+
+    expect(doctor).toThrow('There are no appointments for this user.');
+});
