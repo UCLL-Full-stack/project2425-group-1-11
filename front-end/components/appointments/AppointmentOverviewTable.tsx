@@ -1,25 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Appointment } from '@types';
 import { mutate } from 'swr';
 import AppointmentService from '@services/AppointmentService';
 
 type Props = {
   appointments: Array<Appointment>;
+  deleteAppointment: (id: number) => void
 };
 
-const AppointmentOverviewTable: React.FC<Props> = ({ appointments }: Props) => {
+const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }: Props) => {
 
   const handleDelete = async (id: number) => {
-    const response = await AppointmentService.deleteAppointment(id);
-
-    if (response.ok) {
-      // Trigger SWR to re-fetch appointments and update the UI automatically
-      mutate('appointments'); // Ensure this key matches your SWR fetching key
-    } else {
-      const errorText = await response.text();
-      console.error("Failed to delete appointment:", errorText);
-      alert(`Failed to delete appointment: ${errorText}`);
-    }
+    deleteAppointment(id)
   };
 
   // Function to check if the appointment is active (in the future)
@@ -42,7 +34,7 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments }: Props) => {
           </thead>
           <tbody>
             {appointments.map((appointment, index) => (
-              <tr key={index} style={{ backgroundColor: isActiveAppointment(appointment.startDate) ? 'lightgreen' : 'inherit' }}>
+              <tr key={index} style={{ color: isActiveAppointment(appointment.startDate) ? 'lightgreen' : 'inherit' }}>
                 <td>{appointment.startDate}</td>
                 <td>{appointment.endDate}</td>
                 <td>{appointment.comment}</td>
