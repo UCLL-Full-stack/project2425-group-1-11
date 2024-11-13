@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Appointment {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    startDate   DateTime
+    endDate     DateTime
+    comment     String
+    pacient     Pacient     @relation(fields: [pacientId], references: [id])
+    doctor      Doctor      @relation(fields: [doctorId], references: [id])
+}
+
+model Clinic {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    doctors         Doctor[]
+    address         String
+    contactNumber   Int
+    rating          Int
+}
+
+model Doctor {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    user            User        @relation(fields: [userId], references: [id])
+    department      String
+    appointments    Appointment[]
+}
+
+model Pacient {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    user            User        @relation(fields: [userId], references: [id])
+    records         Record[]
+    appointments    Appointment[]
+}
+
+model Record {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    pacient         Pacient     @relation(fields: [pacientId], references: [id])
+    title           String 
+    description     String
+}
+
+model User {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    userName        String
+    firstName       String
+    lastName        String
+    email           String
+    password        String
+    role            String
+}

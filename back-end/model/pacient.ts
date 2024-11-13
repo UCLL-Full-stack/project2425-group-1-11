@@ -7,18 +7,24 @@ export class Pacient {
     private user: User;
     private records: Record[];
     private appointments: Appointment[];
+    private createdAt?: Date;
+    private updatedAt?: Date;
 
     constructor(pacient: {
         id?: number;
         user: User;
         records: Record[];
         appointments: Appointment[];
+        createdAt?: Date;
+        updatedAt?: Date;
     }) {
         this.validate(pacient);
         this.id = pacient.id;
         this.user = pacient.user;
         this.records = pacient.records;
         this.appointments = pacient.appointments;
+        this.createdAt = pacient.createdAt;
+        this.updatedAt = pacient.updatedAt;
     }
 
     getId(): number | undefined {
@@ -35,6 +41,14 @@ export class Pacient {
 
     getAppointments(): Appointment[] {
         return this.appointments;
+    }
+    
+    getCreatedAt(): Date | undefined {
+        return this.createdAt;
+    }
+
+    getUpdatedAt(): Date | undefined {
+        return this.updatedAt;
     }
 
     validate(pacient: {
@@ -57,7 +71,9 @@ export class Pacient {
         return (
             this.user === pacient.getUser() &&
             this.records === pacient.getRecords() &&
-            this.appointments === pacient.getAppointments()
+            this.appointments === pacient.getAppointments() && 
+            this.createdAt === pacient.createdAt &&
+            this.updatedAt === pacient.updatedAt
         );
     }
 }

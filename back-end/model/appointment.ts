@@ -8,6 +8,8 @@ export class Appointment {
     private comment: string;
     private pacient: Pacient;
     private doctor: Doctor;
+    private createdAt?: Date;
+    private updatedAt?: Date;
 
     constructor(appointment: {
         id?: number;
@@ -16,6 +18,8 @@ export class Appointment {
         comment: string;
         pacient: Pacient;
         doctor: Doctor;
+        createdAt?: Date;
+        updatedAt?: Date;
     }) {
         this.validate(appointment);
         this.id = appointment.id;
@@ -24,6 +28,8 @@ export class Appointment {
         this.comment = appointment.comment;
         this.pacient = appointment.pacient;
         this.doctor = appointment.doctor;
+        this.createdAt = appointment.createdAt;
+        this.updatedAt = appointment.updatedAt;
     }
 
     getId(): number | undefined {
@@ -48,6 +54,14 @@ export class Appointment {
 
     getDoctor(): Doctor {
         return this.doctor;
+    }
+
+    getCreatedAt(): Date | undefined {
+        return this.createdAt;
+    }
+
+    getUpdatedAt(): Date | undefined {
+        return this.updatedAt;
     }
 
     validate(appointment: {
@@ -80,7 +94,9 @@ export class Appointment {
             this.endDate.getTime() === appointment.getEndDate().getTime() &&
             this.comment === appointment.getComment() &&
             this.pacient === appointment.getPacient() &&
-            this.doctor === appointment.getDoctor()
+            this.doctor === appointment.getDoctor() &&
+            this.createdAt === appointment.createdAt &&
+            this.updatedAt === appointment.updatedAt
         );
     }
 }
