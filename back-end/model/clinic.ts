@@ -1,4 +1,8 @@
 import { Doctor } from "./doctor";
+import {
+    Clinic as ClinicPrisma,
+    Doctor as DoctorPrisma,
+} from '@prisma/client'
 
 export class Clinic {
     private id?: number;
@@ -82,8 +86,21 @@ export class Clinic {
             this.address === clinic.getAddress() &&
             this.contactNumber === clinic.getContactNumber() &&
             this.rating === clinic.getRating() &&
-            this.createdAt === clinic.createdAt &&
-            this.updatedAt === clinic.updatedAt
+            this.createdAt === clinic.getCreatedAt() &&
+            this.updatedAt === clinic.getUpdatedAt()
         );
     }
+
+    static from({id, doctors, address, contactNumber, rating, createdAt, updatedAt}:
+        ClinicPrisma & {doctors: DoctorPrisma[]}) {
+            return new Clinic({
+                id,
+                doctors: doctors.map((doctor) => Doctor.from(doctor)),
+                address,
+                contactNumber,
+                rating,
+                createdAt,
+                updatedAt,
+            })
+        }
 }

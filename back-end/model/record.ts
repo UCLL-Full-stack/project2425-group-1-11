@@ -1,4 +1,8 @@
 import { Pacient } from "./pacient";
+import {
+    Record as RecordPrisma,
+    Pacient as PacientPrisma,
+} from '@prisma/client'
 
 
 export class Record {
@@ -71,8 +75,20 @@ export class Record {
             this.pacient === record.getPacient() &&
             this.title === record.getTitle() &&
             this.description === record.getDescription() && 
-            this.createdAt === record.createdAt &&
-            this.updatedAt === record.updatedAt
+            this.createdAt === record.getCreatedAt() &&
+            this.updatedAt === record.getUpdatedAt()
         );
     }
+
+    static from({id, pacient, title, description, createdAt, updatedAt}: 
+        RecordPrisma & {pacient: PacientPrisma }) {
+            return new Record({
+                id,
+                pacient: Pacient.from(pacient),
+                title,
+                description,
+                createdAt,
+                updatedAt,
+            });
+        }
 }

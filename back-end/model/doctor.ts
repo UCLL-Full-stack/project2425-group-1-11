@@ -1,5 +1,10 @@
 import { Appointment } from "./appointment";
 import { User } from "./user";
+import {
+    Doctor as DoctorPrisma,
+    User as UserPrisma,
+    Appointment as AppointmentPrisma,
+} from '@prisma/client'
 
 export class Doctor {
     private id?: number;
@@ -71,8 +76,20 @@ export class Doctor {
             this.user === doctor.getUser() &&
             this.department === doctor.getDepartment() &&
             this.appointments === doctor.getAppointments() && 
-            this.createdAt === doctor.createdAt &&
-            this.updatedAt === doctor.updatedAt
-        );
+            this.createdAt === doctor.getCreatedAt() &&
+            this.updatedAt === doctor.getUpdatedAt()
+        ); 
     }
+
+    static from({id, user, department, appointments, createdAt, updatedAt}:
+        DoctorPrisma & {user: UserPrisma; appointments: AppointmentPrisma[] }) {
+            return new Doctor({
+                id,
+                user: User.from(user),
+                department,
+                appointments: appointments.map((appointment) => Appointment.from(appointment)),
+                createdAt,
+                updatedAt,
+            })
+        }
 }
