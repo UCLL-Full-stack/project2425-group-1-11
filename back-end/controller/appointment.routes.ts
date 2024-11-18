@@ -22,8 +22,8 @@
  *            comment:
  *              type: string
  *              description: Appointment comment.
- *            pacient:
- *              $ref: '#/components/schemas/Pacient'
+ *            patient:
+ *              $ref: '#/components/schemas/Patient'
  *            doctor:
  *              $ref: '#/components/schemas/Doctor'
  */

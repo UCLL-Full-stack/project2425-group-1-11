@@ -5,32 +5,32 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const main = async () => {
-    await prisma.appointment.deleteMany();
-    await prisma.clinic.deleteMany();
-    await prisma.doctor.deleteMany();
-    await prisma.pacient.deleteMany();
-    await prisma.record.deleteMany();
-    await prisma.user.deleteMany();
+    // await prisma.appointment.deleteMany();
+    // await prisma.clinic.deleteMany();
+    // await prisma.doctor.deleteMany();
+    // await prisma.patient.deleteMany();
+    // await prisma.record.deleteMany();
+    // await prisma.user.deleteMany();
 
-// All the user pacients
-    const userPacient1 = await prisma.user.create({
+// All the user patients
+    const userPatient1 = await prisma.user.create({
         data: {
             userName: 'furquanmobeen',
             firstName: 'Furquan',
             lastName: 'Mobeen',
             email: 'furquan.mobeen@ucll.be',
             password: 'furquan12',
-            role: 'pacient'
+            role: 'patient'
         },
     });
-    const userPacient2 = await prisma.user.create({
+    const userPatient2 = await prisma.user.create({
         data: {
             userName: 'irinalazar',
             firstName: 'Irina',
             lastName: 'Lazar',
             email: 'irina.lazar@ucll.be',
             password: 'irina8',
-            role: 'pacient'
+            role: 'patient'
         },
     });
 
@@ -53,22 +53,6 @@ const main = async () => {
             email: 'eddy.ndacasaba@ucll.be',
             password: 'eddy14',
             role: 'doctor'
-        },
-    });
-
-// All the records
-    const record1 = await prisma.record.create({
-        data: {
-            pacient: {},
-            title: 'Record ONE',
-            description: 'Description 1',
-        },
-    });
-    const record2 = await prisma.record.create({
-        data: {
-            pacient: {},
-            title: 'Record TWO',
-            description: 'Description 2',
         },
     });
 
@@ -100,7 +84,7 @@ const main = async () => {
             startDate: new Date('2025-10-10'),
             endDate: new Date('2025-11-10'),
             comment: 'Appointment 1',
-            pacient: {},
+            patient: {},
             doctor: {},
         },
     });
@@ -109,7 +93,7 @@ const main = async () => {
             startDate: new Date('2025-09-26'),
             endDate: new Date('2025-10-26'),
             comment: 'Appointment 2',
-            pacient: {},
+            patient: {},
             doctor: {},
         },
     });
@@ -118,7 +102,7 @@ const main = async () => {
             startDate: new Date('2025-12-15'),
             endDate: new Date('2026-01-15'),
             comment: 'Appointment 3',
-            pacient: {},
+            patient: {},
             doctor: {},
         },
     });
@@ -127,28 +111,32 @@ const main = async () => {
             startDate: new Date('2026-02-27'),
             endDate: new Date('2026-03-27'),
             comment: 'Appointment 4',
-            pacient: {},
+            patient: {},
             doctor: {},
         },
     });
     
-// All the pacients
-    const pacient1 = await prisma.pacient.create({
+// All the patients
+    const patient1 = await prisma.patient.create({
         data: {
-            user: { connect: { id: userPacient1.id } },
+            user: { connect: { id: userPatient1.id } },
             records: {
-                connect: [{ id: record1.id }]
+                create: [
+                    { title: 'Record ONE', description: 'Description 1' }
+                ]
             },
             appointments: {
                 connect: [{ id: appointment1.id }, { id: appointment2.id}]
             },
         },
     });
-    const pacient2 = await prisma.pacient.create({
+    const patient2 = await prisma.patient.create({
         data: {
-            user: { connect: { id: userPacient2.id }},
+            user: { connect: { id: userPatient2.id }},
             records: {
-                connect: [{ id: record2.id }]
+                create: [
+                    { title: 'Record TWO', description: 'Description 2' }
+                ]
             },
             appointments: {
                 connect: [{ id: appointment3.id }, { id: appointment4.id }]
