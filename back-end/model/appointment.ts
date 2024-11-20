@@ -105,7 +105,8 @@ export class Appointment {
         );
     }
 
-    static from({id, startDate, endDate, comment, patient, doctor, createdAt, updatedAt, patientId, doctorId}: AppointmentPrisma & {patient: PatientPrisma; doctor: DoctorPrisma}): Appointment {
+    static from({id, startDate, endDate, comment, patient, doctor, createdAt, updatedAt}: 
+        AppointmentPrisma & {patient: PatientPrisma; doctor: DoctorPrisma}) {
             return new Appointment({
                 id,
                 startDate,

@@ -1,9 +1,9 @@
 import { Appointment } from "../model/appointment";
 import appointmentDb from "../repository/appointment.db";
 
-const getAllAppointments = (): Appointment[] => appointmentDb.getAllAppointments();
+const getAllAppointments = async (): Promise<Appointment[]> => await appointmentDb.getAllAppointments();
 
-const deleteAppointmentById = (id: number): void => appointmentDb.deleteAppointmentById(id);
+const deleteAppointmentById = (id: number): Promise<void> => appointmentDb.deleteAppointmentById(id);
 
 export default { 
     getAllAppointments,
