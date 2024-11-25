@@ -1,7 +1,4 @@
 import { Role } from "../types";
-import {
-    User as UserPrisma,
-} from '@prisma/client'
 
 export class User {
     private id?: number;
@@ -113,20 +110,4 @@ export class User {
             this.updatedAt === user.updatedAt
         );
     }
-
-    
-    static from({id, userName, firstName, lastName, email, password, role, createdAt, updatedAt}:
-        UserPrisma) {
-            return new User({
-                id,
-                userName,
-                firstName,
-                lastName,
-                email,
-                password,
-                role: role as Role,
-                createdAt,
-                updatedAt,
-            })
-        }
 }

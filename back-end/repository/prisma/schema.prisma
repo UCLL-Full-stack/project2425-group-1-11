@@ -14,9 +14,7 @@ model Appointment {
     startDate   DateTime
     endDate     DateTime
     comment     String
-    pacientId   Int
     pacient     Pacient     @relation(fields: [pacientId], references: [id])
-    doctorId    Int
     doctor      Doctor      @relation(fields: [doctorId], references: [id])
 }
 
@@ -34,10 +32,7 @@ model Doctor {
     id              Int         @id @default(autoincrement())
     createdAt       DateTime    @default(now())
     updatedAt       DateTime    @updatedAt
-    userId          Int         @unique
     user            User        @relation(fields: [userId], references: [id])
-    clinicId        Int
-    clinic          Clinic      @relation(fields: [clinicId], references: [id])
     department      String
     appointments    Appointment[]
 }
@@ -46,7 +41,6 @@ model Pacient {
     id              Int         @id @default(autoincrement())
     createdAt       DateTime    @default(now())
     updatedAt       DateTime    @updatedAt
-    userId          Int         @unique
     user            User        @relation(fields: [userId], references: [id])
     records         Record[]
     appointments    Appointment[]
@@ -56,7 +50,6 @@ model Record {
     id              Int         @id @default(autoincrement())
     createdAt       DateTime    @default(now())
     updatedAt       DateTime    @updatedAt
-    pacientId       Int
     pacient         Pacient     @relation(fields: [pacientId], references: [id])
     title           String 
     description     String
@@ -69,9 +62,7 @@ model User {
     userName        String
     firstName       String
     lastName        String
-    email           String      @unique
+    email           String
     password        String
     role            String
-    doctor          Doctor?
-    pacient         Pacient?
 }

@@ -2,7 +2,6 @@ import { Appointment } from '../model/appointment';
 import { Doctor } from '../model/doctor';
 import { Pacient } from '../model/pacient';
 import { User } from '../model/user';
-import database from './database';
 
 const userPacient1 = new User({id: 1, userName: "Freakiest", firstName: "Freak", lastName: "Bob", email: "freakbob@irina.com", password: "freak8", role: "pacient"})
 const userDoctor1 = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", lastName: "McGraw", email: "philmcgraw@gmail.com", password: "phil222", role: "doctor"})
@@ -21,17 +20,7 @@ const appointments = [
     new Appointment({id: 2, startDate: new Date('2028-10-30'), endDate: new Date('2028-11-30'), comment: "He is displaying signs of fever.", pacient: pacient2, doctor: doctor2}),
 ];
 
-const getAllAppointments = async (): Promise<Appointment[]> => {
-    try {
-        const appointmentPrisma = await database.appointment.findMany({
-            include: {pacient: true, doctor: true},
-        })
-        return appointmentPrisma.map((appointmentPrisma) => Appointment.from(appointmentPrisma))
-    } catch (error) {
-        console.error(error)
-        throw new Error('Database error. See server log for details.')
-    }
-};
+const getAllAppointments = (): Appointment[] => appointments;
 
 const deleteAppointmentById = (id: number): void => {
     const appointment = appointments.find(appointment => appointment.getId() === id);
