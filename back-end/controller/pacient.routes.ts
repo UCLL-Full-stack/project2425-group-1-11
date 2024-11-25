@@ -7,7 +7,7 @@
  *      scheme: bearer
  *      bearerFormat: JWT
  *    schemas:
- *      Patient:
+ *      Pacient:
  *          type: object
  *          properties:
  *            id:

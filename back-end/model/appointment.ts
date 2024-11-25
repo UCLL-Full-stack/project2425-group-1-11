@@ -1,8 +1,8 @@
 import { Doctor } from "./doctor";
-import { Patient } from "./patient";
+import { Pacient } from "./pacient";
 import {
     Appointment as AppointmentPrisma,
-    Patient as PatientPrisma,
+    Pacient as PacientPrisma,
     Doctor as DoctorPrisma,
 } from '@prisma/client'
 
@@ -11,7 +11,7 @@ export class Appointment {
     private startDate: Date;
     private endDate: Date;
     private comment: string;
-    private patient: Patient;
+    private pacient: Pacient;
     private doctor: Doctor;
     private createdAt?: Date;
     private updatedAt?: Date;
@@ -21,7 +21,7 @@ export class Appointment {
         startDate: Date;
         endDate: Date;
         comment: string;
-        patient: Patient;
+        pacient: Pacient;
         doctor: Doctor;
         createdAt?: Date;
         updatedAt?: Date;
@@ -31,7 +31,7 @@ export class Appointment {
         this.startDate = appointment.startDate;
         this.endDate = appointment.endDate;
         this.comment = appointment.comment;
-        this.patient = appointment.patient;
+        this.pacient = appointment.pacient;
         this.doctor = appointment.doctor;
         this.createdAt = appointment.createdAt;
         this.updatedAt = appointment.updatedAt;
@@ -53,8 +53,8 @@ export class Appointment {
         return this.comment;
     }
 
-    getPatient(): Patient {
-        return this.patient;
+    getPacient(): Pacient {
+        return this.pacient;
     }
 
     getDoctor(): Doctor {
@@ -73,7 +73,7 @@ export class Appointment {
         startDate: Date;
         endDate: Date;
         comment: string;
-        patient: Patient;
+        pacient: Pacient;
         doctor: Doctor;
     }) {
         if (!appointment.startDate || !appointment.endDate) {
@@ -85,8 +85,8 @@ export class Appointment {
         if (!appointment.comment.trim()) {
             throw new Error('Comment is required.');
         }
-        if (!appointment.patient) {
-            throw new Error('Patient is required.');
+        if (!appointment.pacient) {
+            throw new Error('Pacient is required.');
         }
         if (!appointment.doctor) {
             throw new Error('Doctor is required.');
@@ -98,20 +98,20 @@ export class Appointment {
             this.startDate.getTime() === appointment.getStartDate().getTime() &&
             this.endDate.getTime() === appointment.getEndDate().getTime() &&
             this.comment === appointment.getComment() &&
-            this.patient === appointment.getPatient() &&
+            this.pacient === appointment.getPacient() &&
             this.doctor === appointment.getDoctor() &&
             this.createdAt === appointment.getCreatedAt() &&
             this.updatedAt === appointment.getUpdatedAt()
         );
     }
 
-    static from({id, startDate, endDate, comment, patient, doctor, createdAt, updatedAt, patientId, doctorId}: AppointmentPrisma & {patient: PatientPrisma; doctor: DoctorPrisma}): Appointment {
+    static from({id, startDate, endDate, comment, pacient, doctor, createdAt, updatedAt, pacientId, doctorId}: AppointmentPrisma & {pacient: PacientPrisma; doctor: DoctorPrisma}): Appointment {
             return new Appointment({
                 id,
                 startDate,
                 endDate,
                 comment,
-                patient: Patient.from(patient),
+                pacient: Pacient.from(pacient),
                 doctor: Doctor.from(doctor),
                 createdAt,
                 updatedAt,

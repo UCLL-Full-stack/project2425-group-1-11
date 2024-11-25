@@ -1,17 +1,17 @@
 import { Appointment } from "../model/appointment";
 import { Doctor } from "../model/doctor";
-import { Patient } from "../model/patient";
+import { Pacient } from "../model/pacient";
 import { Record } from "../model/record";
 import { User } from "../model/user";
 
-export type Role = 'patient' | 'doctor';
+export type Role = 'pacient' | 'doctor';
 
 export type AppointmentInput = {
     id?: number;
     startDate: Date;
     endDate: Date;
     comment: string;
-    patient: Patient;
+    pacient: Pacient;
     doctor: Doctor;
 }
 
@@ -30,7 +30,7 @@ export type DoctorInput = {
     appointments: Appointment[];
 }
 
-export type PatientInput = {
+export type PacientInput = {
     id?: number;
     user: User;
     records: Record[];
@@ -39,7 +39,7 @@ export type PatientInput = {
 
 export type RecordInput = {
     id?: number;
-    patient: Patient;
+    pacient: Pacient;
     title: string;
     description: string;
 }

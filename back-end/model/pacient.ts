@@ -2,13 +2,13 @@ import { Appointment } from "./appointment";
 import { Record } from "./record";
 import { User } from "./user";
 import {
-    Patient as PatientPrisma,
+    Pacient as PacientPrisma,
     User as UserPrisma,
     Appointment as AppointmentPrisma,
     Record as RecordPrisma,
 } from '@prisma/client'
 
-export class Patient {
+export class Pacient {
     private id?: number;
     private user: User;
     private records: Record[];
@@ -16,7 +16,7 @@ export class Patient {
     private createdAt?: Date;
     private updatedAt?: Date;
 
-    constructor(patient: {
+    constructor(pacient: {
         id?: number;
         user: User;
         records: Record[];
@@ -24,13 +24,13 @@ export class Patient {
         createdAt?: Date;
         updatedAt?: Date;
     }) {
-        this.validate(patient);
-        this.id = patient.id;
-        this.user = patient.user;
-        this.records = patient.records;
-        this.appointments = patient.appointments;
-        this.createdAt = patient.createdAt;
-        this.updatedAt = patient.updatedAt;
+        this.validate(pacient);
+        this.id = pacient.id;
+        this.user = pacient.user;
+        this.records = pacient.records;
+        this.appointments = pacient.appointments;
+        this.createdAt = pacient.createdAt;
+        this.updatedAt = pacient.updatedAt;
     }
 
     getId(): number | undefined {
@@ -57,35 +57,35 @@ export class Patient {
         return this.updatedAt;
     }
 
-    validate(patient: {
+    validate(pacient: {
         user: User;
         records: Record[];
         appointments: Appointment[];
     }) {
-        if (!patient.user) {
+        if (!pacient.user) {
             throw new Error('No User defined.');
         }
-        if (!patient.records) {
+        if (!pacient.records) {
             throw new Error('There are no records for this user.');
         }
-        if (!patient.appointments) {
+        if (!pacient.appointments) {
             throw new Error('There are no appointments for this user.');
         }
     }
 
-    equals(patient: Patient): boolean {
+    equals(pacient: Pacient): boolean {
         return (
-            this.user === patient.getUser() &&
-            this.records === patient.getRecords() &&
-            this.appointments === patient.getAppointments() && 
-            this.createdAt === patient.getCreatedAt() &&
-            this.updatedAt === patient.getUpdatedAt()
+            this.user === pacient.getUser() &&
+            this.records === pacient.getRecords() &&
+            this.appointments === pacient.getAppointments() && 
+            this.createdAt === pacient.getCreatedAt() &&
+            this.updatedAt === pacient.getUpdatedAt()
         );
     }
     
     static from({id, user, records, appointments, createdAt, updatedAt}:
-        PatientPrisma & {user: UserPrisma; records: RecordPrisma[]; appointments: AppointmentPrisma[] }) {
-            return new Patient({
+        PacientPrisma & {user: UserPrisma; records: RecordPrisma[]; appointments: AppointmentPrisma[] }) {
+            return new Pacient({
                 id,
                 user: User.from(user),
                 records: records.map((record) => Record.from(record)),

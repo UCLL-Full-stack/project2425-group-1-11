@@ -1,13 +1,13 @@
-import { Patient } from "./patient";
+import { Pacient } from "./pacient";
 import {
     Record as RecordPrisma,
-    Patient as PatientPrisma,
+    Pacient as PacientPrisma,
 } from '@prisma/client'
 
 
 export class Record {
     private id?: number;
-    private patient: Patient;
+    private pacient: Pacient;
     private title: string;
     private description: string;
     private createdAt?: Date;
@@ -15,7 +15,7 @@ export class Record {
 
     constructor(record: {
         id?: number;
-        patient: Patient;
+        pacient: Pacient;
         title: string;
         description: string;
         createdAt?: Date;
@@ -23,7 +23,7 @@ export class Record {
     }) {
         this.validate(record);
         this.id = record.id;
-        this.patient = record.patient;
+        this.pacient = record.pacient;
         this.title = record.title;
         this.description = record.description;
         this.createdAt = record.createdAt;
@@ -34,8 +34,8 @@ export class Record {
         return this.id;
     }
 
-    getPatient(): Patient {
-        return this.patient;
+    getPacient(): Pacient {
+        return this.pacient;
     }
 
     getTitle(): string {
@@ -55,12 +55,12 @@ export class Record {
     }
 
     validate(record: {
-        patient: Patient;
+        pacient: Pacient;
         title: string;
         description: string;
     }) {
-        if (!record.patient) {
-            throw new Error('Patient is required.');
+        if (!record.pacient) {
+            throw new Error('Pacient is required.');
         }
         if (!record.title) {
             throw new Error('Title is required.');
@@ -72,7 +72,7 @@ export class Record {
 
     equals(record: Record): boolean {
         return (
-            this.patient === record.getPatient() &&
+            this.pacient === record.getPacient() &&
             this.title === record.getTitle() &&
             this.description === record.getDescription() && 
             this.createdAt === record.getCreatedAt() &&
@@ -80,11 +80,11 @@ export class Record {
         );
     }
 
-    static from({id, patient, title, description, createdAt, updatedAt}: 
-        RecordPrisma & {patient: PatientPrisma }) {
+    static from({id, pacient, title, description, createdAt, updatedAt}: 
+        RecordPrisma & {pacient: PacientPrisma }) {
             return new Record({
                 id,
-                patient: Patient.from(patient),
+                pacient: Pacient.from(pacient),
                 title,
                 description,
                 createdAt,
