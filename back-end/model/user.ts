@@ -8,8 +8,6 @@ export class User {
     private email: string;
     private password: string;
     private role: Role;
-    private createdAt?: Date;
-    private updatedAt?: Date;
 
     constructor(user: {
         id?: number;
@@ -19,8 +17,6 @@ export class User {
         email: string;
         password: string;
         role: Role;
-        createdAt?: Date;
-        updatedAt?: Date;
     }) {
         this.validate(user);
         this.id = user.id;
@@ -30,8 +26,6 @@ export class User {
         this.email = user.email;
         this.password = user.password;
         this.role = user.role;
-        this.createdAt = user.createdAt;
-        this.updatedAt = user.updatedAt;
     }
 
     getId(): number | undefined {
@@ -60,14 +54,6 @@ export class User {
 
     getRole(): Role {
         return this.role;
-    }
-    
-    getCreatedAt(): Date | undefined {
-        return this.createdAt;
-    }
-
-    getUpdatedAt(): Date | undefined {
-        return this.updatedAt;
     }
 
     validate(user: {
@@ -105,9 +91,7 @@ export class User {
             this.lastName === user.getLastName() &&
             this.email === user.getEmail() &&
             this.password === user.getPassword() &&
-            this.role === user.getRole() &&
-            this.createdAt === user.createdAt &&
-            this.updatedAt === user.updatedAt
+            this.role === user.getRole()
         );
     }
 }

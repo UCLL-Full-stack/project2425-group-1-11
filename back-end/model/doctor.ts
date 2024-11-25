@@ -6,24 +6,18 @@ export class Doctor {
     private user: User;
     private department: string;
     private appointments: Appointment[];
-    private createdAt?: Date;
-    private updatedAt?: Date;
 
     constructor(doctor: {
         id?: number;
         user: User;
         department: string;
         appointments: Appointment[];
-        createdAt?: Date;
-        updatedAt?: Date;
     }) {
         this.validate(doctor);
         this.id = doctor.id;
         this.user = doctor.user;
         this.department = doctor.department;
         this.appointments = doctor.appointments;
-        this.createdAt = doctor.createdAt;
-        this.updatedAt = doctor.updatedAt;
     }
 
     getId(): number | undefined {
@@ -40,14 +34,6 @@ export class Doctor {
 
     getAppointments(): Appointment[] {
         return this.appointments;
-    }
-    
-    getCreatedAt(): Date | undefined {
-        return this.createdAt;
-    }
-
-    getUpdatedAt(): Date | undefined {
-        return this.updatedAt;
     }
 
     validate(doctor: {
@@ -70,9 +56,7 @@ export class Doctor {
         return (
             this.user === doctor.getUser() &&
             this.department === doctor.getDepartment() &&
-            this.appointments === doctor.getAppointments() && 
-            this.createdAt === doctor.createdAt &&
-            this.updatedAt === doctor.updatedAt
+            this.appointments === doctor.getAppointments()
         );
     }
 }

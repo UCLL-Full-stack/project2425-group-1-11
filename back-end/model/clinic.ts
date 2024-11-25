@@ -6,8 +6,6 @@ export class Clinic {
     private address: string;
     private contactNumber: number;
     private rating: number;
-    private createdAt?: Date;
-    private updatedAt?: Date;
 
     constructor(clinic: {
         id?: number;
@@ -15,8 +13,6 @@ export class Clinic {
         address: string;
         contactNumber: number;
         rating: number;
-        createdAt?: Date;
-        updatedAt?: Date;
     }) {
         this.validate(clinic);
         this.id = clinic.id;
@@ -24,8 +20,6 @@ export class Clinic {
         this.address = clinic.address;
         this.contactNumber = clinic.contactNumber;
         this.rating = clinic.rating;
-        this.createdAt = clinic.createdAt;
-        this.updatedAt = clinic.updatedAt;
     }
 
     getId(): number | undefined {
@@ -46,14 +40,6 @@ export class Clinic {
 
     getRating(): number {
         return this.rating;
-    }
-    
-    getCreatedAt(): Date | undefined {
-        return this.createdAt;
-    }
-
-    getUpdatedAt(): Date | undefined {
-        return this.updatedAt;
     }
 
     validate(clinic: {
@@ -81,9 +67,7 @@ export class Clinic {
             this.doctors === clinic.getDoctors() &&
             this.address === clinic.getAddress() &&
             this.contactNumber === clinic.getContactNumber() &&
-            this.rating === clinic.getRating() &&
-            this.createdAt === clinic.createdAt &&
-            this.updatedAt === clinic.updatedAt
+            this.rating === clinic.getRating()
         );
     }
 }
