@@ -1,4 +1,7 @@
 import { Role } from "../types";
+import {
+    User as UserPrisma,
+} from '@prisma/client'
 
 export class User {
     private id?: number;
@@ -26,34 +29,6 @@ export class User {
         this.email = user.email;
         this.password = user.password;
         this.role = user.role;
-    }
-
-    getId(): number | undefined {
-        return this.id;
-    }
-
-    getUsername(): string {
-        return this.userName;
-    }
-
-    getFirstName(): string {
-        return this.firstName;
-    }
-
-    getLastName(): string {
-        return this.lastName;
-    }
-
-    getEmail(): string {
-        return this.email;
-    }
-
-    getPassword(): string {
-        return this.password;
-    }
-
-    getRole(): Role {
-        return this.role;
     }
 
     validate(user: {
@@ -84,6 +59,34 @@ export class User {
         }
     }
 
+    getId(): number | undefined {
+        return this.id;
+    }
+
+    getUsername(): string {
+        return this.userName;
+    }
+
+    getFirstName(): string {
+        return this.firstName;
+    }
+
+    getLastName(): string {
+        return this.lastName;
+    }
+
+    getEmail(): string {
+        return this.email;
+    }
+
+    getPassword(): string {
+        return this.password;
+    }
+
+    getRole(): Role {
+        return this.role;
+    }
+
     equals(user: User): boolean {
         return (
             this.userName === user.getUsername() &&
@@ -94,4 +97,25 @@ export class User {
             this.role === user.getRole()
         );
     }
+
+    static from({
+        id, 
+        userName, 
+        firstName, 
+        lastName, 
+        email, 
+        password,
+        role
+    }: UserPrisma) {
+            return new User({
+                id,
+                userName,
+                firstName,
+                lastName,
+                email,
+                password,
+                role: role as Role,
+            })
+        }
+    
 }

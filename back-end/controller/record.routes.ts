@@ -13,8 +13,8 @@
  *            id:
  *              type: number
  *              format: int64
- *            pacient:
- *              $ref: '#/components/schemas/Pacient'
+ *            patient:
+ *              $ref: '#/components/schemas/Patient'
  *            title:
  *              type: string
  *              description: Record title.

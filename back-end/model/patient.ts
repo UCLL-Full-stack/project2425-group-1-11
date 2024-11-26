@@ -1,49 +1,50 @@
 import { Appointment } from "./appointment";
+import { Record } from "./record";
 import { User } from "./user";
 import {
-    Doctor as DoctorPrisma,
+    Patient as PatientPrisma,
     User as UserPrisma,
+    Record as RecordPrisma,
     Appointment as AppointmentPrisma,
-    PrismaClient,
 } from '@prisma/client'
 
-export class Doctor {
+export class Patient {
     private id?: number;
     private user: User;
-    private department: string;
+    // private records: Record[];
     private appointments: Appointment[];
     private createdAt?: Date;
     private updatedAt?: Date;
 
-    constructor(doctor: {
+    constructor(patient: {
         id?: number;
         user: User;
-        department: string;
+        // records: Record[];
         appointments: Appointment[];
         createdAt?: Date;
         updatedAt?: Date;
     }) {
-        this.validate(doctor);
-        this.id = doctor.id;
-        this.user = doctor.user;
-        this.department = doctor.department;
-        this.appointments = doctor.appointments;
-        this.createdAt = doctor.createdAt;
-        this.updatedAt = doctor.updatedAt;
+        this.validate(patient);
+        this.id = patient.id;
+        this.user = patient.user;
+        // this.records = patient.records;
+        this.appointments = patient.appointments;
+        this.createdAt = patient.createdAt;
+        this.updatedAt = patient.updatedAt;
     }
 
-    validate(doctor: {
+    validate(patient: {
         user: User;
-        department: string;
+        // records: Record[];
         appointments: Appointment[];
     }) {
-        if (!doctor.user) {
+        if (!patient.user) {
             throw new Error('No User defined.');
         }
-        if (!doctor.department) {
-            throw new Error('Department is required.');
-        }
-        if (!doctor.appointments) {
+        // if (!patient.records) {
+        //     throw new Error('There are no records for this user.');
+        // }
+        if (!patient.appointments) {
             throw new Error('There are no appointments for this user.');
         }
     }
@@ -56,9 +57,9 @@ export class Doctor {
         return this.user;
     }
 
-    getDepartment(): string {
-        return this.department;
-    }
+    // getRecords(): Record[] {
+    //     return this.records;
+    // }
 
     getAppointments(): Appointment[] {
         return this.appointments;
@@ -72,32 +73,31 @@ export class Doctor {
         return this.updatedAt;
     }
 
-    equals(doctor: Doctor): boolean {
+    equals(patient: Patient): boolean {
         return (
-            this.user === doctor.getUser() &&
-            this.department === doctor.getDepartment() &&
-            this.appointments === doctor.getAppointments() &&
-            this.createdAt === doctor.getCreatedAt() &&
-            this.updatedAt === doctor.getUpdatedAt()
+            this.user === patient.getUser() &&
+            // this.records === patient.getRecords() &&
+            this.appointments === patient.getAppointments() && 
+            this.createdAt === patient.getCreatedAt() &&
+            this.updatedAt === patient.getUpdatedAt()
         );
     }
 
     static from({
         id,
         user,
-        department,
+        // records,
         appointments,
         createdAt,
         updatedAt,
-    }: DoctorPrisma & { user: UserPrisma; appointments: AppointmentPrisma[] }) {
-        return new Doctor({
+    }: PatientPrisma & { user: UserPrisma; records: RecordPrisma[]; appointments: AppointmentPrisma[] }) {
+        return new Patient({
             id,
             user: User.from(user),
-            department,
+            // records: records.map((record) => Record.from(record)),
             appointments: appointments.map((appointment) => Appointment.from(appointment)),
             createdAt,
             updatedAt,
         })
     }
-
 }

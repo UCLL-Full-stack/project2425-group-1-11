@@ -1,31 +1,56 @@
-import { Pacient } from "./pacient";
-
+import { Patient } from "./patient";
+import {
+    Record as RecordPrisma,
+    Patient as PatientPrisma,
+} from '@prisma/client'
 
 export class Record {
     private id?: number;
-    private pacient: Pacient;
+    private patient: Patient;
     private title: string;
     private description: string;
+    private createdAt?: Date;
+    private updatedAt?: Date;
 
     constructor(record: {
         id?: number;
-        pacient: Pacient;
+        patient: Patient;
         title: string;
         description: string;
+        createdAt?: Date;
+        updatedAt?: Date;
     }) {
         this.validate(record);
         this.id = record.id;
-        this.pacient = record.pacient;
+        this.patient = record.patient;
         this.title = record.title;
         this.description = record.description;
+        this.createdAt = record.createdAt;
+        this.updatedAt = record.updatedAt;
+    }
+
+    validate(record: {
+        patient: Patient;
+        title: string;
+        description: string;
+    }) {
+        if (!record.patient) {
+            throw new Error('Patient is required.');
+        }
+        if (!record.title) {
+            throw new Error('Title is required.');
+        }
+        if (!record.description) {
+            throw new Error('Description is required.');
+        }
     }
 
     getId(): number | undefined {
         return this.id;
     }
 
-    getPacient(): Pacient {
-        return this.pacient;
+    getPatient(): Patient {
+        return this.patient;
     }
 
     getTitle(): string {
@@ -36,27 +61,39 @@ export class Record {
         return this.description;
     }
 
-    validate(record: {
-        pacient: Pacient;
-        title: string;
-        description: string;
-    }) {
-        if (!record.pacient) {
-            throw new Error('Pacient is required.');
-        }
-        if (!record.title) {
-            throw new Error('Title is required.');
-        }
-        if (!record.description) {
-            throw new Error('Description is required.');
-        }
+    getCreatedAt(): Date | undefined {
+        return this.createdAt;
+    }
+
+    getUpdatedAt(): Date | undefined {
+        return this.updatedAt;
     }
 
     equals(record: Record): boolean {
         return (
-            this.pacient === record.getPacient() &&
+            this.patient === record.getPatient() &&
             this.title === record.getTitle() &&
-            this.description === record.getDescription()
+            this.description === record.getDescription() &&
+            this.createdAt === record.createdAt &&
+            this.updatedAt === record.updatedAt
         );
+    }
+
+    static from({
+        id,
+        patient,
+        title,
+        description,
+        createdAt,
+        updatedAt,
+    }: RecordPrisma & { patient: PatientPrisma }) {
+        return new Record({
+            id,
+            patient: Patient.from(patient),
+            title,
+            description,
+            createdAt,
+            updatedAt,
+        })
     }
 }

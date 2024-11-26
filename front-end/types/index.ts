@@ -15,7 +15,7 @@ export type Doctor = {
     appointments: Appointment[];
 };
   
-export type Pacient = {
+export type Patient = {
 
 };
 
@@ -29,5 +29,5 @@ export type Appointment = {
     endDate: string;
     comment: string;
     doctor: Doctor;
-    pacient: Pacient;
+    patient: Patient;
 };

@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Appointment {
+    id          Int         @id @default(autoincrement())
+    createdAt   DateTime    @default(now())
+    updatedAt   DateTime    @updatedAt
+    startDate   DateTime
+    endDate     DateTime
+    comment     String
+    patientId   Int?
+    patient     Patient?    @relation(fields: [patientId], references: [id])
+    doctorId    Int?
+    doctor      Doctor?     @relation(fields: [doctorId], references: [id])
+}
+
+model Clinic {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    doctors         Doctor[]
+    address         String
+    contactNumber   Int
+    rating          Int
+}
+
+model Doctor {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    userId          Int         @unique
+    user            User        @relation(fields: [userId], references: [id])
+    clinicId        Int?
+    clinic          Clinic?     @relation(fields: [clinicId], references: [id])
+    department      String
+    appointments    Appointment[]
+}
+
+model Patient {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    userId          Int         @unique
+    user            User        @relation(fields: [userId], references: [id])
+    records         Record[]
+    appointments    Appointment[]
+}
+
+model Record {
+    id              Int         @id @default(autoincrement())
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+    patientId       Int?
+    patient         Patient?     @relation(fields: [patientId], references: [id])
+    title           String 
+    description     String
+}
+
+model User {
+    id              Int         @id @default(autoincrement())
+    userName        String
+    firstName       String
+    lastName        String
+    email           String      @unique
+    password        String
+    role            String
+    doctor          Doctor?
+    patient         Patient?
+}

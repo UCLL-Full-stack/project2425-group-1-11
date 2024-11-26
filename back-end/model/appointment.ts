@@ -1,29 +1,64 @@
 import { Doctor } from "./doctor";
-import { Pacient } from "./pacient";
+import { Patient } from "./patient";
+import {
+    Appointment as AppointmentPrisma,
+    Patient as PatientPrisma,
+    Doctor as DoctorPrisma,
+} from '@prisma/client';
 
 export class Appointment {
     private id?: number;
     private startDate: Date;
     private endDate: Date;
     private comment: string;
-    private pacient: Pacient;
-    private doctor: Doctor;
+    // private patient: Patient;
+    // private doctor: Doctor;
+    private createdAt?: Date;
+    private updatedAt?: Date;
 
     constructor(appointment: {
         id?: number;
         startDate: Date;
         endDate: Date;
         comment: string;
-        pacient: Pacient;
-        doctor: Doctor;
+        // patient: Patient;
+        // doctor: Doctor;
+        createdAt?: Date;
+        updatedAt?: Date;
     }) {
         this.validate(appointment);
         this.id = appointment.id;
         this.startDate = appointment.startDate;
         this.endDate = appointment.endDate;
         this.comment = appointment.comment;
-        this.pacient = appointment.pacient;
-        this.doctor = appointment.doctor;
+        // this.patient = appointment.patient;
+        // this.doctor = appointment.doctor;
+        this.createdAt = appointment.createdAt;
+        this.updatedAt = appointment.updatedAt;
+    }
+
+    validate(appointment: {
+        startDate: Date;
+        endDate: Date;
+        comment: string;
+        // patient: Patient;
+        // doctor: Doctor;
+    }) {
+        if (!appointment.startDate || !appointment.endDate) {
+            throw new Error('Start and end date are required.');
+        }
+        if (appointment.startDate > appointment.endDate) {
+            throw new Error('Start date cannot be after end date.');
+        }
+        if (!appointment.comment.trim()) {
+            throw new Error('Comment is required.');
+        }
+        // if (!appointment.patient) {
+        //     throw new Error('Patient is required.');
+        // }
+        // if (!appointment.doctor) {
+        //     throw new Error('Doctor is required.');
+        // }
     }
 
     getId(): number | undefined {
@@ -42,36 +77,20 @@ export class Appointment {
         return this.comment;
     }
 
-    getPacient(): Pacient {
-        return this.pacient;
+    // getPatient(): Patient {
+    //     return this.patient;
+    // }
+
+    // getDoctor(): Doctor {
+    //     return this.doctor;
+    // }
+
+    getCreatedAt(): Date | undefined {
+        return this.createdAt;
     }
 
-    getDoctor(): Doctor {
-        return this.doctor;
-    }
-
-    validate(appointment: {
-        startDate: Date;
-        endDate: Date;
-        comment: string;
-        pacient: Pacient;
-        doctor: Doctor;
-    }) {
-        if (!appointment.startDate || !appointment.endDate) {
-            throw new Error('Start and end date are required.');
-        }
-        if (appointment.startDate > appointment.endDate) {
-            throw new Error('Start date cannot be after end date.');
-        }
-        if (!appointment.comment.trim()) {
-            throw new Error('Comment is required.');
-        }
-        if (!appointment.pacient) {
-            throw new Error('Pacient is required.');
-        }
-        if (!appointment.doctor) {
-            throw new Error('Doctor is required.');
-        }
+    getUpdatedAt(): Date | undefined {
+        return this.updatedAt;
     }
 
     equals(appointment: Appointment): boolean {
@@ -79,8 +98,32 @@ export class Appointment {
             this.startDate.getTime() === appointment.getStartDate().getTime() &&
             this.endDate.getTime() === appointment.getEndDate().getTime() &&
             this.comment === appointment.getComment() &&
-            this.pacient === appointment.getPacient() &&
-            this.doctor === appointment.getDoctor()
+            // this.patient === appointment.getPatient() &&
+            // this.doctor === appointment.getDoctor() &&
+            this.createdAt === appointment.getCreatedAt() &&
+            this.updatedAt === appointment.getUpdatedAt()
         );
+    }
+
+    static from({
+        id,
+        startDate,
+        endDate,
+        comment,
+        // patient,
+        // doctor,
+        createdAt,
+        updatedAt,
+    }: AppointmentPrisma) {
+        return new Appointment ({
+            id,
+            startDate,
+            endDate,
+            comment,
+            // patient: Patient.from(patient),
+            // doctor: Doctor.from(doctor),
+            createdAt,
+            updatedAt,
+        })
     }
 }

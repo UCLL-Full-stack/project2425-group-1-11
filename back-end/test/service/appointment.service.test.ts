@@ -1,18 +1,18 @@
 import { Appointment } from "../../model/appointment"
 import { Doctor } from "../../model/doctor"
-import { Pacient } from "../../model/pacient"
+import { Patient } from "../../model/patient"
 import { User } from "../../model/user"
 import appointmentDb from "../../repository/appointment.db";
 import appointmentService from '../../service/appointment.service';
 
-const userPacient = new User({id: 1, userName: "Freakiest", firstName: "Freak", lastName: "Bob", email: "freakbob@irina.com", password: "freak8", role: "pacient"})
+const userPatient = new User({id: 1, userName: "Freakiest", firstName: "Freak", lastName: "Bob", email: "freakbob@irina.com", password: "freak8", role: "patient"})
 const userDoctor = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", lastName: "McGraw", email: "philmcgraw@gmail.com", password: "phil222", role: "doctor"})
 
-const pacient = new Pacient({id: 1, user: userPacient, records: [], appointments: []})
+const patient = new Patient({id: 1, user: userPatient, records: [], appointments: []})
 const doctor = new Doctor({id: 1, user: userDoctor, department: "clinical psychology", appointments: []})
 
 const appointments = [
-    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", pacient: pacient, doctor: doctor}),
+    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", patient: patient, doctor: doctor}),
 ];
 
 let mockAppointmentDbGetAllAppointments: jest.Mock;

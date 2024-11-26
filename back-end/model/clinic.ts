@@ -1,4 +1,8 @@
 import { Doctor } from "./doctor";
+import {
+    Clinic as ClinicPrisma,
+    Doctor as DoctorPrisma,
+} from '@prisma/client'
 
 export class Clinic {
     private id?: number;
@@ -6,6 +10,8 @@ export class Clinic {
     private address: string;
     private contactNumber: number;
     private rating: number;
+    private createdAt?: Date;
+    private updatedAt?: Date;
 
     constructor(clinic: {
         id?: number;
@@ -13,6 +19,8 @@ export class Clinic {
         address: string;
         contactNumber: number;
         rating: number;
+        createdAt?: Date;
+        updatedAt?: Date;
     }) {
         this.validate(clinic);
         this.id = clinic.id;
@@ -20,26 +28,8 @@ export class Clinic {
         this.address = clinic.address;
         this.contactNumber = clinic.contactNumber;
         this.rating = clinic.rating;
-    }
-
-    getId(): number | undefined {
-        return this.id;
-    }
-
-    getDoctors(): Doctor[] {
-        return this.doctors;
-    }
-
-    getAddress(): string {
-        return this.address;
-    }
-
-    getContactNumber(): number {
-        return this.contactNumber;
-    }
-
-    getRating(): number {
-        return this.rating;
+        this.createdAt = clinic.createdAt;
+        this.updatedAt = clinic.updatedAt;
     }
 
     validate(clinic: {
@@ -62,12 +52,62 @@ export class Clinic {
         }
     }
 
+    getId(): number | undefined {
+        return this.id;
+    }
+
+    getDoctors(): Doctor[] {
+        return this.doctors;
+    }
+
+    getAddress(): string {
+        return this.address;
+    }
+
+    getContactNumber(): number {
+        return this.contactNumber;
+    }
+
+    getRating(): number {
+        return this.rating;
+    }
+    
+    getCreatedAt(): Date | undefined {
+        return this.createdAt;
+    }
+
+    getUpdatedAt(): Date | undefined {
+        return this.updatedAt;
+    }
+
     equals(clinic: Clinic): boolean {
         return (
             this.doctors === clinic.getDoctors() &&
             this.address === clinic.getAddress() &&
             this.contactNumber === clinic.getContactNumber() &&
-            this.rating === clinic.getRating()
+            this.rating === clinic.getRating() &&
+            this.createdAt === clinic.getCreatedAt() &&
+            this.updatedAt === clinic.getUpdatedAt()
         );
+    }
+
+    static from({
+        id,
+        doctors,
+        address,
+        contactNumber,
+        rating,
+        createdAt,
+        updatedAt,
+    }: ClinicPrisma & { doctors: DoctorPrisma[] }) {
+        return new Clinic({
+            id,
+            doctors: doctors.map((doctor) => Doctor.from(doctor)),
+            address,
+            contactNumber,
+            rating,
+            createdAt,
+            updatedAt,
+        })
     }
 }
