@@ -6,7 +6,7 @@ import {
 
 export class Record {
     private id?: number;
-    private patient: Patient;
+    private patient?: Patient;
     private title: string;
     private description: string;
     private createdAt?: Date;
@@ -14,7 +14,7 @@ export class Record {
 
     constructor(record: {
         id?: number;
-        patient: Patient;
+        patient?: Patient;
         title: string;
         description: string;
         createdAt?: Date;
@@ -30,13 +30,9 @@ export class Record {
     }
 
     validate(record: {
-        patient: Patient;
         title: string;
         description: string;
     }) {
-        if (!record.patient) {
-            throw new Error('Patient is required.');
-        }
         if (!record.title) {
             throw new Error('Title is required.');
         }
@@ -49,7 +45,7 @@ export class Record {
         return this.id;
     }
 
-    getPatient(): Patient {
+    getPatient(): Patient | undefined{
         return this.patient;
     }
 
@@ -71,7 +67,6 @@ export class Record {
 
     equals(record: Record): boolean {
         return (
-            this.patient === record.getPatient() &&
             this.title === record.getTitle() &&
             this.description === record.getDescription() &&
             this.createdAt === record.createdAt &&
@@ -81,15 +76,13 @@ export class Record {
 
     static from({
         id,
-        patient,
         title,
         description,
         createdAt,
         updatedAt,
-    }: RecordPrisma & { patient: PatientPrisma }) {
+    }: RecordPrisma) {
         return new Record({
             id,
-            patient: Patient.from(patient),
             title,
             description,
             createdAt,

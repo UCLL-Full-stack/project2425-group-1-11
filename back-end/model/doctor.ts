@@ -5,11 +5,13 @@ import {
     User as UserPrisma,
     Appointment as AppointmentPrisma,
     PrismaClient,
+    Clinic,
 } from '@prisma/client'
 
 export class Doctor {
     private id?: number;
     private user: User;
+    private clinic?: Clinic;
     private department: string;
     private appointments: Appointment[];
     private createdAt?: Date;
@@ -18,6 +20,7 @@ export class Doctor {
     constructor(doctor: {
         id?: number;
         user: User;
+        clinic?: Clinic;
         department: string;
         appointments: Appointment[];
         createdAt?: Date;
@@ -26,6 +29,7 @@ export class Doctor {
         this.validate(doctor);
         this.id = doctor.id;
         this.user = doctor.user;
+        this.clinic = doctor.clinic;
         this.department = doctor.department;
         this.appointments = doctor.appointments;
         this.createdAt = doctor.createdAt;
@@ -54,6 +58,10 @@ export class Doctor {
 
     getUser(): User {
         return this.user;
+    }
+
+    getClinic(): Clinic | undefined {
+        return this.clinic;
     }
 
     getDepartment(): string {

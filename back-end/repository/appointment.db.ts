@@ -9,10 +9,10 @@ const userDoctor1 = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", las
 const userPatient2 = new User({id: 2, userName: "Paki", firstName: "Corner", lastName: "Shop", email: "cornershop@furquan.com", password: "corner12", role: "patient"})
 const userDoctor2 = new User({id: 2, userName: "Chess", firstName: "Andrew", lastName: "Tate", email: "andrewtate@gmail.com", password: "andrew13", role: "doctor"})
 
-const patient1 = new Patient({id: 1, user: userPatient1, appointments: []})
+const patient1 = new Patient({id: 1, user: userPatient1, records: [], appointments: []})
 const doctor1 = new Doctor({id: 1, user: userDoctor1, department: "clinical psychology", appointments: []})
 
-const patient2 = new Patient({id: 2, user: userPatient2, appointments: []})
+const patient2 = new Patient({id: 2, user: userPatient2, records: [], appointments: []})
 const doctor2 = new Doctor({id: 2, user: userDoctor2, department: "kickboxer", appointments: []})
 
 const appointments = [
