@@ -16,8 +16,8 @@ const patient2 = new Patient({id: 2, user: userPatient2, appointments: []})
 const doctor2 = new Doctor({id: 2, user: userDoctor2, department: "kickboxer", appointments: []})
 
 const appointments = [
-    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat."}),
-    new Appointment({id: 2, startDate: new Date('2028-10-30'), endDate: new Date('2028-11-30'), comment: "He is displaying signs of fever."})
+    new Appointment({id: 1, startDate: new Date('2027-10-30'), endDate: new Date('2027-11-30'), comment: "Mild heart burn, sore throat.", patient: patient1, doctor: doctor1}),
+    new Appointment({id: 2, startDate: new Date('2028-10-30'), endDate: new Date('2028-11-30'), comment: "He is displaying signs of fever.", patient: patient2, doctor: doctor2})
 ];
 
 const getAllAppointments = (): Appointment[] => appointments;

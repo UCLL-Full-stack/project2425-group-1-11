@@ -2,8 +2,6 @@ import { Doctor } from "./doctor";
 import { Patient } from "./patient";
 import {
     Appointment as AppointmentPrisma,
-    Patient as PatientPrisma,
-    Doctor as DoctorPrisma,
 } from '@prisma/client';
 
 export class Appointment {
@@ -11,8 +9,8 @@ export class Appointment {
     private startDate: Date;
     private endDate: Date;
     private comment: string;
-    // private patient: Patient;
-    // private doctor: Doctor;
+    private patient?: Patient;
+    private doctor?: Doctor;
     private createdAt?: Date;
     private updatedAt?: Date;
 
@@ -21,8 +19,8 @@ export class Appointment {
         startDate: Date;
         endDate: Date;
         comment: string;
-        // patient: Patient;
-        // doctor: Doctor;
+        patient?: Patient;
+        doctor?: Doctor;
         createdAt?: Date;
         updatedAt?: Date;
     }) {
@@ -31,8 +29,8 @@ export class Appointment {
         this.startDate = appointment.startDate;
         this.endDate = appointment.endDate;
         this.comment = appointment.comment;
-        // this.patient = appointment.patient;
-        // this.doctor = appointment.doctor;
+        this.patient = appointment.patient;
+        this.doctor = appointment.doctor;
         this.createdAt = appointment.createdAt;
         this.updatedAt = appointment.updatedAt;
     }
@@ -41,8 +39,6 @@ export class Appointment {
         startDate: Date;
         endDate: Date;
         comment: string;
-        // patient: Patient;
-        // doctor: Doctor;
     }) {
         if (!appointment.startDate || !appointment.endDate) {
             throw new Error('Start and end date are required.');
@@ -53,12 +49,6 @@ export class Appointment {
         if (!appointment.comment.trim()) {
             throw new Error('Comment is required.');
         }
-        // if (!appointment.patient) {
-        //     throw new Error('Patient is required.');
-        // }
-        // if (!appointment.doctor) {
-        //     throw new Error('Doctor is required.');
-        // }
     }
 
     getId(): number | undefined {
@@ -77,13 +67,13 @@ export class Appointment {
         return this.comment;
     }
 
-    // getPatient(): Patient {
-    //     return this.patient;
-    // }
+    getPatient(): Patient | undefined {
+        return this.patient;
+    }
 
-    // getDoctor(): Doctor {
-    //     return this.doctor;
-    // }
+    getDoctor(): Doctor | undefined {
+        return this.doctor;
+    }
 
     getCreatedAt(): Date | undefined {
         return this.createdAt;
@@ -98,8 +88,6 @@ export class Appointment {
             this.startDate.getTime() === appointment.getStartDate().getTime() &&
             this.endDate.getTime() === appointment.getEndDate().getTime() &&
             this.comment === appointment.getComment() &&
-            // this.patient === appointment.getPatient() &&
-            // this.doctor === appointment.getDoctor() &&
             this.createdAt === appointment.getCreatedAt() &&
             this.updatedAt === appointment.getUpdatedAt()
         );
@@ -110,8 +98,6 @@ export class Appointment {
         startDate,
         endDate,
         comment,
-        // patient,
-        // doctor,
         createdAt,
         updatedAt,
     }: AppointmentPrisma) {
@@ -120,8 +106,6 @@ export class Appointment {
             startDate,
             endDate,
             comment,
-            // patient: Patient.from(patient),
-            // doctor: Doctor.from(doctor),
             createdAt,
             updatedAt,
         })
