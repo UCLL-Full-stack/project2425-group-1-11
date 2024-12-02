@@ -1,11 +1,10 @@
 import { Appointment } from "./appointment";
+import { Clinic } from "./clinic";
 import { User } from "./user";
 import {
     Doctor as DoctorPrisma,
     User as UserPrisma,
     Appointment as AppointmentPrisma,
-    PrismaClient,
-    Clinic,
 } from '@prisma/client'
 
 export class Doctor {

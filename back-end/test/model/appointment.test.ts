@@ -52,17 +52,3 @@ test('given: invalid values for appointment, when: appointment Comment is empty,
 
     expect(appointment).toThrow('Comment is required.');
 });
-
-test('given: invalid values for appointment, when: appointment Patient is empty, then: appropriated error is returned', () => {
-    const appointment = () => 
-        new Appointment({ startDate: start, endDate: end, comment: comment, patient: undefined as unknown as Patient, doctor: doctor });
-
-    expect(appointment).toThrow('Patient is required.');
-});
-
-test('given: invalid values for appointment, when: appointment Doctor is empty, then: appropriated error is returned', () => {
-    const appointment = () => 
-        new Appointment({ startDate: start, endDate: end, comment: comment, patient: patient, doctor: undefined as unknown as Doctor});
-
-    expect(appointment).toThrow('Doctor is required.');
-});

@@ -69,8 +69,8 @@ export class Record {
         return (
             this.title === record.getTitle() &&
             this.description === record.getDescription() &&
-            this.createdAt === record.createdAt &&
-            this.updatedAt === record.updatedAt
+            this.createdAt === record.getCreatedAt() &&
+            this.updatedAt === record.getUpdatedAt()
         );
     }
 
