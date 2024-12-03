@@ -29,6 +29,7 @@
  */
 import express, { Request, Response } from 'express';
 import appointmentService from '../service/appointment.service';
+import { AppointmentInput } from '../types';
 
 const appointmentRouter = express.Router();
 
@@ -103,6 +104,37 @@ appointmentRouter.delete('/:id', async (req: Request, res: Response) => {
         res.status(200).json(appointment);
     } catch (error) {
         res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
+ * /appointments/add:
+ *   post:
+ *      security:
+ *       - bearerAuth: []
+ *      summary: Create a new appointment for an existing patient.
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/AppointmentInput'
+ *      responses:
+ *         200:
+ *            description: The created schedule.
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/Appointment'
+ */
+appointmentRouter.post('/add', async (req: Request, res: Response) => {
+    try {
+        const appointment = <AppointmentInput>req.body;
+        const result = await appointmentService.makeAppointment(appointment);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({ status: 'error', errorMessage: (error as Error).message });
     }
 });
 

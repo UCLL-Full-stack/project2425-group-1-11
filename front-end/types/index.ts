@@ -12,7 +12,7 @@ export type Doctor = {
     user: User;
     department: string;
     description: string;
-    appointments: Appointment[];
+    appointments?: Appointment[];
 };
   
 export type Patient = {
@@ -24,10 +24,10 @@ export type Record = {
 };
 
 export type Appointment = {
-    id: number;
+    id?: number;
     startDate: string;
     endDate: string;
     comment: string;
-    doctor: Doctor;
-    patient: Patient;
+    doctor?: Doctor;
+    patient?: Patient;
 };
