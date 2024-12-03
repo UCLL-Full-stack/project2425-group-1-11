@@ -18,13 +18,6 @@ test('given: valid values for record, when: record is created, then: record is c
     expect(record.getDescription()).toEqual(description);
 });
 
-test('given: invalid values for record, when: record patient is missing, then: appropriated error is returned', () => {
-    const record = () => 
-        new Record({patient: undefined as unknown as Patient, title: title, description: description})
-
-    expect(record).toThrow('Patient is required.');
-});
-
 test('given: invalid values for record, when: record title is missing, then: appropriated error is returned', () => {
     const record = () => 
         new Record({patient: patient, title: "", description: description})

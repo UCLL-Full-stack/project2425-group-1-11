@@ -4,6 +4,7 @@ import { User } from "./user";
 import {
     Doctor as DoctorPrisma,
     User as UserPrisma,
+    Clinic as ClinicPrisma,
     Appointment as AppointmentPrisma,
 } from '@prisma/client'
 
@@ -92,14 +93,16 @@ export class Doctor {
     static from({
         id,
         user,
+        clinic,
         department,
         appointments,
         createdAt,
         updatedAt,
-    }: DoctorPrisma & { user: UserPrisma; appointments: AppointmentPrisma[] }) {
+    }: DoctorPrisma & { user: UserPrisma; clinic: ClinicPrisma; appointments: AppointmentPrisma[] }) {
         return new Doctor({
             id,
             user: User.from(user),
+            clinic: Clinic.from(clinic),
             department,
             appointments: appointments.map((appointment) => Appointment.from(appointment)),
             createdAt,

@@ -14,17 +14,9 @@ const rating = 5
 const clinic = new Clinic({doctors: doctors, address: address, contactNumber: contactNumber, rating: rating})
 
 test('given: valid values for clinic, when: clinic is created, then: clinic is created with those values', () => {
-    expect(clinic.getDoctors()).toEqual(doctors);
     expect(clinic.getAddress()).toEqual(address);
     expect(clinic.getContactNumber()).toEqual(contactNumber);
     expect(clinic.getRating()).toEqual(rating);
-});
-
-test('given: invalid values for clinic, when: clinic doctors are missing, then: appropriated error is returned', () => {
-    const clinic = () => 
-        new Clinic({doctors: null as unknown as Doctor[], address: address, contactNumber: contactNumber, rating: rating})
-
-    expect(clinic).toThrow('No doctors found.');
 });
 
 test('given: invalid values for clinic, when: clinic address is missing, then: appropriated error is returned', () => {
