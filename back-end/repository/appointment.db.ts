@@ -1,8 +1,6 @@
 import { Appointment } from '../model/appointment';
-import { Doctor } from '../model/doctor';
-import { Patient } from '../model/patient';
-import { User } from '../model/user';
 import database from '../util/database';
+import { User } from '../model/user';
 
 const getAllAppointments = async (): Promise<Appointment[]> => {
     try {
@@ -34,8 +32,46 @@ const deleteAppointmentById = async ({ id }: { id: number }): Promise<void> => {
     }
 };
 
-const saveAppointment = (appointment: Appointment): void => {
-    appointments.push(appointment);
+// const saveAppointment = (appointment: Appointment): void => {
+//     appointments.push(appointment);
+// };
+
+// const getUserByName = async ({ firstName, lastName }: { firstName: string, lastName: string }): Promise<User | null> => {
+//     try {
+//         const userPrisma = await database.user.findFirst({
+//             where: { firstName, lastName },
+//         });
+//         return userPrisma ? User.from(userPrisma) : null;
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Database error. See server log for details.');
+//     }
+// };
+
+const saveAppointment = async (appointment: Appointment): Promise<Appointment> => {
+    try {
+        const savedAppointment = await database.appointment.create({
+            data: {
+                startDate: appointment.getStartDate(),
+                endDate: appointment.getEndDate(),
+                comment: appointment.getComment(),
+                doctor: {
+                    connect: { id: appointment.getDoctor()?.getId() },
+                },
+            },
+            include: {
+                doctor: {
+                    include: {
+                        user: true,
+                    },
+                },
+            },
+        });
+        return Appointment.from(savedAppointment);
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database error. See server log for details.');
+    }
 };
 
 export default {

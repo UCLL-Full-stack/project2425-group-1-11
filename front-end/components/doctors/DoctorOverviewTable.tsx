@@ -16,8 +16,8 @@ const DoctorOverviewTable: React.FC<Props> = ({ doctors }: Props) => {
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Department</th>
-              {/* <th scope="col">Description</th> */}
-              {/* <th scope="col">Clinic</th> */}
+              {/* <th scope="col">Description</th>
+              <th scope="col">Clinic</th> */}
             </tr>
           </thead>
           <tbody>
@@ -25,7 +25,7 @@ const DoctorOverviewTable: React.FC<Props> = ({ doctors }: Props) => {
           <tr key={doctor.id}>
             <td>{doctor.user.firstName} {doctor.user.lastName}</td>
             <td>{doctor.department}</td>
-            {/* <td>{doctor.description}</td> */}
+            <td>{doctor.description}</td>
           </tr>
         ))}
           </tbody>

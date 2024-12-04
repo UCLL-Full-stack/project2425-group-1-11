@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Appointment } from '@types';
+import { Appointment, Doctor, User } from '@types';
 import { mutate } from 'swr';
 import AppointmentService from '@services/AppointmentService';
 
@@ -45,7 +45,7 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
                     : 'Unknown Doctor'}
                 </td>
                 <td>
-                  <button onClick={() => handleDelete(appointment.id)}>Cancel</button>
+                  <button onClick={() => appointment.id !== undefined && handleDelete(appointment.id)}>Cancel</button>
                 </td>
               </tr>
             ))}

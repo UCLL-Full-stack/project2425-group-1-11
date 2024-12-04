@@ -131,7 +131,8 @@ const MakeAppointment: React.FC = () => {
         </select>
         {doctorError && <p>{doctorError}</p>}
       </div>
-      <button type="submit">Make Appointment</button>
+      {/* <button type="submit">Make Appointment</button> */}
+      <button onClick={handleSubmit}>Make Appointment</button>
     </form>
   );
 };

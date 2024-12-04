@@ -36,8 +36,8 @@ model Doctor {
     updatedAt       DateTime    @updatedAt
     userId          Int         @unique
     user            User        @relation(fields: [userId], references: [id])
-    clinicId        Int?
-    clinic          Clinic?     @relation(fields: [clinicId], references: [id])
+    clinicId        Int
+    clinic          Clinic     @relation(fields: [clinicId], references: [id])
     department      String
     appointments    Appointment[]
 }
@@ -67,7 +67,7 @@ model User {
     userName        String
     firstName       String
     lastName        String
-    email           String      @unique
+    email           String      
     password        String
     role            String
     doctor          Doctor?

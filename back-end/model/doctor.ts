@@ -11,7 +11,7 @@ import {
 export class Doctor {
     private id?: number;
     private user: User;
-    private clinic?: Clinic;
+    private clinic: Clinic;
     private department: string;
     private appointments: Appointment[];
     private createdAt?: Date;
@@ -20,7 +20,7 @@ export class Doctor {
     constructor(doctor: {
         id?: number;
         user: User;
-        clinic?: Clinic;
+        clinic: Clinic;
         department: string;
         appointments: Appointment[];
         createdAt?: Date;
@@ -38,11 +38,15 @@ export class Doctor {
 
     validate(doctor: {
         user: User;
+        clinic: Clinic
         department: string;
         appointments: Appointment[];
     }) {
         if (!doctor.user) {
             throw new Error('No User defined.');
+        }
+        if (!doctor.clinic) {
+            throw new Error('No Clinic defined.');
         }
         if (!doctor.department) {
             throw new Error('Department is required.');
@@ -60,7 +64,7 @@ export class Doctor {
         return this.user;
     }
 
-    getClinic(): Clinic | undefined {
+    getClinic(): Clinic{
         return this.clinic;
     }
 
@@ -83,6 +87,7 @@ export class Doctor {
     equals(doctor: Doctor): boolean {
         return (
             this.user === doctor.getUser() &&
+            this.clinic === doctor.getClinic() &&
             this.department === doctor.getDepartment() &&
             this.appointments === doctor.getAppointments() &&
             this.createdAt === doctor.getCreatedAt() &&

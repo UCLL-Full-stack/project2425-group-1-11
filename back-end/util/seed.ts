@@ -2,7 +2,14 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-async function main() {
+const main = async () => {
+
+    await prisma.appointment.deleteMany();
+    await prisma.doctor.deleteMany();
+    await prisma.patient.deleteMany();
+    await prisma.record.deleteMany();
+    await prisma.clinic.deleteMany();
+    await prisma.user.deleteMany();
     
     // Create Users
     const userPacient1 = await prisma.user.create({
@@ -58,6 +65,7 @@ async function main() {
         },
     });
 
+
     // Create Records
     const record1 = await prisma.record.create({
         data: {
@@ -74,26 +82,9 @@ async function main() {
         },
     });
 
-    // Create Doctors
-    const doctor1 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor1.id } },
-            department: 'Cardiology',
-        },
-    });
-    const doctor2 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor2.id } },
-            department: 'Neurology',
-        },
-    });
-
     // Create Clinics
     const clinic1 = await prisma.clinic.create({
         data: {
-            doctors: {
-                connect: [{ id: doctor1.id }],
-            },
             address: 'Geldenaaksebaan 335, 3001 Leuven',
             contactNumber: 16375700,
             rating: 7.5,
@@ -101,12 +92,25 @@ async function main() {
     });
     const clinic2 = await prisma.clinic.create({
         data: {
-            doctors: {
-                connect: [{ id: doctor2.id }],
-            },
             address: 'Kortestraat 7/9, 3000 Leuven',
             contactNumber: 16200752,
             rating: 8.9,
+        },
+    });
+
+    // Create Doctors
+    const doctor1 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor1.id }},
+            clinic: { connect: { id: clinic1.id}},
+            department: 'Cardiology',
+        },
+    });
+    const doctor2 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor2.id }},
+            clinic: { connect: { id: clinic2.id}},
+            department: 'Neurology',
         },
     });
 

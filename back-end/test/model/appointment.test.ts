@@ -1,4 +1,5 @@
 import { Appointment } from "../../model/appointment"
+import { Clinic } from "../../model/clinic"
 import { Doctor } from "../../model/doctor"
 import { Patient } from "../../model/patient"
 import { User } from "../../model/user"
@@ -6,8 +7,10 @@ import { User } from "../../model/user"
 const userPatient1 = new User({id: 1, userName: "Freakiest", firstName: "Freak", lastName: "Bob", email: "freakbob@irina.com", password: "freak8", role: "patient"})
 const userDoctor1 = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", lastName: "McGraw", email: "philmcgraw@gmail.com", password: "phil222", role: "doctor"})
 
+const clinic1 = new Clinic({id: 1, address: 'Geldenaaksebaan 335, 3001 Leuven', contactNumber: 16375700, rating: 7.5})
+
 const patient1 = new Patient({id: 1, user: userPatient1, records: [], appointments: []})
-const doctor1 = new Doctor({id: 1, user: userDoctor1, department: "clinical psychology", appointments: []})
+const doctor1 = new Doctor({id: 1, user: userDoctor1, clinic: clinic1, department: "clinical psychology", appointments: []})
 
 const start = new Date('2027-10-30');
 const end = new Date('2027-11-30');
