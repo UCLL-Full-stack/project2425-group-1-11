@@ -5,6 +5,7 @@ import * as bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { appointmentRouter } from './controller/appointment.routes';
+import doctorRouter from './controller/doctor.routes';
 
 const app = express();
 dotenv.config();
@@ -31,6 +32,7 @@ const swaggerSpec = swaggerJSDoc(swaggerOpts);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/appointments', appointmentRouter);
+app.use('/doctors', doctorRouter);
 
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);

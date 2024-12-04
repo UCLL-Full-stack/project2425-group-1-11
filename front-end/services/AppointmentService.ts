@@ -1,3 +1,5 @@
+import { Appointment } from "@types";
+
 const getAllAppointments = async () => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`;
   
@@ -20,9 +22,21 @@ const deleteAppointment = (id: number) => {
   });
 };
 
+const makeAppointment = (appointment: Appointment) => {
+  return fetch(process.env.NEXT_PUBLIC_API_URL + "/appointments/add", {
+      method: "POST",
+
+      headers: {
+          "Content-Type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+  });
+};
+
 const AppointmentService = {
   getAllAppointments,
-  deleteAppointment
+  deleteAppointment,
+  makeAppointment
 };
 
 export default AppointmentService;

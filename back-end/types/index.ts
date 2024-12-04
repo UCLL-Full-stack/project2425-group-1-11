@@ -11,7 +11,7 @@ export type AppointmentInput = {
     startDate: Date;
     endDate: Date;
     comment: string;
-    patient: Patient;
+    patient?: Patient;
     doctor: Doctor;
 }
 

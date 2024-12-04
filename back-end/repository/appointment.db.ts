@@ -34,7 +34,12 @@ const deleteAppointmentById = async ({ id }: { id: number }): Promise<void> => {
     }
 };
 
+const saveAppointment = (appointment: Appointment): void => {
+    appointments.push(appointment);
+};
+
 export default {
     getAllAppointments,
     deleteAppointmentById,
+    saveAppointment
 };

@@ -1,4 +1,5 @@
 import AppointmentOverviewTable from "@components/appointments/AppointmentOverviewTable";
+import MakeAppointment from "@components/appointments/MakeAppointment";
 import Header from "@components/header";
 import AppointmentService from "@services/AppointmentService";
 import { Appointment } from "@types";
@@ -42,6 +43,12 @@ const Appointments: React.FC = () => {
                 {appointments && (
                     <AppointmentOverviewTable appointments={appointments} deleteAppointment={handleDelete}></AppointmentOverviewTable>
                 )}
+
+                <section>
+                    <h2>Appointments overview</h2>
+                </section>
+                
+                <MakeAppointment></MakeAppointment>
 
             </main>
         </>
