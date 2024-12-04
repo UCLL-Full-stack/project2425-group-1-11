@@ -39,7 +39,7 @@ test('given: a list of appointments, when: appointments are called, then: appoin
 test('given: a list of appointments, when: appointment is deleted, then: appointment is deleted from list', () => {
     const mockId = 2;
 
-    appointmentService.deleteAppointmentById(mockId);
+    appointmentService.deleteAppointmentById({ id: mockId });
 
     expect(appointmentDb.deleteAppointmentById).toHaveBeenCalledTimes(1);
 });

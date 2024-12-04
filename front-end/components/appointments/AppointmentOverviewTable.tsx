@@ -38,7 +38,12 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
                 <td>{appointment.startDate}</td>
                 <td>{appointment.endDate}</td>
                 <td>{appointment.comment}</td>
-                <td>{`${appointment.doctor.user.firstName} ${appointment.doctor.user.lastName}`}</td>
+                {/* <td>{`${appointment.doctor.user.firstName} ${appointment.doctor.user.lastName}`}</td> */}
+                <td>
+                  {appointment.doctor && appointment.doctor.user
+                    ? `${appointment.doctor.user.firstName} ${appointment.doctor.user.lastName}`
+                    : 'Unknown Doctor'}
+                </td>
                 <td>
                   <button onClick={() => handleDelete(appointment.id)}>Cancel</button>
                 </td>

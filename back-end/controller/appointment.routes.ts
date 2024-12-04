@@ -99,7 +99,7 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
 */
 appointmentRouter.delete('/:id', async (req: Request, res: Response) => {
     try {
-        const appointment = await appointmentService.deleteAppointmentById(Number(req.params.id))
+        const appointment = await appointmentService.deleteAppointmentById({ id: Number(req.params.id) })
         res.status(200).json(appointment);
     } catch (error) {
         res.status(400).json({status: 'error', errorMessage: (error as Error).message});

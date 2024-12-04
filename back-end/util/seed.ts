@@ -1,16 +1,10 @@
-// Execute: npx ts-node util/seed.ts
-
-
 import { PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient();
-const main = async () => {
-    await prisma.appointment.deleteMany();
-    await prisma.clinic.deleteMany();
-    await prisma.doctor.deleteMany();
-    await prisma.patient.deleteMany();
-    await prisma.record.deleteMany();
-    await prisma.user.deleteMany();
-// All the user patients
+
+async function main() {
+    
+    // Create Users
     const userPacient1 = await prisma.user.create({
         data: {
             userName: 'furquanmobeen',
@@ -18,7 +12,7 @@ const main = async () => {
             lastName: 'Mobeen',
             email: 'furquan.mobeen@ucll.be',
             password: 'furquan12',
-            role: 'patient'
+            role: 'patient',
         },
     });
     const userPacient2 = await prisma.user.create({
@@ -28,10 +22,9 @@ const main = async () => {
             lastName: 'Lazar',
             email: 'irina.lazar@ucll.be',
             password: 'irina8',
-            role: 'patient'
+            role: 'patient',
         },
     });
-// All the user doctors
     const userDoctor1 = await prisma.user.create({
         data: {
             userName: 'Augustineasimhi',
@@ -39,7 +32,7 @@ const main = async () => {
             lastName: 'Asimhi',
             email: 'Augustine.asimhi@ucll.be',
             password: 'augustine13',
-            role: 'doctor'
+            role: 'doctor',
         },
     });
     const userDoctor2 = await prisma.user.create({
@@ -49,53 +42,86 @@ const main = async () => {
             lastName: 'Ndacasaba',
             email: 'eddy.ndacasaba@ucll.be',
             password: 'eddy14',
-            role: 'doctor'
+            role: 'doctor',
         },
     });
-// All the records
+
+    // Create Patients
+    const patient1 = await prisma.patient.create({
+        data: {
+            user: { connect: { id: userPacient1.id } },
+        },
+    });
+    const patient2 = await prisma.patient.create({
+        data: {
+            user: { connect: { id: userPacient2.id } },
+        },
+    });
+
+    // Create Records
     const record1 = await prisma.record.create({
         data: {
-            patient: {},
-            title: 'Record ONE',
-            description: 'Description 1',
+            patient: { connect: { id: patient1.id } },
+            title: 'Title1',
+            description: 'Description1'
         },
     });
     const record2 = await prisma.record.create({
         data: {
-            patient: {},
-            title: 'Record TWO',
-            description: 'Description 2',
+            patient: { connect: { id: patient2.id } },
+            title: 'Title2',
+            description: 'Description2'
         },
     });
-// All the clinics
+
+    // Create Doctors
+    const doctor1 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor1.id } },
+            department: 'Cardiology',
+        },
+    });
+    const doctor2 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor2.id } },
+            department: 'Neurology',
+        },
+    });
+
+    // Create Clinics
     const clinic1 = await prisma.clinic.create({
         data: {
             doctors: {
-                connect: []
+                connect: [{ id: doctor1.id }],
             },
             address: 'Geldenaaksebaan 335, 3001 Leuven',
             contactNumber: 16375700,
-            rating: 7.5
+            rating: 7.5,
         },
     });
     const clinic2 = await prisma.clinic.create({
         data: {
             doctors: {
-                connect: []
+                connect: [{ id: doctor2.id }],
             },
             address: 'Kortestraat 7/9, 3000 Leuven',
             contactNumber: 16200752,
-            rating: 8.9
+            rating: 8.9,
         },
     });
-// All the appointments
+
+    // Create Appointments
     const appointment1 = await prisma.appointment.create({
         data: {
             startDate: new Date('2025-10-10'),
             endDate: new Date('2025-11-10'),
             comment: 'Appointment 1',
-            patient: {},
-            doctor: {},
+            patient: {
+                connect: { id: patient1.id }, 
+            },
+            doctor: {
+                connect: { id: doctor1.id },
+            },
         },
     });
     const appointment2 = await prisma.appointment.create({
@@ -103,8 +129,12 @@ const main = async () => {
             startDate: new Date('2025-09-26'),
             endDate: new Date('2025-10-26'),
             comment: 'Appointment 2',
-            patient: {},
-            doctor: {},
+            patient: {
+                connect: { id: patient1.id }, 
+            },
+            doctor: {
+                connect: { id: doctor1.id },
+            },
         },
     });
     const appointment3 = await prisma.appointment.create({
@@ -112,72 +142,34 @@ const main = async () => {
             startDate: new Date('2025-12-15'),
             endDate: new Date('2026-01-15'),
             comment: 'Appointment 3',
-            patient: {},
-            doctor: {},
+            patient: {
+                connect: { id: patient2.id }, 
+            },
+            doctor: {
+                connect: { id: doctor2.id },
+            },
         },
     });
     const appointment4 = await prisma.appointment.create({
         data: {
-            startDate: new Date('2026-02-27'),
-            endDate: new Date('2026-03-27'),
+            startDate: new Date('2025-12-15'),
+            endDate: new Date('2026-01-15'),
             comment: 'Appointment 4',
-            patient: {},
-            doctor: {},
-        },
-    });
-    
-// All the patients
-    const patient1 = await prisma.patient.create({
-        data: {
-            user: { connect: { id: userPacient1.id } },
-            records: {
-                connect: [{ id: record1.id }]
+            patient: {
+                connect: { id: patient2.id }, 
             },
-            appointments: {
-                connect: [{ id: appointment1.id }, { id: appointment2.id}]
-            },
-        },
-    });
-    const patient2 = await prisma.patient.create({
-        data: {
-            user: { connect: { id: userPacient2.id }},
-            records: {
-                connect: [{ id: record2.id }]
-            },
-            appointments: {
-                connect: [{ id: appointment3.id }, { id: appointment4.id }]
-            },
-        },
-    });
-// All the doctors
-    const doctor1 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor1.id }},
-            department: 'Freaky',
-            clinic: { connect: { id: clinic1.id }},
-            appointments: {
-                connect: [{ id: appointment1.id }, { id: appointment2.id}]
-            },
-        },
-    });
-    const doctor2 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor2.id }},
-            department: 'Nonchalant',
-            clinic: { connect: { id: clinic2.id }},
-            appointments: {
-                connect: [{ id: appointment3.id }, { id: appointment4.id }]
+            doctor: {
+                connect: { id: doctor2.id },
             },
         },
     });
 };
-(async () => {
-    try {
-        await main();
-        await prisma.$disconnect();
-    } catch (error) {
-        console.error(error);
-        await prisma.$disconnect();
+
+main()
+    .catch(e => {
+        console.error(e);
         process.exit(1);
-    }
-})();
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
+    });
