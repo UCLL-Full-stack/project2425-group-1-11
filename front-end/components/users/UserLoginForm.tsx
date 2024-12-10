@@ -48,7 +48,6 @@ const UserLoginForm: React.FC = () => {
     
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <h1>Login</h1>
         {statusMessages && (
             <div className="row">
             <ul>

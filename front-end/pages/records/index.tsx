@@ -2,8 +2,8 @@ import Header from "@components/header";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import { Record } from "@types";
-import RecordService from "@services/recordService";
 import RecordOverviewTable from "@components/records/RecordOverviewTable";
+import RecordService from "@services/RecordService";
 
 const Records: React.FC = () => {
 

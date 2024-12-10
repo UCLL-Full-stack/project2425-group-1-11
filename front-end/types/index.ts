@@ -36,6 +36,13 @@ export type Appointment = {
     patient?: Patient;
 };
 
+export type Clinic = {
+    id?: number;
+    address: string;
+    contactNumber: number;
+    rating: number;
+};
+
 export type StatusMessage = {
     message: string;
     type: "error" | "success";
