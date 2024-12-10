@@ -16,11 +16,15 @@ export type Doctor = {
 };
   
 export type Patient = {
-
+    id?: number;
+    user: User;
+    records?: Record[];
 };
 
 export type Record = {
-
+    id?: number;
+    title: string;
+    description: string;
 };
 
 export type Appointment = {

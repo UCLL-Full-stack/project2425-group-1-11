@@ -29,6 +29,9 @@ const Header: React.FC = () => {
         </Link>
         <Link href="/appointments" className="nav-link px-4 fs-5 text-white">Appointments</Link>
         <Link href="/doctors" className="nav-link px-4 fs-5 text-white">Doctors</Link>
+        <Link href="/records" className="nav-link px-4 fs-5 text-white">Records</Link>
+        <Link href="/patients" className="nav-link px-4 fs-5 text-white">Patients</Link>
+        <Link href="/clinics" className="nav-link px-4 fs-5 text-white">Clinics</Link>
       {!loggedInUser && (
         <Link className="nav-link px-4 fs-5 text-white"
           href="/login"
