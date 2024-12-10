@@ -1,18 +1,30 @@
 import * as dotenv from 'dotenv';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import * as bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import { appointmentRouter } from './controller/appointment.routes';
 import doctorRouter from './controller/doctor.routes';
+import { expressjwt } from 'express-jwt';
 
 const app = express();
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// app.use(
+//     expressjwt({
+//         secret: process.env.JWT_SECRET || 'default_secret',
+//         algorithms: ['HS256'],
+//     }).unless({
+//         path: ['/api-docs', /^\/api-docs\/.*/, '/users/login', '/users/signup', '/status'],
+//     })
+// );
+
 
 app.get('/status', (req, res) => {
     res.json({ message: 'Back-end is running...' });

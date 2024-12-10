@@ -116,7 +116,7 @@ export class Appointment {
         doctor,
         createdAt,
         updatedAt,
-    }: AppointmentPrisma & { patient: PatientPrisma & { user: UserPrisma; records: RecordPrisma[]; }; doctor: DoctorPrisma & { user: UserPrisma;} }) {
+    }: AppointmentPrisma & { patient: PatientPrisma & { user: UserPrisma; records: RecordPrisma[]; }; doctor: DoctorPrisma & { user: UserPrisma; }; }) {
         return new Appointment ({
             id,
             startDate,

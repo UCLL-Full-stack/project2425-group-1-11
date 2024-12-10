@@ -32,6 +32,23 @@
  *              type: string
  *              description: User role.
  */
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
+// import userService from '../service/user.service';
+// import { UserInput } from '../types/index';
 
-export {  };
+// const userRouter = express.Router();
+
+
+// userRouter.post(
+//     '/signup',
+//     async (req: Request, res: Response, next: NextFunction) => {
+//         try {
+//             const user = await userService.creatUser(req.body as UserInput);
+//             res.status(200).json(user);
+//         } catch (error) {
+//             next(error)
+//         }
+//     }
+// )
+
+// export { userRouter };

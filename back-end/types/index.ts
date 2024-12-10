@@ -42,10 +42,10 @@ export type RecordInput = {
 export type UserInput = {
     id?: number;
     userName: string;
-    password: string;
     firstName: string;
     lastName: string;
     email: string;
+    password: string;
     role: Role;
 };
 
