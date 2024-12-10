@@ -100,7 +100,7 @@ export class Clinic {
         rating,
         createdAt,
         updatedAt,
-    }: ClinicPrisma & { doctors: (DoctorPrisma & { user: UserPrisma })[]}) {
+    }: ClinicPrisma & { doctors: (DoctorPrisma & { user: UserPrisma }) [] }) {
         return new Clinic({
             id,
             doctors: doctors.map(doctor => Doctor.from(doctor)),

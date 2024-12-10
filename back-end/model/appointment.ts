@@ -1,3 +1,4 @@
+import appointmentDb from "../repository/appointment.db";
 import { Doctor } from "./doctor";
 import { Patient } from "./patient";
 import {
@@ -116,15 +117,7 @@ export class Appointment {
         doctor,
         createdAt,
         updatedAt,
-    }: AppointmentPrisma & { 
-            patient: PatientPrisma & { 
-                user: UserPrisma; 
-                records: RecordPrisma[]; 
-            }; 
-            doctor: DoctorPrisma & { 
-                user: UserPrisma;
-            };
-        }) {
+    }: AppointmentPrisma & { patient: PatientPrisma & { user: UserPrisma; records: RecordPrisma[]; }; doctor: DoctorPrisma & { user: UserPrisma;} }) {
         return new Appointment ({
             id,
             startDate,
