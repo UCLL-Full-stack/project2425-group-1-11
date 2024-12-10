@@ -1,4 +1,3 @@
-import appointmentDb from "../repository/appointment.db";
 import { Doctor } from "./doctor";
 import { Patient } from "./patient";
 import {

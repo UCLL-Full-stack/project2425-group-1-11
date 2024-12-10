@@ -1,4 +1,3 @@
-import { Appointment } from "./appointment";
 import { Record } from "./record";
 import { User } from "./user";
 import {

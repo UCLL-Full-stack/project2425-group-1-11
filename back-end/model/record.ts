@@ -1,7 +1,5 @@
-import { Patient } from "./patient";
 import {
     Record as RecordPrisma,
-    Patient as PatientPrisma,
 } from '@prisma/client'
 
 export class Record {
