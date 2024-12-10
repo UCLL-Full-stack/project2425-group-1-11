@@ -83,9 +83,26 @@ const main = async () => {
         },
     });
 
+    // Create Doctors
+    const doctor1 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor1.id }},
+            department: 'Cardiology',
+        },
+    });
+    const doctor2 = await prisma.doctor.create({
+        data: {
+            user: { connect: { id: userDoctor2.id }},
+            department: 'Neurology',
+        },
+    });
+
     // Create Clinics
     const clinic1 = await prisma.clinic.create({
         data: {
+            doctors: {
+                connect: [{ id: doctor1.id }],
+            },    
             address: 'Geldenaaksebaan 335, 3001 Leuven',
             contactNumber: 16375700,
             rating: 7.5,
@@ -93,25 +110,12 @@ const main = async () => {
     });
     const clinic2 = await prisma.clinic.create({
         data: {
+            doctors: {
+                connect: [{ id: doctor2.id }],
+            },            
             address: 'Kortestraat 7/9, 3000 Leuven',
             contactNumber: 16200752,
             rating: 8.9,
-        },
-    });
-
-    // Create Doctors
-    const doctor1 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor1.id }},
-            clinic: { connect: { id: clinic1.id}},
-            department: 'Cardiology',
-        },
-    });
-    const doctor2 = await prisma.doctor.create({
-        data: {
-            user: { connect: { id: userDoctor2.id }},
-            clinic: { connect: { id: clinic2.id}},
-            department: 'Neurology',
         },
     });
 

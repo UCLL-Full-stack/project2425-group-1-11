@@ -6,7 +6,6 @@ const getAllDoctors = async (): Promise<Doctor[]> => {
         const doctorPrisma = await database.doctor.findMany({
             include: {
                 user: true,
-                clinic: true,
                 appointments: true,
             },
         });
@@ -21,7 +20,7 @@ const getDoctorById = async ({ id }: { id: number }): Promise<Doctor | null> => 
     try {
         const doctorPrisma = await database.doctor.findUnique({
             where: { id },
-            include: { user: true, clinic: true, appointments: true },
+            include: { user: true, appointments: true },
         });
         return doctorPrisma ? Doctor.from(doctorPrisma) : null;
     } catch (error) {
