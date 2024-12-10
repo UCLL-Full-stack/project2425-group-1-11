@@ -1,7 +1,5 @@
 import { Appointment } from "../model/appointment";
-import { Doctor } from "../model/doctor";
 import appointmentDb from "../repository/appointment.db";
-import doctorDb from "../repository/doctor.db";
 import { AppointmentInput } from "../types";
 
 const getAllAppointments = (): Promise<Appointment[]> => appointmentDb.getAllAppointments();

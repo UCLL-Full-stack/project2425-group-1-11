@@ -1,7 +1,5 @@
-import { Appointment } from "../model/appointment";
 import { Doctor } from "../model/doctor";
 import { Patient } from "../model/patient";
-import { Record } from "../model/record";
 import { User } from "../model/user";
 
 export type Role = 'patient' | 'doctor';

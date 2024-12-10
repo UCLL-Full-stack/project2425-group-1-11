@@ -11,7 +11,6 @@ export class Patient {
     private id?: number;
     private user: User;
     private records: Record[];
-    // private appointments: Appointment[];
     private createdAt?: Date;
     private updatedAt?: Date;
 
@@ -19,7 +18,6 @@ export class Patient {
         id?: number;
         user: User;
         records: Record[];
-        // appointments: Appointment[];
         createdAt?: Date;
         updatedAt?: Date;
     }) {
@@ -27,7 +25,6 @@ export class Patient {
         this.id = patient.id;
         this.user = patient.user;
         this.records = patient.records;
-        // this.appointments = patient.appointments;
         this.createdAt = patient.createdAt;
         this.updatedAt = patient.updatedAt;
     }
@@ -35,7 +32,6 @@ export class Patient {
     validate(patient: {
         user: User;
         records: Record[];
-        // appointments: Appointment[];
     }) {
         if (!patient.user) {
             throw new Error('No User defined.');
@@ -43,9 +39,6 @@ export class Patient {
         if (!patient.records) {
             throw new Error('There are no records for this user.');
         }
-        // if (!patient.appointments) {
-        //     throw new Error('There are no appointments for this user.');
-        // }
     }
 
     getId(): number | undefined {
@@ -60,10 +53,6 @@ export class Patient {
         return this.records;
     }
 
-    // getAppointments(): Appointment[] {
-    //     return this.appointments;
-    // }
-
     getCreatedAt(): Date | undefined {
         return this.createdAt;
     }
@@ -76,7 +65,6 @@ export class Patient {
         return (
             this.user === patient.getUser() &&
             this.records === patient.getRecords() &&
-            // this.appointments === patient.getAppointments() && 
             this.createdAt === patient.getCreatedAt() &&
             this.updatedAt === patient.getUpdatedAt()
         );
@@ -86,7 +74,6 @@ export class Patient {
         id,
         user,
         records,
-        // appointments,
         createdAt,
         updatedAt,
     }: PatientPrisma & { user: UserPrisma; records: RecordPrisma[];}) {
@@ -94,7 +81,6 @@ export class Patient {
             id,
             user: User.from(user),
             records: records.map((record) => Record.from(record)),
-            // appointments: appointments.map((appointment) => Appointment.from(appointment)),
             createdAt,
             updatedAt,
         })

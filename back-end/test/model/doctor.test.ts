@@ -1,7 +1,4 @@
-import { Appointment } from "../../model/appointment"
-import { Clinic } from "../../model/clinic"
 import { Doctor } from "../../model/doctor"
-import { Patient } from "../../model/patient"
 import { User } from "../../model/user"
 
 const userDoctor1 = new User({id: 1, userName: "Dr.Phil", firstName: "Phil", lastName: "McGraw", email: "philmcgraw@gmail.com", password: "phil222", role: "doctor"})

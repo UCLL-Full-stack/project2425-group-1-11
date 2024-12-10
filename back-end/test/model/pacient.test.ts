@@ -1,6 +1,3 @@
-import { Appointment } from "../../model/appointment"
-import { Clinic } from "../../model/clinic"
-import { Doctor } from "../../model/doctor"
 import { Patient } from "../../model/patient"
 import { Record } from "../../model/record"
 import { User } from "../../model/user"

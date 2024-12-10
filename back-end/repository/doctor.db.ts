@@ -1,7 +1,4 @@
-import { Appointment } from '../model/appointment';
 import { Doctor } from '../model/doctor';
-import { Patient } from '../model/patient';
-import { User } from '../model/user';
 import database from '../util/database';
 
 const getAllDoctors = async (): Promise<Doctor[]> => {
