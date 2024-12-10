@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-const generateJwtToken = ({ userName, role }: { userName: string; role: string }): string => {
+const generateJwtToken = ({ userName, role }): string => {
     const options = {expiresIn: `${process.env.JWT_EXPIRES_HOURS}h`}
     issuer: 'LVMed_app'
 

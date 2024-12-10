@@ -31,3 +31,8 @@ export type Appointment = {
     doctor?: Doctor;
     patient?: Patient;
 };
+
+export type StatusMessage = {
+    message: string;
+    type: "error" | "success";
+};
