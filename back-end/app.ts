@@ -7,6 +7,8 @@ import swaggerUi from 'swagger-ui-express';
 import { appointmentRouter } from './controller/appointment.routes';
 import doctorRouter from './controller/doctor.routes';
 import { expressjwt } from 'express-jwt';
+import { recordRouter } from './controller/record.routes';
+import { patientRouter } from './controller/pacient.routes';
 
 const app = express();
 
@@ -45,6 +47,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/appointments', appointmentRouter);
 app.use('/doctors', doctorRouter);
+app.use('/records', recordRouter)
+app.use('/patients', patientRouter)
 
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);
