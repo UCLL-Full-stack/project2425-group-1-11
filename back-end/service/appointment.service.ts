@@ -1,4 +1,5 @@
 import { Appointment } from "../model/appointment";
+import { Doctor } from "../model/doctor";
 import appointmentDb from "../repository/appointment.db";
 import doctorDb from "../repository/doctor.db";
 import { AppointmentInput } from "../types";
@@ -7,14 +8,10 @@ const getAllAppointments = (): Promise<Appointment[]> => appointmentDb.getAllApp
 
 const deleteAppointmentById = ({ id }: { id: number }): Promise<void> => appointmentDb.deleteAppointmentById({ id });
 
-const makeAppointment = async ({
-    startDate,
-    endDate,
-    comment,
-    doctor
-}: AppointmentInput): Promise<Appointment> => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+const makeAppointment = async (appointment: AppointmentInput): Promise<Appointment> => {
+
+    const start = new Date(appointment.startDate);
+    const end = new Date(appointment.endDate);
     const now = new Date();
 
     if (start <= now) {
@@ -25,21 +22,29 @@ const makeAppointment = async ({
         throw new Error('End date must be after the start date');
     }
 
+    if (!appointment.patient) {
+        throw new Error('Patient is required');
+    }
+
+    if (!appointment.doctor) {
+        throw new Error('Doctor is required');
+    }
+
     const newAppointment = new Appointment({
         startDate: start,
         endDate: end,
-        comment,
-        doctor
+        comment: appointment.comment,
+        patient: appointment.patient,
+        doctor: appointment.doctor,
     });
 
-    appointmentDb.saveAppointment(newAppointment);
+    await appointmentDb.saveAppointment(newAppointment);
 
     return newAppointment;
-    
 };
 
 export default { 
     getAllAppointments,
     deleteAppointmentById, 
-    makeAppointment
+    makeAppointment,
 };

@@ -35,5 +35,5 @@ const getDoctorById = async ({ id }: { id: number }): Promise<Doctor | null> => 
 
 export default {
     getAllDoctors,
-    getDoctorById
+    getDoctorById,
 };

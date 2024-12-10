@@ -30,6 +30,7 @@
 import express, { Request, Response } from 'express';
 import appointmentService from '../service/appointment.service';
 import { AppointmentInput } from '../types';
+import { Appointment } from '@prisma/client';
 
 const appointmentRouter = express.Router();
 

@@ -2,11 +2,12 @@ import { Doctor } from "./doctor";
 import {
     Clinic as ClinicPrisma,
     Doctor as DoctorPrisma,
+    User as UserPrisma,
 } from '@prisma/client'
 
 export class Clinic {
     private id?: number;
-    private doctors?: Doctor[];
+    private doctors: Doctor[];
     private address: string;
     private contactNumber: number;
     private rating: number;
@@ -15,7 +16,7 @@ export class Clinic {
 
     constructor(clinic: {
         id?: number;
-        doctors?: Doctor[];
+        doctors: Doctor[];
         address: string;
         contactNumber: number;
         rating: number;
@@ -33,10 +34,14 @@ export class Clinic {
     }
 
     validate(clinic: {
+        doctors: Doctor [];
         address: string;
         contactNumber: number;
         rating: number;
     }) {
+        if (!clinic.doctors) {
+            throw new Error('Doctor is required.');
+        }
         if (!clinic.address) {
             throw new Error('No address defined.');
         }
@@ -52,7 +57,7 @@ export class Clinic {
         return this.id;
     }
 
-    getDoctors(): Doctor[] | undefined {
+    getDoctors(): Doctor[] {
         return this.doctors;
     }
 
@@ -78,6 +83,7 @@ export class Clinic {
 
     equals(clinic: Clinic): boolean {
         return (
+            this.doctors === clinic.getDoctors() &&
             this.address === clinic.getAddress() &&
             this.contactNumber === clinic.getContactNumber() &&
             this.rating === clinic.getRating() &&
@@ -88,19 +94,21 @@ export class Clinic {
 
     static from({
         id,
+        doctors,
         address,
         contactNumber,
         rating,
         createdAt,
         updatedAt,
-    }: ClinicPrisma) {
+    }: ClinicPrisma & { doctors: (DoctorPrisma & { user: UserPrisma })[]}) {
         return new Clinic({
             id,
+            doctors: doctors.map(doctor => Doctor.from(doctor)),
             address,
             contactNumber,
             rating,
             createdAt,
             updatedAt,
-        })
+        });
     }
 }

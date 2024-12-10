@@ -12,7 +12,7 @@ export type AppointmentInput = {
     endDate: Date;
     comment: string;
     patient?: Patient;
-    doctor: Doctor;
+    doctor?: Doctor;
 }
 
 export type ClinicInput = {
@@ -27,14 +27,11 @@ export type DoctorInput = {
     id?: number;
     user: User;
     department: string;
-    appointments: Appointment[];
 }
 
 export type PatientInput = {
     id?: number;
     user: User;
-    records: Record[];
-    appointments: Appointment[];
 }
 
 export type RecordInput = {

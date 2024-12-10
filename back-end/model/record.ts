@@ -6,7 +6,7 @@ import {
 
 export class Record {
     private id?: number;
-    private patient?: Patient;
+    // private patient?: Patient;
     private title: string;
     private description: string;
     private createdAt?: Date;
@@ -14,7 +14,7 @@ export class Record {
 
     constructor(record: {
         id?: number;
-        patient?: Patient;
+        // patient?: Patient;
         title: string;
         description: string;
         createdAt?: Date;
@@ -22,7 +22,7 @@ export class Record {
     }) {
         this.validate(record);
         this.id = record.id;
-        this.patient = record.patient;
+        // this.patient = record.patient;
         this.title = record.title;
         this.description = record.description;
         this.createdAt = record.createdAt;
@@ -45,9 +45,9 @@ export class Record {
         return this.id;
     }
 
-    getPatient(): Patient | undefined{
-        return this.patient;
-    }
+    // getPatient(): Patient | undefined{
+    //     return this.patient;
+    // }
 
     getTitle(): string {
         return this.title;

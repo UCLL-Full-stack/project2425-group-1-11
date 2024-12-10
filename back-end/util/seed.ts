@@ -4,12 +4,12 @@ const prisma = new PrismaClient();
 
 const main = async () => {
 
-    await prisma.appointment.deleteMany();
-    await prisma.doctor.deleteMany();
-    await prisma.patient.deleteMany();
-    await prisma.record.deleteMany();
-    await prisma.clinic.deleteMany();
-    await prisma.user.deleteMany();
+    await prisma.$executeRaw`TRUNCATE TABLE "Appointment" RESTART IDENTITY CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE "Clinic" RESTART IDENTITY CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE "Patient" RESTART IDENTITY CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE "Doctor" RESTART IDENTITY CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE "User" RESTART IDENTITY CASCADE`;
+    await prisma.$executeRaw`TRUNCATE TABLE "Record" RESTART IDENTITY CASCADE`;
     
     // Create Users
     const userPacient1 = await prisma.user.create({
@@ -167,13 +167,16 @@ const main = async () => {
             },
         },
     });
+
 };
 
-main()
-    .catch(e => {
-        console.error(e);
-        process.exit(1);
-    })
-    .finally(async () => {
+(async () => {
+    try {
+        await main();
         await prisma.$disconnect();
-    });
+    } catch (error) {
+        console.error(error);
+        await prisma.$disconnect();
+        process.exit(1);
+    }
+})();

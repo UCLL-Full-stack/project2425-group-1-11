@@ -63,6 +63,8 @@ const MakeAppointment: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log(e)
+
     if (!validate()) {
       return;
     }
