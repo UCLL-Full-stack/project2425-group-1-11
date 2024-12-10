@@ -48,3 +48,9 @@ export type UserInput = {
     email: string;
     role: Role;
 };
+
+export type AuthenticationResponse = {
+    token: string;
+    username: string;
+    fullname: string;
+};

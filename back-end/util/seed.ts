@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -18,7 +19,7 @@ const main = async () => {
             firstName: 'Furquan',
             lastName: 'Mobeen',
             email: 'furquan.mobeen@ucll.be',
-            password: 'furquan12',
+            password: await bcrypt.hash('furquan12', 10),
             role: 'patient',
         },
     });
@@ -28,7 +29,7 @@ const main = async () => {
             firstName: 'Irina',
             lastName: 'Lazar',
             email: 'irina.lazar@ucll.be',
-            password: 'irina8',
+            password: await bcrypt.hash('irina8', 10),
             role: 'patient',
         },
     });
@@ -38,7 +39,7 @@ const main = async () => {
             firstName: 'Augustine',
             lastName: 'Asimhi',
             email: 'Augustine.asimhi@ucll.be',
-            password: 'augustine13',
+            password: await bcrypt.hash('augustine13', 10),
             role: 'doctor',
         },
     });
@@ -48,7 +49,7 @@ const main = async () => {
             firstName: 'Eddy',
             lastName: 'Ndacasaba',
             email: 'eddy.ndacasaba@ucll.be',
-            password: 'eddy14',
+            password: await bcrypt.hash('eddy14', 10),
             role: 'doctor',
         },
     });
