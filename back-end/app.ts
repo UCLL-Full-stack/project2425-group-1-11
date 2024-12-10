@@ -51,7 +51,6 @@ app.use('/doctors', doctorRouter);
 app.use('/records', recordRouter)
 app.use('/patients', patientRouter)
 app.use('/clinics', clinicRouter)
-app.use('/users', userRouter)
 
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);
