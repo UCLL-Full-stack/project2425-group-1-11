@@ -33,22 +33,40 @@
  *              description: User role.
  */
 import express, { NextFunction, Request, Response } from 'express';
-// import userService from '../service/user.service';
-// import { UserInput } from '../types/index';
+import userService from '../service/user.service';
+import { UserInput } from '../types/index';
+import { User } from '@prisma/client';
 
-// const userRouter = express.Router();
+const userRouter = express.Router();
+const registerRouter = express.Router();
 
+/**
+ * @swagger
+ * /users/register:
+ *   post:
+ *      summary: Create a new user.
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/UserInput'
+ *      responses:
+ *         200:
+ *            description: The created user.
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/User'
+ */
+userRouter.post('/register', async (req: Request, res: Response) => {
+    try {
+        const user = req.body as UserInput;
+        const result = await userService.makeUser(user);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json({ status: 'error', errorMessage: (error as Error).message });
+    }
+});
 
-// userRouter.post(
-//     '/signup',
-//     async (req: Request, res: Response, next: NextFunction) => {
-//         try {
-//             const user = await userService.creatUser(req.body as UserInput);
-//             res.status(200).json(user);
-//         } catch (error) {
-//             next(error)
-//         }
-//     }
-// )
-
-// export { userRouter };
+export { userRouter, registerRouter };

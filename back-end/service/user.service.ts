@@ -4,6 +4,22 @@ import { AuthenticationResponse, UserInput } from "../types";
 import bcrypt from 'bcrypt';
 // import jwt from "../util/jwt";
 
+const makeUser = async (user: UserInput): Promise<User> => {
+
+    const newUser = new User({
+        userName: user.userName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password,
+        role: user.role,
+    });
+
+    await userDb.saveUser(newUser);
+
+    return newUser;
+};
+
 // const getUserByUsername = async ({ userName }: { userName: string }): Promise<User> => {
 //     const user = await userDb.getUserByUsername({ userName });
 //     if (!user) {
@@ -46,9 +62,10 @@ import bcrypt from 'bcrypt';
 //     }
 // }
 
-// export default {
-//     getUserByUsername,
-//     creatUser,
-//     login,
-// }
+export default {
+    makeUser,
+    // getUserByUsername,
+    // creatUser,
+    // login,
+}
 

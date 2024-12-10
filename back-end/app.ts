@@ -9,6 +9,7 @@ import doctorRouter from './controller/doctor.routes';
 import { expressjwt } from 'express-jwt';
 import { recordRouter } from './controller/record.routes';
 import { patientRouter } from './controller/pacient.routes';
+import { clinicRouter } from './controller/clinic.routes';
 
 const app = express();
 
@@ -49,6 +50,8 @@ app.use('/appointments', appointmentRouter);
 app.use('/doctors', doctorRouter);
 app.use('/records', recordRouter)
 app.use('/patients', patientRouter)
+app.use('/clinics', clinicRouter)
+app.use('/users', userRouter)
 
 app.listen(port || 3000, () => {
     console.log(`Back-end is running on port ${port}.`);

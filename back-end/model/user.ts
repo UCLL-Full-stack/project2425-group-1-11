@@ -39,19 +39,19 @@ export class User {
         password: string;
         role: Role;
     }) {
-        if (!user.userName.trim()) {
+        if (!user.userName) {
             throw new Error('Username is required.');
         }
-        if (!user.firstName.trim()) {
+        if (!user.firstName) {
             throw new Error('First name is required.');
         }
-        if (!user.lastName.trim()) {
+        if (!user.lastName) {
             throw new Error('Last name is required.');
         }
-        if (!user.email.trim()) {
+        if (!user.email) {
             throw new Error('Email is required.');
         }
-        if (!user.password.trim()) {
+        if (!user.password) {
             throw new Error('Password is required.');
         }
         if (!user.role) {
