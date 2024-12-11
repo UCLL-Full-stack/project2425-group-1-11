@@ -11,7 +11,7 @@ type Props = {
 const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }: Props) => {
 
   const handleDelete = async (id: number) => {
-    deleteAppointment(id)
+    AppointmentService.deleteAppointment(id)
   };
 
   // Function to check if the appointment is active (in the future)
