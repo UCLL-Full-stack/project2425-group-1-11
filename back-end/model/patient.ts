@@ -4,7 +4,6 @@ import {
     Patient as PatientPrisma,
     User as UserPrisma,
     Record as RecordPrisma,
-    Appointment as AppointmentPrisma,
 } from '@prisma/client'
 
 export class Patient {

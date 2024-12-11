@@ -1,11 +1,6 @@
 /**
  * @swagger
  *   components:
- *    securitySchemes:
- *     bearerAuth:
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT
  *    schemas:
  *      Clinic:
  *          type: object
@@ -34,19 +29,21 @@ const clinicRouter = express.Router();
 
 /**
  * @swagger
- * /appointments:
+ * /clinics:
  *   get:
- *     summary: Get a list of all appointments.
- *     description: Returns an array of appointments. Each item in the array is of type Appointment.
+ *     tags:
+ *       - Clinic
+ *     summary: Get a list of all clinics.
+ *     description: Returns an array of clinics. Each item in the array is of type Clinic.
  *     responses:
  *       200:
- *         description: A JSON array of appointment objects.
+ *         description: A JSON array of clinics objects.
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Appointment'
+ *                 $ref: '#/components/schemas/Clinic'
  */
 clinicRouter.get('/', async (req: Request, res: Response) => {
     try {

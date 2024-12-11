@@ -1,11 +1,6 @@
 /**
  * @swagger
  *   components:
- *    securitySchemes:
- *     bearerAuth:
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT
  *    schemas:
  *      Record:
  *          type: object
@@ -31,6 +26,8 @@ const recordRouter = express.Router();
  * @swagger
  * /records:
  *   get:
+ *     tags:
+ *       - Record
  *     summary: Get a list of all records.
  *     description: Returns an array of records. Each item in the array is of type Records.
  *     responses:

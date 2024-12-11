@@ -1,11 +1,6 @@
 /**
  * @swagger
  *   components:
- *    securitySchemes:
- *     bearerAuth:
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT
  *    schemas:
  *      Doctor:
  *          type: object
@@ -26,13 +21,14 @@
 import express, { Request, Response } from 'express';
 import doctorService from '../service/doctor.service';
 
-
 const doctorRouter = express.Router();
 
 /**
  * @swagger
  * /doctors:
  *   get:
+ *     tags:
+ *       - Doctor
  *     summary: Get a list of all doctors.
  *     description: Returns an array of doctors. Each item in the array is of type Doctor.
  *     responses:

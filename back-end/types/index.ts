@@ -51,6 +51,6 @@ export type UserInput = {
 
 export type AuthenticationResponse = {
     token: string;
-    username: string;
-    fullname: string;
+    userName: string;
+    fullName: string;
 };
