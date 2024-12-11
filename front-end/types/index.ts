@@ -5,7 +5,13 @@ export type User = {
     username: string;
     password: string;
     email: string;
+    role?:string;
 };
+
+export type UserLogin = {
+    username: string;
+    password: string;
+  };
   
 export type Doctor = {
     id?: number;

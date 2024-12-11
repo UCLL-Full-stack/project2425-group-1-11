@@ -1,9 +1,14 @@
 import { User } from '@types';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 const Header: React.FC = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>(null);
+
+  const router = useRouter();
+  const isActive = (pathname: string) => router.pathname === pathname;
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("loggedInUser");
@@ -39,7 +44,6 @@ const Header: React.FC = () => {
           Login
         </Link>
       )}
-
       {loggedInUser && (
         <a
           href="/login"
@@ -55,6 +59,15 @@ const Header: React.FC = () => {
           Welcome, {loggedInUser.firstName} !
         </div>
       )}
+
+      {!authToken && (
+              <Link
+                href="/users/register"
+                className="nav-link px-4 fs-5 text-white"
+              >
+                Register
+              </Link>
+            )}
 
       </nav>
     </header>

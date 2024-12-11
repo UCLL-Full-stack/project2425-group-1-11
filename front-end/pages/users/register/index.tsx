@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "@components/header";
-// import UserLoginForm from "@components/users/RegisterForm";
+import RegisterForm from "@components/register/RegisterForm";
+
 
 const Register: React.FC = () => {
     return (
@@ -12,7 +13,7 @@ const Register: React.FC = () => {
             <main className="d-flex flex-column justify-content-center align-items-center">
                 <h1>Register</h1>
                 <section className="p-6 min-h-screen flex flex-col items-center">
-                    {/* <RegisterForm /> */}
+                    <RegisterForm />
                 </section>
             </main>
         </>

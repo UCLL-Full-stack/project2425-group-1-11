@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "@components/header";
-import UserLoginForm from "@components/users/UserLoginForm";
+import UserLoginForm from "@components/login/UserLoginForm";
 
 const Login: React.FC = () => {
     return (
