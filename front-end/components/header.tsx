@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   };
   
   return (
-    <header className="p-3 mb-3 border-bottom bg-dark bg-gradient">
+    <header className="p-3 mb-3 border-bottom  bg-gradient" style={{ backgroundColor: 'darkgreen' }}>
       <a className="fs-2 d-flex justify-content-center mb-2 mb-lg-0 text-white-50 text-decoration-none">
         {' '}
         LVMed App

@@ -49,4 +49,55 @@ recordRouter.get('/', async (req: Request, res: Response) => {
     }
 });
 
+/**
+ * @swagger
+ * /records/{id}:
+ *   delete:
+ *     tags:
+ *       - Record
+ *     summary: Delete an record by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The record ID
+ *     responses:
+ *       200:
+ *         description: Record deleted successfully
+ *         content:
+ *           record/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Record deleted successfully
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           record/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Error message
+ */
+recordRouter.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        const appointment = await recordService.deleteRecordById({ id: Number(req.params.id) })
+        res.status(200).json(appointment);
+    } catch (error) {
+        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
+
 export { recordRouter };

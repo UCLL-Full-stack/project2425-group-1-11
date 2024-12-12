@@ -21,7 +21,7 @@ const getAllAppointments = async (): Promise<Appointment[]> => {
         return appointmentPrisma.map((appointment) => Appointment.from(appointment));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Appointment error. See server log for details.');
     }
 };
 
@@ -32,7 +32,7 @@ const deleteAppointmentById = async ({ id }: { id: number }): Promise<void> => {
         });
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Appointment error. See server log for details.');
     }
 };
 
@@ -43,7 +43,7 @@ const saveAppointment = async (appointment: Appointment): Promise<Appointment> =
                 startDate: appointment.getStartDate(),
                 endDate: appointment.getEndDate(),
                 comment: appointment.getComment(),
-                patient: { connect: { id: undefined }},
+                patient: { connect: { id: appointment.getPatient().getId() }},
                 doctor: { connect: { id: appointment.getDoctor().getId() }},
             },
             include: {
@@ -63,7 +63,7 @@ const saveAppointment = async (appointment: Appointment): Promise<Appointment> =
         return Appointment.from(savedAppointment);
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Appointment error. See server log for details.');
     }
 };
 

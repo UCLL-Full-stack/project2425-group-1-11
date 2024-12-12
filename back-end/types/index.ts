@@ -9,8 +9,9 @@ export type AppointmentInput = {
     startDate: Date;
     endDate: Date;
     comment: string;
-    patient?: Patient;
-    doctor?: Doctor;
+    patientId: number;
+    doctorFirstName: string;
+    doctorLastName: string;
 }
 
 export type ClinicInput = {

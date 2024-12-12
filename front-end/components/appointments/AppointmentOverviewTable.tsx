@@ -34,7 +34,13 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
           </thead>
           <tbody>
             {appointments.map((appointment, index) => (
-              <tr key={index} style={{ color: isActiveAppointment(appointment.startDate) ? 'lightgreen' : 'inherit' }}>
+              <tr
+                key={index}
+                style={{
+                  color: isActiveAppointment(appointment.startDate) ? 'green' : 'inherit',
+                  fontWeight: 'bold',
+                }}
+              >                
                 <td>{appointment.startDate}</td>
                 <td>{appointment.endDate}</td>
                 <td>{appointment.comment}</td>

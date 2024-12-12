@@ -25,12 +25,9 @@
  *         doctorId:
  *           type: number
  *           description: The ID of the doctor.
- *     AppointmentInput:
+ *     AppointmentsAdd:
  *       type: object
  *       properties:
- *         id:
- *           type: number
- *           format: int64
  *         startDate:
  *           type: string
  *           format: date-time
@@ -45,9 +42,12 @@
  *         patientId:
  *           type: number
  *           description: The ID of the patient.
- *         doctorId:
- *           type: number
- *           description: The ID of the doctor.
+ *         doctorFirstName:
+ *           type: string
+ *           description: FirstName of the doctor.
+ *         doctorLastName:
+ *           type: string
+ *           description: LastName of the doctor.
  */
 import express, { Request, Response } from 'express';
 import appointmentService from '../service/appointment.service';
@@ -84,26 +84,38 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
 
 /**
  * @swagger
+ * 
  * /appointments/add:
  *   post:
  *      tags:
  *       - Appointment
- *      security:
- *       - bearerAuth: []
  *      summary: Create a new appointment for an existing patient.
  *      requestBody:
  *        required: true
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/AppointmentInput'
+ *              $ref: '#/components/schemas/AppointmentsAdd'
  *      responses:
  *         200:
- *            description: The created schedule.
+ *            description: The created appointment.
  *            content:
  *              application/json:
  *                schema:
  *                  $ref: '#/components/schemas/Appointment'
+ *         400:
+ *           description: Bad request. The input data is invalid.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
+ *                     example: error
+ *                   errorMessage:
+ *                     type: string
+ *                     example: Invalid input data.
  */
 appointmentRouter.post('/add', async (req: Request, res: Response) => {
     try {

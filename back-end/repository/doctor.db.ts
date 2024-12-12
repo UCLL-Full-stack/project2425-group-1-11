@@ -12,7 +12,7 @@ const getAllDoctors = async (): Promise<Doctor[]> => {
         return doctorPrisma.map((doctor) => Doctor.from(doctor));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Doctor error. See server log for details.');
     }
 };
 
@@ -20,16 +20,35 @@ const getDoctorById = async ({ id }: { id: number }): Promise<Doctor | null> => 
     try {
         const doctorPrisma = await database.doctor.findUnique({
             where: { id },
-            include: { user: true, appointments: true },
+            include: {
+                user:true,
+            },
         });
         return doctorPrisma ? Doctor.from(doctorPrisma) : null;
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Doctor error. See server log for details.');
     }
 };
+
+const getDoctorByFullName = async ({ firstName, lastName }: { firstName: string, lastName: string }): Promise<Doctor | null> => {
+    try {
+        const doctorPrisma = await database.doctor.findFirst({
+            where: { user: { firstName, lastName } },
+            include: {
+                user:true,
+            },
+        });
+        return doctorPrisma ? Doctor.from(doctorPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database Doctor error. See server log for details.');
+    }
+};
+
 
 export default {
     getAllDoctors,
     getDoctorById,
+    getDoctorByFullName,
 };

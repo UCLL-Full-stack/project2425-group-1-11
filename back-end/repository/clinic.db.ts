@@ -15,7 +15,7 @@ const getAllClinics = async (): Promise<Clinic[]> => {
         return clinicPrisma.map((clinic) => Clinic.from(clinic));
     } catch (error) {
         console.error(error);
-        throw new Error('Database error. See server log for details.');
+        throw new Error('Database Clinic error. See server log for details.');
     }
 };
 

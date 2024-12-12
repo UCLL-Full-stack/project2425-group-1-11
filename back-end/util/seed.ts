@@ -54,32 +54,31 @@ const main = async () => {
         },
     });
 
+    // Create Records
+    const record1 = await prisma.record.create({
+        data: {
+            title: 'Title1',
+            description: 'Description1',
+        },
+    });
+    const record2 = await prisma.record.create({
+        data: {
+            title: 'Title2',
+            description: 'Description2',
+        },
+    });
+
     // Create Patients
     const patient1 = await prisma.patient.create({
         data: {
             user: { connect: { id: userPacient1.id } },
+            records: { connect: {id: record1.id} }
         },
     });
     const patient2 = await prisma.patient.create({
         data: {
             user: { connect: { id: userPacient2.id } },
-        },
-    });
-
-
-    // Create Records
-    const record1 = await prisma.record.create({
-        data: {
-            patient: { connect: { id: patient1.id } },
-            title: 'Title1',
-            description: 'Description1'
-        },
-    });
-    const record2 = await prisma.record.create({
-        data: {
-            patient: { connect: { id: patient2.id } },
-            title: 'Title2',
-            description: 'Description2'
+            records: { connect: {id: record2.id}}
         },
     });
 

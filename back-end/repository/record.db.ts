@@ -16,10 +16,37 @@ const getAllRecords = async (): Promise<Record[]> => {
         return recordPrisma.map((record) => Record.from(record));
     } catch (error) {
         console.error(error);
+        throw new Error('Database Record error. See server log for details.');
+    }
+};
+
+const saveRecord = async (record: Record): Promise<Record> => {
+    try {
+        const savedRecord = await database.record.create({
+            data: {
+                title: record.getTitle(),
+                description: record.getDescription(),
+            },
+        });
+        return Record.from(savedRecord);
+    } catch (error) {
+        console.error(error);
         throw new Error('Database error. See server log for details.');
+    }
+};
+
+const deleteRecordById = async ({ id }: { id: number }): Promise<void> => {
+    try {
+        await database.record.delete({
+            where: { id },
+        });
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database Record error. See server log for details.');
     }
 };
 
 export default {
     getAllRecords,
+    deleteRecordById,
 }
