@@ -2,7 +2,7 @@ import { Doctor } from "../model/doctor";
 import { Patient } from "../model/patient";
 import { User } from "../model/user";
 
-export type Role = 'patient' | 'doctor';
+export type Role = 'patient' | 'doctor' | 'admin';
 
 export type AppointmentInput = {
     id?: number;
@@ -10,8 +10,7 @@ export type AppointmentInput = {
     endDate: Date;
     comment: string;
     patientId: number;
-    doctorFirstName: string;
-    doctorLastName: string;
+    doctorId: number;
 }
 
 export type ClinicInput = {

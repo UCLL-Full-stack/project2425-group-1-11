@@ -26,12 +26,9 @@
  *            role:
  *              type: string
  *              description: User role.
- *      UserInput:
+ *      UsersAdd:
  *          type: object
  *          properties:
- *            id:
- *              type: number
- *              format: int64
  *            userName:
  *              type: string
  *              description: User userName.
@@ -53,13 +50,10 @@
  *      AuthenticationResponse:
  *          type: object
  *          properties:
- *            token:
- *              type: string
- *              description: User token.
  *            userName:
  *              type: string
  *              description: User userName.
- *            fullName:
+ *            password:
  *              type: string
  *              description: User fullName.
  */
@@ -81,7 +75,7 @@ const userRouter = express.Router();
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/UserInput'
+ *              $ref: '#/components/schemas/UsersAdd'
  *      responses:
  *         200:
  *            description: The created user.
@@ -89,6 +83,19 @@ const userRouter = express.Router();
  *              application/json:
  *                schema:
  *                  $ref: '#/components/schemas/User'
+ *         400:
+ *           description: Bad request. The input data is invalid.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
+ *                     example: error
+ *                   errorMessage:
+ *                     type: string
+ *                     example: Invalid input data.
  */
 userRouter.post('/register', async (req: Request, res: Response) => {
     try {

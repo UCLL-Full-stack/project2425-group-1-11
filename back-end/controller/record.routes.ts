@@ -34,7 +34,7 @@ const recordRouter = express.Router();
  *       200:
  *         description: A JSON array of records objects.
  *         content:
- *           record/json:
+ *           application/json:
  *             schema:
  *               type: array
  *               items:
@@ -67,7 +67,7 @@ recordRouter.get('/', async (req: Request, res: Response) => {
  *       200:
  *         description: Record deleted successfully
  *         content:
- *           record/json:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:
@@ -80,7 +80,7 @@ recordRouter.get('/', async (req: Request, res: Response) => {
  *       400:
  *         description: Bad request
  *         content:
- *           record/json:
+ *           application/json:
  *             schema:
  *               type: object
  *               properties:

@@ -42,12 +42,9 @@
  *         patientId:
  *           type: number
  *           description: The ID of the patient.
- *         doctorFirstName:
- *           type: string
- *           description: FirstName of the doctor.
- *         doctorLastName:
- *           type: string
- *           description: LastName of the doctor.
+ *         doctorId:
+ *           type: number
+ *           description: The ID of the doctor.
  */
 import express, { Request, Response } from 'express';
 import appointmentService from '../service/appointment.service';

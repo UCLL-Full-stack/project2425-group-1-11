@@ -36,7 +36,7 @@ const patientRouter = express.Router();
  *       200:
  *         description: A JSON array of patients objects.
  *         content:
- *           patient/json:
+ *           application/json:
  *             schema:
  *               type: array
  *               items:

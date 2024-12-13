@@ -33,22 +33,14 @@ const makeAppointment = async (appointment: AppointmentInput): Promise<Appointme
         throw new Error('Patient not found');
     }
 
-    if (!appointment.doctorFirstName) {
-        throw new Error('Doctor firstname is required');
+    if (!appointment.doctorId) {
+        throw new Error('Doctor ID is required');
     }
-    if (!appointment.doctorLastName) {
-        throw new Error('Doctor lastname is required');
+    const doctorId = appointment.doctorId;
+    if (doctorId === undefined) {
+        throw new Error('Doctor ID is required');
     }
-    const doctorFirstName = appointment.doctorFirstName;
-    const doctorLastName = appointment.doctorLastName;
-
-    if (doctorFirstName === undefined) {
-        throw new Error('Doctor firstname is required');
-    }
-    if (doctorLastName === undefined) {
-        throw new Error('Doctor lastname is required');
-    }
-    const doctor = await doctorDb.getDoctorByFullName({ firstName: doctorFirstName, lastName: doctorLastName });
+    const doctor = await doctorDb.getDoctorById({ id: doctorId });
     if (!doctor) {
         throw new Error('Doctor not found');
     }
