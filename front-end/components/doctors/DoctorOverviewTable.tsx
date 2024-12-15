@@ -16,8 +16,6 @@ const DoctorOverviewTable: React.FC<Props> = ({ doctors }: Props) => {
             <tr>
               <th scope="col">Name</th>
               <th scope="col">Department</th>
-              {/* <th scope="col">Description</th>
-              <th scope="col">Clinic</th> */}
             </tr>
           </thead>
           <tbody>

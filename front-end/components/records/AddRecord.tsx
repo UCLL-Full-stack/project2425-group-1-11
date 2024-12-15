@@ -1,6 +1,7 @@
 import RecordService from "@services/RecordService";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { mutate } from "swr";
 
 const AddRecord: React.FC = () => {
   const [title, setTitle] = useState<string>("");
@@ -45,6 +46,8 @@ const AddRecord: React.FC = () => {
       const response = await RecordService.addRecord(record);
 
       if (response.ok) {
+        // Revalidate the records data
+        mutate('records');
         router.push("/records");
       } else {
         console.error("Failed to add record");

@@ -3,6 +3,7 @@ import DoctorService from "@services/DoctorService";
 import { User } from "@types";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { mutate } from "swr";
 
 const MakeAppointment: React.FC = () => {
   const [start, setStart] = useState<string>("");
@@ -80,6 +81,7 @@ const MakeAppointment: React.FC = () => {
       const response = await AppointmentService.makeAppointment(appointment);
 
       if (response.ok) {
+        mutate('appointments');
         router.push("/appointments");
       } else {
         const errorData = await response.json();
@@ -133,7 +135,6 @@ const MakeAppointment: React.FC = () => {
         </select>
         {doctorError && <p>{doctorError}</p>}
       </div>
-      {/* <button type="submit">Make Appointment</button> */}
       <button onClick={handleSubmit}>Make Appointment</button>
     </form>
   );

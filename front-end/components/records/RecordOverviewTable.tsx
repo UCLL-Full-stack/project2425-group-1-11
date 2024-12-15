@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Record } from '@types';
-import { mutate } from 'swr';
 import RecordService from '@services/RecordService';
+import { mutate } from 'swr';
 
 type Props = {
   records: Array<Record>;
@@ -10,7 +10,19 @@ type Props = {
 const RecordOverviewTable: React.FC<Props> = ({ records }: Props) => {
 
   const handleDelete = async (id: number) => {
-    RecordService.deleteRecord(id);
+    try {
+      const response = await RecordService.deleteRecord(id);
+      if (response.ok) {
+        // Revalidate the records data
+        mutate('records');
+      } else {
+        const errorText = await response.text();
+        console.error("Failed to delete record:", errorText);
+        alert(`Failed to delete record: ${errorText}`);
+      }
+    } catch (error) {
+      console.error("An error occurred while deleting the record", error);
+    }
   };
 
   return (

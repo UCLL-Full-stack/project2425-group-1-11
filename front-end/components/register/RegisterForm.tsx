@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
 import UserService from "../../services/UserService"; // Adjust the path as necessary
+import { mutate } from "swr";
 
 const RegisterForm = () => {
   const [username, setUsername] = useState<string>("");
@@ -75,6 +76,8 @@ const RegisterForm = () => {
 
       if (response.ok) {
         setStatus("Registration successful");
+        // Revalidate the user data
+        mutate('users');
         router.push("/login");
       } else {
         setStatus("Registration failed");

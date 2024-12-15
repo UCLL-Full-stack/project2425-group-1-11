@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Appointment, Doctor, User } from '@types';
 import { mutate } from 'swr';
 import AppointmentService from '@services/AppointmentService';
+import DoctorService from '@services/DoctorService';
 
 type Props = {
   appointments: Array<Appointment>;
@@ -9,10 +10,6 @@ type Props = {
 };
 
 const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }: Props) => {
-
-  // const handleDelete = async (id: number) => {
-  //   AppointmentService.deleteAppointment(id);
-  // };
 
   const handleDelete = async (id: number) => {
     const response = await AppointmentService.deleteAppointment(id);
@@ -57,7 +54,6 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
                 <td>{appointment.startDate}</td>
                 <td>{appointment.endDate}</td>
                 <td>{appointment.comment}</td>
-                {/* <td>{`${appointment.doctor.user.firstName} ${appointment.doctor.user.lastName}`}</td> */}
                 <td>
                   {appointment.doctor && appointment.doctor.user
                     ? `${appointment.doctor.user.firstName} ${appointment.doctor.user.lastName}`
