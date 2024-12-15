@@ -41,7 +41,7 @@ const UserLoginForm: React.FC = () => {
           return;
         }
 
-        console.log('Logging in with:', { userName: userName, password }); 
+        // console.log('Logging in with:', { userName: userName, password }); 
     
         const user = { userName: userName, password };
         const response = await UserService.login(user);
@@ -54,8 +54,8 @@ const UserLoginForm: React.FC = () => {
             'loggedInUser',
             JSON.stringify({
               token: user.token,
-              userName: user.username,
-              fullName: user.firstName + ' ' + user.lastName,
+              userName: user.userName,
+              fullName: user.fullName,
             })
           );
       

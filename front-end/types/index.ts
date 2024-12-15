@@ -6,6 +6,7 @@ export type User = {
     password?: string;
     email?: string;
     role?:string;
+    fullName?:string;
 };
 export type Doctor = {
     id?: number;
