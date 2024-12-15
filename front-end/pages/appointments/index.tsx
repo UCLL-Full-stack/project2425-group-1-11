@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 const Appointments: React.FC = () => {
 
     const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [showAppointmentForm, setShowAppointmentForm] = useState<boolean>(false);
 
 
     const getAllAppointments = async () => {
@@ -44,11 +45,19 @@ const Appointments: React.FC = () => {
                     <AppointmentOverviewTable appointments={appointments} deleteAppointment={handleDelete}></AppointmentOverviewTable>
                 )}
 
-                <section>
-                    <h2>Appointments overview</h2>
-                </section>
-                
-                <MakeAppointment></MakeAppointment>
+
+                <button
+                    onClick={() => setShowAppointmentForm(!showAppointmentForm)}
+                    
+                >
+                  Make Appointment
+                </button>
+
+                {showAppointmentForm && (
+                  <div className="w-full max-w-md">
+                    <MakeAppointment></MakeAppointment>
+                  </div>
+              )}
 
             </main>
         </>

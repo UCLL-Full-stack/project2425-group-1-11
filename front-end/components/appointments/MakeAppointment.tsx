@@ -145,7 +145,7 @@ const MakeAppointment: React.FC = () => {
         </select>
         {doctorError && <p>{doctorError}</p>}
       </div>
-      <button onClick={handleSubmit}>Make Appointment</button>
+      <button onClick={handleSubmit}>Book now</button>
       {successMessage && <p>{successMessage}</p>}
     </form>
   );
