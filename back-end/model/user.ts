@@ -63,7 +63,7 @@ export class User {
         return this.id;
     }
 
-    getUsername(): string {
+    getUserName(): string {
         return this.userName;
     }
 
@@ -89,7 +89,7 @@ export class User {
 
     equals(user: User): boolean {
         return (
-            this.userName === user.getUsername() &&
+            this.userName === user.getUserName() &&
             this.firstName === user.getFirstName() &&
             this.lastName === user.getLastName() &&
             this.email === user.getEmail() &&

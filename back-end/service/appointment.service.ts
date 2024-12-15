@@ -46,6 +46,7 @@ const makeAppointment = async (appointment: AppointmentInput): Promise<Appointme
     }
 
     const newAppointment = new Appointment({
+        id: appointment.id,
         startDate: start,
         endDate: end,
         comment: appointment.comment,

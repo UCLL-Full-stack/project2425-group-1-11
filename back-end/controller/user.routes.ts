@@ -65,6 +65,33 @@ const userRouter = express.Router();
 
 /**
  * @swagger
+ * /users:
+ *   get:
+ *     tags:
+ *        - User
+ *     summary: Get a list of all users.
+ *     description: Returns an array of users. Each item in the array is of type Users.
+ *     responses:
+ *       200:
+ *         description: A JSON array of users objects.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ */
+userRouter.get('/', async (req: Request, res: Response) => {
+    try {
+        const users = await userService.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
  * /users/register:
  *   post:
  *      tags:

@@ -13,10 +13,6 @@
  *            department:
  *              type: string
  *              description: Doctor department.
- *            appointments:
- *              type: array
- *              items:
- *                  $ref: '#/components/schemas/Appointment'
  */
 import express, { Request, Response } from 'express';
 import doctorService from '../service/doctor.service';

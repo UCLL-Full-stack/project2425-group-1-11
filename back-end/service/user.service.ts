@@ -4,20 +4,24 @@ import { AuthenticationResponse, UserInput } from "../types";
 import bcrypt from 'bcrypt';
 import jwt from '../util/jwt';
 
-const getUserByUsername = async ({ userName }: { userName: string }): Promise<User> => {
-    const user = await userDb.getUserByUsername({ userName });
-    if (!user) {
-        throw new Error(`User with username: ${userName} does not exist.`);
-    }
-    return user;
-};
+const getAllUsers = (): Promise<User[]> => userDb.getAllUsers();
 
 const makeUser = async (user: UserInput): Promise<User> => {
 
-    const userInput = await userDb.getUserByUsername({userName: user.userName})
+    const existingUserName = await userDb.getUserByUserName({ userName: user.userName });
+    if (existingUserName) {
+        throw new Error(`User with username ${user.userName} already exists.`);
+    }
 
-    if (userInput) {
-        throw new Error(`User with username: ${user.userName} does not exist`)
+    const existingUserEmail = await userDb.getUserByEmail({ email: user.email });
+    if (existingUserEmail) {
+        throw new Error(`User with email ${user.email} already exists.`);
+    }
+
+    if (user.role === 'patient' || user.role === 'doctor' || user.role === 'admin') {
+        user.role
+    } else {
+        throw new Error('Role must be patient, doctor or admin')
     }
 
     const hashedPassword = await bcrypt.hash(user.password, 12);
@@ -37,13 +41,17 @@ const makeUser = async (user: UserInput): Promise<User> => {
 };
 
 const login = async (userName: string, password: string): Promise<AuthenticationResponse> => {
-    const user = await getUserByUsername({ userName });
-    const isPasswordValid = await bcrypt.compare(password, user.getPassword());
-    if (!isPasswordValid) {
-        throw new Error('Invalid username or password');
+    const user = await userDb.getUserByUserName({ userName });
+    if (!user) {
+        throw new Error(`User with username: ${userName} does not exist.`);
     }
 
-    const token = jwt.generateJwtToken({ userName: user.getUsername(), role: user.getRole() });
+    const isPasswordValid = await bcrypt.compare(password, user.getPassword());
+    if (!isPasswordValid) {
+        throw new Error('Invalid password');
+    }
+
+    const token = jwt.generateJwtToken({ userName: user.getUserName(), role: user.getRole() });
     return { 
         token, 
         userName: userName, 
@@ -52,8 +60,8 @@ const login = async (userName: string, password: string): Promise<Authentication
 };
 
 export default {
+    getAllUsers,
     makeUser,
-    getUserByUsername,
     login,
 }
 
