@@ -11,6 +11,8 @@ const MakeAppointment: React.FC = () => {
   const [comments, setComments] = useState<string>("");
   const [doctor, setDoctor] = useState<string>("");
   const [doctors, setDoctors] = useState<{ id: number; user: User; department: string; }[]>([]);
+  const [successMessage, setSuccessMessage] = useState<string>("");
+
 
   const [startError, setStartError] = useState<string>("");
   const [endError, setEndError] = useState<string>("");
@@ -58,6 +60,11 @@ const MakeAppointment: React.FC = () => {
       valid = false;
     }
 
+    if (doctor === "" || doctor.trim() === "") {
+      setDoctorError("Doctor is required.");
+      valid = false;
+    }
+
     return valid;
   };
 
@@ -82,6 +89,9 @@ const MakeAppointment: React.FC = () => {
 
       if (response.ok) {
         mutate('appointments');
+
+        setSuccessMessage("Appointment successfully created!");
+
         router.push("/appointments");
       } else {
         const errorData = await response.json();
@@ -136,6 +146,7 @@ const MakeAppointment: React.FC = () => {
         {doctorError && <p>{doctorError}</p>}
       </div>
       <button onClick={handleSubmit}>Make Appointment</button>
+      {successMessage && <p>{successMessage}</p>}
     </form>
   );
 };
