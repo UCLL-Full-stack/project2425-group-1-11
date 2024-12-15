@@ -1,3 +1,4 @@
+import UserService from "@services/UserService";
 import { StatusMessage } from "@types";
 import classNames from "classnames";
 import { useRouter } from "next/router";
@@ -5,21 +6,23 @@ import { useState } from "react";
 
 const UserLoginForm: React.FC = () => {
 
-    const [name, setName] = useState("");
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const [nameError, setNameError] = useState<string | null>(null);
+    const [userNameError, setUserNameError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const router = useRouter();
+
     const clearErrors = () => {
-        setNameError(null);
+        setUserNameError(null);
         setPasswordError(null);
         setStatusMessages([]);
     };
+
     const validate = (): boolean => {
         let result = true;
-        if (!name && name.trim() === "") {
-        setNameError("Name is required");
+        if (!userName && userName.trim() === "") {
+        setUserNameError("Username is required");
         result = false;
         }
         if (!password && password.trim() === "") {
@@ -28,23 +31,49 @@ const UserLoginForm: React.FC = () => {
         }
         return result;
     };
-    const handleSubmit = async (event: { preventDefault: () => void; }) => {
+
+    const handleLogin = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
+    
         clearErrors();
+    
         if (!validate()) {
-        return;
+          return;
         }
-        setStatusMessages([
-        {
-            message: `Login succesful. Redirecting to homepage...`,
-            type: "success",
-        },
-        ]);
-        localStorage.setItem("loggedInUser", name);
-        setTimeout(() => {
-        router.push("/");
-        }, 2000);
-    };
+
+        console.log('Logging in with:', { userName: userName, password }); 
+    
+        const user = { userName: userName, password };
+        const response = await UserService.login(user);
+    
+        if (response.status === 200) {
+          setStatusMessages([{ message: "Login successful. Redirecting...", type: 'success' }]);
+      
+          const user = await response.json();
+          sessionStorage.setItem(
+            'loggedInUser',
+            JSON.stringify({
+              token: user.token,
+              userName: user.username,
+              fullName: user.firstName + ' ' + user.lastName,
+            })
+          );
+      
+          setTimeout(() => {
+            router.push('/');
+          }, 2000);
+        } else if (response.status === 401) {
+          const { errorMessage } = await response.json();
+          setStatusMessages([{ message: errorMessage, type: 'error' }]);
+        } else {
+          setStatusMessages([
+            {
+              message: 'Invalid username or password.',
+              type: 'error',
+            },
+          ]);
+        }
+      };
     
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -65,7 +94,7 @@ const UserLoginForm: React.FC = () => {
             </ul>
             </div>
         )}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLogin}>
             <label htmlFor="nameInput">
             Username:
             </label>
@@ -73,10 +102,10 @@ const UserLoginForm: React.FC = () => {
             <input
                 id="nameInput"
                 type="text"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
+                value={userName}
+                onChange={(event) => setUserName(event.target.value)}
             />
-            {nameError && <div className="text-red-800 ">{nameError}</div>}
+            {userNameError && <div className="text-red-800 ">{userNameError}</div>}
             </div>
             <div className="mt-2">
             <div>

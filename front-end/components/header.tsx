@@ -39,14 +39,14 @@ const Header: React.FC = () => {
         <Link href="/clinics" className="nav-link px-4 fs-5 text-white">Clinics</Link>
       {!loggedInUser && (
         <Link className="nav-link px-4 fs-5 text-white"
-          href="/login"
+          href="users/login"
         >
           Login
         </Link>
       )}
       {loggedInUser && (
         <a
-          href="/login"
+          href="users/login"
           onClick={handleClick}
           className="nav-link px-4 fs-5 text-white"
         >

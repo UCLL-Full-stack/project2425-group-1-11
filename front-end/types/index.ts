@@ -1,18 +1,12 @@
 export type User = {
     id?: number;
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-    email: string;
+    firstName?: string;
+    lastName?: string;
+    userName?: string;
+    password?: string;
+    email?: string;
     role?:string;
 };
-
-export type UserLogin = {
-    username: string;
-    password: string;
-  };
-  
 export type Doctor = {
     id?: number;
     user: User;

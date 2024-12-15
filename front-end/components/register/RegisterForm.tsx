@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/router";
-import UserService from "@services/UserService";
+import UserService from "../../services/UserService"; // Adjust the path as necessary
 
 const RegisterForm = () => {
   const [username, setUsername] = useState<string>("");
@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [role] = useState<string>("Guest"); // Set role to "GUEST"
+  const [role] = useState<string>("patient"); // Set role to "patient"
   const [status, setStatus] = useState<string>("");
 
   const [usernameError, setUsernameError] = useState<string>("");
@@ -65,7 +65,7 @@ const RegisterForm = () => {
 
     try {
       const response = await UserService.registerUser({
-        username,
+        userName: username,
         email,
         firstName,
         lastName,
@@ -94,7 +94,8 @@ const RegisterForm = () => {
           type="text"
           id="username"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)
+          }
         />
         {usernameError && <p>{usernameError}</p>}
       </div>

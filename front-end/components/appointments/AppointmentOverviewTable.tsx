@@ -10,8 +10,21 @@ type Props = {
 
 const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }: Props) => {
 
+  // const handleDelete = async (id: number) => {
+  //   AppointmentService.deleteAppointment(id);
+  // };
+
   const handleDelete = async (id: number) => {
-    AppointmentService.deleteAppointment(id)
+    const response = await AppointmentService.deleteAppointment(id);
+    if (response.ok) {
+      // Trigger SWR to re-fetch appointments and update the UI automatically
+      mutate('appointments'); // Ensure this key matches your SWR fetching key
+    } else {
+      const errorText = await response.text();
+      console.error("Failed to delete appointment:", errorText);
+      alert(`Failed to delete appointment: ${errorText}`);
+    }
+    deleteAppointment(id);
   };
 
   // Function to check if the appointment is active (in the future)
