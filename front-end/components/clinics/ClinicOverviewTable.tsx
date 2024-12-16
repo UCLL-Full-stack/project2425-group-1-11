@@ -25,7 +25,6 @@ const ClinicOverviewTable: React.FC<Props> = ({ clinics }: Props) => {
             <td>{clinic.address}</td>
             <td>{clinic.contactNumber}</td>
             <td>{clinic.rating}</td>
-            <td></td>
           </tr>
         ))}
           </tbody>
