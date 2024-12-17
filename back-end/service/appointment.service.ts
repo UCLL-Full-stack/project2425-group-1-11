@@ -6,6 +6,8 @@ import { AppointmentInput } from "../types";
 
 const getAllAppointments = (): Promise<Appointment[]> => appointmentDb.getAllAppointments();
 
+const getAllAppointmentsByUserId = ({ id }: { id: number }): Promise<Appointment[]> => appointmentDb.getAppointmentsByUserId({ id });
+
 const deleteAppointmentById = ({ id }: { id: number }): Promise<void> => appointmentDb.deleteAppointmentById({ id });
 
 const makeAppointment = async (appointment: AppointmentInput): Promise<Appointment> => {
@@ -60,6 +62,7 @@ const makeAppointment = async (appointment: AppointmentInput): Promise<Appointme
 };
 
 export default { 
+    getAllAppointmentsByUserId,
     getAllAppointments,
     deleteAppointmentById, 
     makeAppointment,

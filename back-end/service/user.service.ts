@@ -54,8 +54,12 @@ const login = async (userName: string, password: string): Promise<Authentication
     const token = jwt.generateJwtToken({ userName: user.getUserName(), role: user.getRole() });
     return { 
         token, 
+        id: user.getId() ?? 0,
         userName: userName, 
-        fullName: `${user.getFirstName()} ${user.getLastName()}` 
+        firstName: user.getFirstName(), 
+        lastName: user.getLastName(),
+        email: user.getEmail(),
+        role: user.getRole()
     };
 };
 
@@ -63,5 +67,4 @@ export default {
     getAllUsers,
     makeUser,
     login,
-}
-
+};

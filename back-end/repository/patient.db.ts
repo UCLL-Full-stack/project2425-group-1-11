@@ -1,4 +1,5 @@
 import { Patient } from "../model/patient";
+import { Record } from "../model/record";
 import database from "../util/database";
 
 const getAllPatients = async (): Promise<Patient[]> => {
@@ -32,6 +33,8 @@ const getPatientById = async ({ id }: { id: number }): Promise<Patient | null> =
         throw new Error('Database Patient error. See server log for details.');
     }
 };
+
+
 
 export default {
     getAllPatients,

@@ -81,6 +81,57 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
 
 /**
  * @swagger
+ * /appointments/{id}:
+ *   get:
+ *     tags:
+ *       - Appointment
+ *     summary: Get all appointments by user ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: Get appointments by user ID successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: success
+ *                 message:
+ *                   type: string
+ *                   example: Get appointments by user ID successfully
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   example: error
+ *                 errorMessage:
+ *                   type: string
+ *                   example: Error message
+ */
+appointmentRouter.get('/:id', async (req: Request, res: Response) => {
+    try {
+        const appointment = await appointmentService.getAllAppointmentsByUserId({ id: Number(req.params.id) })
+        res.status(200).json(appointment);
+    } catch (error) {
+        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
+
+/**
+ * @swagger
  * 
  * /appointments/add:
  *   post:

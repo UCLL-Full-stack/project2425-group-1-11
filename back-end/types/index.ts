@@ -34,7 +34,6 @@ export type PatientInput = {
 
 export type RecordInput = {
     id?: number;
-    patient: Patient;
     title: string;
     description: string;
 }
@@ -51,6 +50,11 @@ export type UserInput = {
 
 export type AuthenticationResponse = {
     token: string;
+    id: number,
     userName: string;
-    fullName: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: Role;
+
 };

@@ -25,6 +25,36 @@ const getAllAppointments = async (): Promise<Appointment[]> => {
     }
 };
 
+const getAppointmentsByUserId = async ({ id }: { id: number }): Promise<Appointment[]> => {
+    try {
+        const appointmentPrisma = await database.appointment.findMany({
+            where: {
+                OR: [
+                    { patientId: id },
+                    { doctorId: id }
+                ]
+            },
+            include: {
+                patient: {
+                    include: {
+                        user: true,
+                        records: true
+                    }
+                },
+                doctor: {
+                    include: {
+                        user: true,
+                    },
+                },
+            },
+        });
+        return appointmentPrisma.map((appointment) => Appointment.from(appointment));
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database Appointment error. See server log for details.');
+    }
+};
+
 const deleteAppointmentById = async ({ id }: { id: number }): Promise<void> => {
     try {
         await database.appointment.delete({
@@ -71,4 +101,5 @@ export default {
     getAllAppointments,
     deleteAppointmentById,
     saveAppointment,
+    getAppointmentsByUserId,
 };
