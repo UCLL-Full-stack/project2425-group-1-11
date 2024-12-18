@@ -59,6 +59,8 @@ recordRouter.get('/', async (req: Request, res: Response) => {
     }
 });
 
+
+
 /**
  * @swagger
  * 

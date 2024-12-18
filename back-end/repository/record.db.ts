@@ -87,10 +87,39 @@ const updateRecord = async ({ recordId, record }: { recordId: number, record: Re
         throw new Error('Database Record error. See server log for details.');
     }
 };
+
+// const getScheduleForLecturer = async ({ username }: { username: string }): Promise<Schedule[]> => {
+//     try {
+//         const schedulesPrisma = await database.schedule.findMany({
+//             where: { lecturer: { user: { username } } },
+//             include: {
+//                 course: true,
+//                 lecturer: { include: { user: true, courses: true } },
+//                 students: { include: { user: true } },
+//             },
+//         });
+//         return schedulesPrisma.map((schedulePrisma) => Schedule.from(schedulePrisma));
+//     } catch (error) {
+//         console.error(error);
+//         throw new Error('Database error. See server log for details.');
+//     }
+// };
+const getRecordsForPatient = async (patientId: number): Promise<Record[]> => {
+    try {
+        const records = await database.record.findMany({
+            where: { patientId: patientId },
+        });
+        return records.map(record => Record.from(record));
+    } catch (error) {
+        console.error('Error fetching records for patient:', error);
+        throw new Error('Database Record error. See server log for details.');
+    }
+};
 export default {
     getAllRecords,
     deleteRecordById,
     saveRecord,
     addRecordToPatient,
     updateRecord,
+    getRecordsForPatient
 }
