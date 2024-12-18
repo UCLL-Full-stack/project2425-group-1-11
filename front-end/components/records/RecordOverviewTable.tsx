@@ -6,17 +6,18 @@ import useCurrentPatient from 'hook/useCurrentPatient';
 
 type Props = {
   records: Array<Record>;
+  deleteRecord: (id: number) => void
 };
 
-const RecordOverviewTable: React.FC<Props> = ({ records }) => {
+const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
   const patient = useCurrentPatient();
-
-  console.log('lol', patient)
 
   const handleDelete = async (id: number) => {
     try {
       const response = await RecordService.deleteRecord(id);
       if (response.ok) {
+        // Remove the deleted record from the state
+        deleteRecord(id);
         // Revalidate the records data
         mutate('records');
       } else {
@@ -33,7 +34,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records }) => {
 
   return (
     <>
-      {patientRecords && (
+      {patientRecords.length > 0 ? (
         <table className="table table-hover">
           <thead>
             <tr>
@@ -48,12 +49,14 @@ const RecordOverviewTable: React.FC<Props> = ({ records }) => {
             <td>{record.title}</td>
             <td>{record.description}</td>
             <td>
-                  <button onClick={() => record.id !== undefined && handleDelete(record.id)}>Cancel</button>
-                </td>
+              <button onClick={() => record.id !== undefined && handleDelete(record.id)}>Cancel</button>
+            </td>
           </tr>
         ))}
           </tbody>
         </table>
+      ) : (
+        <p>No records found for the logged-in patient.</p>
       )}
     </>
   );

@@ -84,7 +84,6 @@ const main = async () => {
         },
     });
     
-
     // Create Records
     const record1 = await prisma.record.create({
         data: {

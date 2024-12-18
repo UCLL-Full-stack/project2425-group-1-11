@@ -13,7 +13,6 @@ const Records: React.FC = () => {
     const [showRecordForm, setShowRecordForm] = useState<boolean>(false);
     const patient = useCurrentPatient();
 
-
     const getAllRecords = async () => {
         const response = await RecordService.getAllRecords();
         const recordsData = await response.json();
@@ -25,6 +24,10 @@ const Records: React.FC = () => {
 
     const handleRecordCreated = (newRecord: Record) => {
         setRecords((prevRecord) => [...prevRecord, newRecord]);
+    }
+
+    const handleDelete = (id: number) => {
+        setRecords((prevRecord) => prevRecord.filter(record => record.id !== id));
     }
 
     useEffect(() => {
@@ -46,7 +49,7 @@ const Records: React.FC = () => {
                 </section>
 
                 {records && (
-                    <RecordOverviewTable records={records}></RecordOverviewTable>
+                    <RecordOverviewTable records={records} deleteRecord={handleDelete}></RecordOverviewTable>
                 )}
 
                 <button

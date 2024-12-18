@@ -3,7 +3,6 @@ import MakeAppointment from "@components/appointments/MakeAppointment";
 import Header from "@components/header";
 import AppointmentService from "@services/AppointmentService";
 import { Appointment } from "@types";
-import useCurrentUser from "hook/useCurrentUserId";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -18,11 +17,8 @@ const Appointments: React.FC = () => {
         setAppointments(appointmentsData);
     }
 
-    const handleDelete = async (id: number) => {
-        const response = await AppointmentService.deleteAppointment(id)
-        if (response.ok) {
-            getAllAppointments()
-        }
+    const handleDelete = (id: number) => {
+        setAppointments((prevAppointments) => prevAppointments.filter(appointment => appointment.id !== id));
     }
 
     const handleAppointmentCreated = (newAppointment: Appointment) => {

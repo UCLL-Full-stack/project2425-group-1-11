@@ -3,6 +3,7 @@ import { Appointment, Doctor, User } from '@types';
 import { mutate } from 'swr';
 import AppointmentService from '@services/AppointmentService';
 import useCurrentUserId from 'hook/useCurrentUserId';
+import { useRouter } from "next/router";
 
 type Props = {
   appointments: Array<Appointment>;
@@ -15,6 +16,8 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
   const handleDelete = async (id: number) => {
     const response = await AppointmentService.deleteAppointment(id);
     if (response.ok) {
+      deleteAppointment(id)
+
       // Trigger SWR to re-fetch appointments and update the UI automatically
       mutate('appointments'); // Ensure this key matches your SWR fetching key
     } else {
@@ -22,19 +25,17 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
       console.error("Failed to delete appointment:", errorText);
       alert(`Failed to delete appointment: ${errorText}`);
     }
-    deleteAppointment(id);
   };
 
-  // Function to check if the appointment is active (in the future)
   const isActiveAppointment = (startDate: string) => {
     return new Date(startDate) > new Date();
   };
 
-  const userAppointments = appointments.filter(appointment => appointment.patient && appointment.patient.id === userId);
+  const userAppointments = appointments.filter(appointment => (appointment.patient && appointment.patient.id === userId) || (appointment.doctor && appointment.doctor.id === userId));
 
   return (
     <>
-      {userAppointments && (
+      {userAppointments .length > 0 ? (
         <table className="table table-hover">
           <thead>
             <tr>
@@ -69,6 +70,8 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
             ))}
           </tbody>
         </table>
+      ) : (
+        <p>No appointments found.</p>
       )}
     </>
   );

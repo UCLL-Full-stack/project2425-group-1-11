@@ -1,18 +1,17 @@
 import { useState, useEffect } from 'react';
-import UserService from '@services/UserService'; // Import the UserService to fetch patient data
 import PatientService from '@services/PatientService';
 import { Patient } from '@types';
 
 const useCurrentPatient = () => {
-    const [patientUser, setPatientId] = useState<Patient | null>(null);
+    const [patient, setPatient] = useState<Patient | null>(null);
 
     useEffect(() => {
-        const fetchPatientId = async (userId: number) => {
+        const fetchPatient = async (userId: number) => {
             try {
                 const response = await PatientService.getPatientByUserId(userId);
                 if (response.ok) {
-                    const patient = await response.json();
-                    setPatientId(patient);
+                    const patientData = await response.json();
+                    setPatient(patientData);
                 } else {
                     console.error('Failed to fetch patient data');
                 }
@@ -26,7 +25,7 @@ const useCurrentPatient = () => {
             try {
                 const user = JSON.parse(storedUser);
                 if (user && user.id) {
-                    fetchPatientId(user.id);
+                    fetchPatient(user.id);
                 }
             } catch (error) {
                 console.error('Failed to parse user from sessionStorage:', error);
@@ -34,7 +33,7 @@ const useCurrentPatient = () => {
         }
     }, []);
 
-    return patientUser;
+    return patient;
 };
 
 export default useCurrentPatient;
