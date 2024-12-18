@@ -54,7 +54,7 @@ const Header: React.FC = () => {
         )}
         {loggedInUser && (
             <div className="nav-link px-4 fs-5 text-white">
-              Welcome, {loggedInUser.fullName}!
+              Welcome, {`${loggedInUser.firstName} ${loggedInUser.lastName}`}!
             </div>
         )}
       </nav>

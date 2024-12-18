@@ -22,8 +22,10 @@ const getAllRecords = async () => {
     });
   };
 
-  const addRecord = (record: Record) => {
-    return fetch(process.env.NEXT_PUBLIC_API_URL + "/records/add", {
+  const addRecord = (record: Record, id: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/records/add`;
+
+    return fetch(`${apiUrl}/${id}`, {
         method: "POST",
   
         headers: {
@@ -32,8 +34,6 @@ const getAllRecords = async () => {
         body: JSON.stringify(record),
     });
   };
-  
-
   
   const RecordService = {
     getAllRecords,

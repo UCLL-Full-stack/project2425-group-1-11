@@ -1,11 +1,16 @@
 import AppointmentService from "@services/AppointmentService";
 import DoctorService from "@services/DoctorService";
 import { User } from "@types";
+import useCurrentUserId from "hook/useCurrentUserId";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { mutate } from "swr";
 
-const MakeAppointment: React.FC = () => {
+type Props = {
+  onAppointmentCreated: (appointment: any) => void; 
+};
+
+const MakeAppointment: React.FC<Props> = ({ onAppointmentCreated }) => {
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const [comments, setComments] = useState<string>("");
@@ -13,12 +18,12 @@ const MakeAppointment: React.FC = () => {
   const [doctors, setDoctors] = useState<{ id: number; user: User; department: string; }[]>([]);
   const [successMessage, setSuccessMessage] = useState<string>("");
 
-
   const [startError, setStartError] = useState<string>("");
   const [endError, setEndError] = useState<string>("");
   const [doctorError, setDoctorError] = useState<string>("");
 
   const router = useRouter();
+  const userId = useCurrentUserId();
 
   useEffect(() => {
     const fetchDoctors = async () => {
@@ -81,6 +86,7 @@ const MakeAppointment: React.FC = () => {
       startDate: start,
       endDate: end,
       comment: comments,
+      patientId: userId,
       doctorId: parseInt(doctor),
     };
 
@@ -88,10 +94,9 @@ const MakeAppointment: React.FC = () => {
       const response = await AppointmentService.makeAppointment(appointment);
 
       if (response.ok) {
-        mutate('appointments');
-
+        const newAppointment = await response.json();
+        onAppointmentCreated(newAppointment); // Call the callback function
         setSuccessMessage("Appointment successfully created!");
-
         router.push("/appointments");
       } else {
         const errorData = await response.json();

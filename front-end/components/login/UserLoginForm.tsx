@@ -48,14 +48,18 @@ const UserLoginForm: React.FC = () => {
     
         if (response.status === 200) {
           setStatusMessages([{ message: "Login successful. Redirecting...", type: 'success' }]);
-      
+
           const user = await response.json();
           sessionStorage.setItem(
             'loggedInUser',
             JSON.stringify({
               token: user.token,
+              id: user.id,
               userName: user.userName,
-              fullName: user.fullName,
+              firstName: user.firstName,
+              lastName: user.lastName,
+              email: user.email,
+              role: user.role,              
             })
           );
       

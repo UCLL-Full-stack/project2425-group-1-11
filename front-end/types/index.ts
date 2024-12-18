@@ -6,7 +6,7 @@ export type User = {
     password?: string;
     email?: string;
     role?:string;
-    fullName?:string;
+    fullName?: string;
 };
 export type Doctor = {
     id?: number;
@@ -26,6 +26,7 @@ export type Record = {
     id?: number;
     title: string;
     description: string;
+    patientId?: number;
 };
 
 export type Appointment = {

@@ -9,7 +9,7 @@ export type AppointmentInput = {
     startDate: Date;
     endDate: Date;
     comment: string;
-    patientId: number;
+    patientId?: number;
     doctorId: number;
 }
 

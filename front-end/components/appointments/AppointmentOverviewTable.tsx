@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Appointment, Doctor, User } from '@types';
 import { mutate } from 'swr';
 import AppointmentService from '@services/AppointmentService';
-import DoctorService from '@services/DoctorService';
+import useCurrentUserId from 'hook/useCurrentUserId';
 
 type Props = {
   appointments: Array<Appointment>;
   deleteAppointment: (id: number) => void
 };
 
-const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }: Props) => {
-
+const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }) => {
+  const userId = useCurrentUserId();
+  
   const handleDelete = async (id: number) => {
     const response = await AppointmentService.deleteAppointment(id);
     if (response.ok) {
@@ -29,9 +30,11 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
     return new Date(startDate) > new Date();
   };
 
+  const userAppointments = appointments.filter(appointment => appointment.patient && appointment.patient.id === userId);
+
   return (
     <>
-      {appointments && (
+      {userAppointments && (
         <table className="table table-hover">
           <thead>
             <tr>
@@ -43,7 +46,7 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
             </tr>
           </thead>
           <tbody>
-            {appointments.map((appointment, index) => (
+            {userAppointments.map((appointment, index) => (
               <tr
                 key={index}
                 style={{
@@ -51,8 +54,8 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
                   fontWeight: 'bold',
                 }}
               >                
-                <td>{appointment.startDate}</td>
-                <td>{appointment.endDate}</td>
+                <td>{new Date(appointment.startDate).toLocaleDateString()}</td>
+                <td>{new Date(appointment.endDate).toLocaleDateString()}</td>
                 <td>{appointment.comment}</td>
                 <td>
                   {appointment.doctor && appointment.doctor.user

@@ -1,9 +1,15 @@
 import RecordService from "@services/RecordService";
+import useCurrentPatient from "hook/useCurrentPatient";
+
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { mutate } from "swr";
 
-const AddRecord: React.FC = () => {
+type Props = {
+  onRecordCreated: (record: any) => void; 
+};
+
+const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
@@ -11,6 +17,7 @@ const AddRecord: React.FC = () => {
   const [descriptionError, setDescriptionError] = useState<string>("");
 
   const router = useRouter();
+  const patient = useCurrentPatient();
 
   const validate = () => {
     let valid = true;
@@ -37,13 +44,22 @@ const AddRecord: React.FC = () => {
       return;
     }
 
+    if (!patient || typeof patient.id !== 'number') {
+      console.error("Patient ID is invalid");
+      return;
+    }
+
     const record = {
       title,
       description,
     };
 
     try {
-      const response = await RecordService.addRecord(record);
+      const response = await RecordService.addRecord(record, patient.id);
+
+      const newRecord = await response.json();
+      onRecordCreated(newRecord); // Call the callback function
+      router.push("/records");
 
       if (response.ok) {
         // Revalidate the records data

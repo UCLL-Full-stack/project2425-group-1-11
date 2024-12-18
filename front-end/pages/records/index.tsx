@@ -5,23 +5,33 @@ import { Record } from "@types";
 import RecordOverviewTable from "@components/records/RecordOverviewTable";
 import RecordService from "@services/RecordService";
 import AddRecord from "@components/records/AddRecord";
+import useCurrentPatient from "hook/useCurrentPatient";
 
 const Records: React.FC = () => {
 
     const [records, setRecords] = useState<Record[]>([]);
     const [showRecordForm, setShowRecordForm] = useState<boolean>(false);
+    const patient = useCurrentPatient();
 
 
     const getAllRecords = async () => {
         const response = await RecordService.getAllRecords();
         const recordsData = await response.json();
-        setRecords(recordsData);
+        if (patient) {
+            const patientRecords = recordsData.filter((record: Record) => record.patientId === patient.id);
+            setRecords(patientRecords);
+        }
     }
 
+    const handleRecordCreated = (newRecord: Record) => {
+        setRecords((prevRecord) => [...prevRecord, newRecord]);
+    }
 
     useEffect(() => {
-        getAllRecords();
-    }, []);
+        if (patient) {
+            getAllRecords();
+        }
+    }, [patient]);
 
     return (
         <>
@@ -48,7 +58,7 @@ const Records: React.FC = () => {
 
                 {showRecordForm && (
                   <div className="w-full max-w-md">
-                    <AddRecord></AddRecord>
+                    <AddRecord onRecordCreated={handleRecordCreated}></AddRecord>
                   </div>
               )}
 

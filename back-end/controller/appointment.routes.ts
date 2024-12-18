@@ -92,7 +92,7 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
  *         required: true
  *         schema:
  *           type: integer
- *         description: The user ID
+ *         description: The patient or doctor ID
  *     responses:
  *       200:
  *         description: Get appointments by user ID successfully

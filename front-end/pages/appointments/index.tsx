@@ -3,6 +3,7 @@ import MakeAppointment from "@components/appointments/MakeAppointment";
 import Header from "@components/header";
 import AppointmentService from "@services/AppointmentService";
 import { Appointment } from "@types";
+import useCurrentUser from "hook/useCurrentUserId";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -10,7 +11,6 @@ const Appointments: React.FC = () => {
 
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [showAppointmentForm, setShowAppointmentForm] = useState<boolean>(false);
-
 
     const getAllAppointments = async () => {
         const response = await AppointmentService.getAllAppointments();
@@ -23,6 +23,10 @@ const Appointments: React.FC = () => {
         if (response.ok) {
             getAllAppointments()
         }
+    }
+
+    const handleAppointmentCreated = (newAppointment: Appointment) => {
+        setAppointments((prevAppointments) => [...prevAppointments, newAppointment]);
     }
 
     useEffect(() => {
@@ -55,7 +59,7 @@ const Appointments: React.FC = () => {
 
                 {showAppointmentForm && (
                   <div className="w-full max-w-md">
-                    <MakeAppointment></MakeAppointment>
+                    <MakeAppointment onAppointmentCreated={handleAppointmentCreated}></MakeAppointment>
                   </div>
               )}
 

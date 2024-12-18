@@ -2,12 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Record } from '@types';
 import RecordService from '@services/RecordService';
 import { mutate } from 'swr';
+import useCurrentPatient from 'hook/useCurrentPatient';
 
 type Props = {
   records: Array<Record>;
 };
 
-const RecordOverviewTable: React.FC<Props> = ({ records }: Props) => {
+const RecordOverviewTable: React.FC<Props> = ({ records }) => {
+  const patient = useCurrentPatient();
+
+  console.log('lol', patient)
 
   const handleDelete = async (id: number) => {
     try {
@@ -25,9 +29,11 @@ const RecordOverviewTable: React.FC<Props> = ({ records }: Props) => {
     }
   };
 
+  const patientRecords = patient?.records ?? [];
+
   return (
     <>
-      {records && (
+      {patientRecords && (
         <table className="table table-hover">
           <thead>
             <tr>
@@ -37,7 +43,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records }: Props) => {
             </tr>
           </thead>
           <tbody>
-          {records.map((record: Record) => (
+          {patientRecords.map((record: Record) => (
           <tr key={record.id}>
             <td>{record.title}</td>
             <td>{record.description}</td>

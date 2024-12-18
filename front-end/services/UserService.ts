@@ -22,6 +22,7 @@ const login = (user: User) => {
       body: JSON.stringify(user),
   });
 };
+
 const UserService = {
     registerUser,
     login
