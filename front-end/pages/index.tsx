@@ -8,14 +8,6 @@ const Home: React.FC = () => {
 
   const userId = useCurrentUserId();
 
-  const users = [
-    { username: 'irinalazar', password: 'irina8', role: 'patient' },
-    { username: 'furquanmobeen', password: 'furquan12', role: 'patient' },
-    { username: 'eddyndacasaba', password: 'eddy14', role: 'doctor' },
-    { username: 'yonghoonkim', password: 'kim10', role: 'doctor' },
-    { username: 'naphatpruekveeraparb', password: 'naphat420', role: 'admin' },
-  ];
-
   return (
     <>
       <Head>
@@ -40,26 +32,6 @@ const Home: React.FC = () => {
             The medical appointments app lets you manage your appointments as a user. <br />
             You can also choose your doctor and manage your medical records.
           </p>
-        </div>
-        <div>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Password</th>
-                <th scope="col">Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user, index) => (
-                <tr key={index}>
-                  <td>{user.username}</td>
-                  <td>{user.password}</td>
-                  <td>{user.role}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </main>
     </>

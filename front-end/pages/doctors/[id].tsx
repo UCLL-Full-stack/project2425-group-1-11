@@ -3,12 +3,18 @@ import Header from '@components/header';
 import DoctorService from '@services/DoctorService';
 import { Doctor } from '@types';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 type Props = {
   doctor: Doctor;
 };
 
 const DoctorDetails: React.FC<Props> = ({ doctor }) => {
+    const router = useRouter();
+
+  const handleBackClick = () => {
+    router.push('/doctors');
+  };
   return (
     <>
       <Head>
@@ -25,6 +31,7 @@ const DoctorDetails: React.FC<Props> = ({ doctor }) => {
           <h2>Department: {doctor.department}</h2>
           <p>Email: {doctor.user.email}</p>
         </section>
+        <button onClick={handleBackClick} className="btn btn-success mt-4">Back to Doctors Overview</button>
       </main>
     </>
   );
