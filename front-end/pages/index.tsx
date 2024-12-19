@@ -22,20 +22,19 @@ const Home: React.FC = () => {
         <title>LVMed</title>
         <meta name="description" content="LVMed app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/images/LVMed_logo.png" />
       </Head>
       <Header />
       <main className={styles.main}>
-        <span>
-          {/* <Image
-            src="/images/courses.png"
-            alt="Courses Logo"
-            className={styles.vercelLogo}
-            width={50}
-            height={50}
-          /> */}
-          <h1>Welcome!</h1>
-        </span>
+        {/* <span> */}
+        <Image
+            src="/images/LVMed_logo.png"
+            alt="LVMed Logo"
+            width={350} 
+            height={350} 
+          />
+          {/* <h1>Welcome!</h1> */}
+        {/* </span> */}
         <div>
           <p>
             The medical appointments app lets you manage your appointments as a user. <br />
