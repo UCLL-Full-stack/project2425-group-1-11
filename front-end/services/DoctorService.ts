@@ -9,9 +9,21 @@ const getAllDoctors = async () => {
     });
   };
 
+  const getDoctorById = async (id: number) => {
+    const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/doctors/${id}`;
+    
+    return fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+  };
+
   
   const DoctorService = {
-    getAllDoctors
+    getAllDoctors,
+    getDoctorById
   };
   
 export default DoctorService;

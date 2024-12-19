@@ -3,68 +3,50 @@ import Image from 'next/image';
 import Header from '@components/header';
 import styles from '@styles/home.module.css';
 import useCurrentUserId from 'hook/useCurrentUserId';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Home: React.FC = () => {
 
-  const userId = useCurrentUserId();
+  const { t } = useTranslation();
 
-  const users = [
-    { username: 'irinalazar', password: 'irina8', role: 'patient' },
-    { username: 'furquanmobeen', password: 'furquan12', role: 'patient' },
-    { username: 'eddyndacasaba', password: 'eddy14', role: 'doctor' },
-    { username: 'yonghoonkim', password: 'kim10', role: 'doctor' },
-    { username: 'naphatpruekveeraparb', password: 'naphat420', role: 'admin' },
-  ];
+  const userId = useCurrentUserId();
 
   return (
     <>
       <Head>
-        <title>LVMed</title>
+        <title>{t('app.title')}</title>
         <meta name="description" content="LVMed app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/images/LVMed_logo.png" />
       </Head>
       <Header />
       <main className={styles.main}>
-        <span>
-          {/* <Image
-            src="/images/courses.png"
-            alt="Courses Logo"
-            className={styles.vercelLogo}
-            width={50}
-            height={50}
-          /> */}
-          <h1>Welcome!</h1>
-        </span>
+        {/* <span> */}
+        <Image
+            src="/images/LVMed_logo.png"
+            alt="LVMed Logo"
+            width={350} 
+            height={350} 
+            priority
+          />
+          {/* <h1>Welcome!</h1> */}
+        {/* </span> */}
         <div>
           <p>
             The medical appointments app lets you manage your appointments as a user. <br />
             You can also choose your doctor and manage your medical records.
           </p>
         </div>
-        <div>
-          <table className="table table-hover">
-            <thead>
-              <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Password</th>
-                <th scope="col">Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user, index) => (
-                <tr key={index}>
-                  <td>{user.username}</td>
-                  <td>{user.password}</td>
-                  <td>{user.role}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </main>
     </>
   );
 };
+
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? "en", ["common"])),
+  },
+});
 
 export default Home;
