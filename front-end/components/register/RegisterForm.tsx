@@ -1,7 +1,8 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/router";
 import UserService from "../../services/UserService"; // Adjust the path as necessary
 import { mutate } from "swr";
+import { useTranslation } from "next-i18next";
 
 const RegisterForm = () => {
   const [username, setUsername] = useState<string>("");
@@ -18,6 +19,13 @@ const RegisterForm = () => {
   const [lnameError, setLastNameError] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
 
+  const { t } = useTranslation();
+  // const [loaded, setLoaded] = useState(false);
+
+  // useEffect(() => {
+  //   setLoaded(true);
+  // }, []);
+
   const router = useRouter();
 
   const validateForm = () => {
@@ -30,27 +38,27 @@ const RegisterForm = () => {
     let isValidForm = true;
 
     if (username === "" || username.trim() === "") {
-      setUsernameError("Username is required");
+      setUsernameError(t('register.validation.usernameRequired'));
       isValidForm = false;
     }
 
     if (email === "" || email.trim() === "") {
-      setEmailError("Email is required");
+      setEmailError(t('register.validation.emailRequired'));
       isValidForm = false;
     }
 
     if (firstName === "" || firstName.trim() === "") {
-      setFirstNameError("First name is required");
+      setFirstNameError(t('register.validation.firstNameRequired'));
       isValidForm = false;
     }
 
     if (lastName === "" || lastName.trim() === "") {
-      setLastNameError("Last name is required");
+      setLastNameError(t('register.validation.lastNameRequired'));
       isValidForm = false;
     }
 
     if (password === "" || password.trim() === "") {
-      setPasswordError("Password is required");
+      setPasswordError(t('register.validation.passwordRequired'));
       isValidForm = false;
     }
 
@@ -75,16 +83,16 @@ const RegisterForm = () => {
       });
 
       if (response.ok) {
-        setStatus("Registration successful");
+        setStatus(t('register.status.success'));
         // Revalidate the user data
         mutate('users');
         router.push("/login");
       } else {
-        setStatus("Registration failed");
+        setStatus(t('register.status.failure'));
       }
     } catch (error) {
       console.error("An error occurred during registration:", error);
-      setStatus("An error occurred during registration");
+      setStatus(t('register.status.error'));
     }
   };
 
@@ -92,7 +100,7 @@ const RegisterForm = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
     <form onSubmit={handleSubmit} >
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="username">{t('register.username')}</label>
         <input
           type="text"
           id="username"
@@ -103,7 +111,7 @@ const RegisterForm = () => {
         {usernameError && <p>{usernameError}</p>}
       </div>
       <div>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email">{t('register.email')}</label>
         <input
           type="email"
           id="email"
@@ -113,7 +121,7 @@ const RegisterForm = () => {
         {emailError && <p>{emailError}</p>}
       </div>
       <div>
-        <label htmlFor="firstName">First Name</label>
+        <label htmlFor="firstName">{t('register.firstName')}</label>
         <input
           type="text"
           id="firstName"
@@ -123,7 +131,7 @@ const RegisterForm = () => {
         {fnameError && <p>{fnameError}</p>}
       </div>
       <div>
-        <label htmlFor="lastName">Last Name</label>
+        <label htmlFor="lastName">{t('register.lastName')}</label>
         <input
           type="text"
           id="lastName"
@@ -133,7 +141,7 @@ const RegisterForm = () => {
         {lnameError && <p>{lnameError}</p>}
       </div>
       <div>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password">{t('register.password')}</label>
         <input
           type="password"
           id="password"
@@ -143,7 +151,7 @@ const RegisterForm = () => {
         {passwordError && <p>{passwordError}</p>}
       </div>
       <button type="submit">
-        Register
+      {t('register.submit')}
       </button>
       {status && <p>{status}</p>}
     </form>

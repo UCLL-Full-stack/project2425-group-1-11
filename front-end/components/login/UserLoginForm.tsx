@@ -1,8 +1,10 @@
 import UserService from "@services/UserService";
 import { StatusMessage } from "@types";
 import classNames from "classnames";
+import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 
 const UserLoginForm: React.FC = () => {
 
@@ -12,6 +14,14 @@ const UserLoginForm: React.FC = () => {
     const [passwordError, setPasswordError] = useState<string | null>(null);
     const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const router = useRouter();
+    const [loaded, setLoaded] = useState(false); 
+    const { t } = useTranslation();
+    
+
+    useEffect(() => {
+      // Mark as loaded after initial render and translations are ready
+      setLoaded(true);
+    }, []);
 
     const clearErrors = () => {
         setUserNameError(null);
@@ -22,11 +32,11 @@ const UserLoginForm: React.FC = () => {
     const validate = (): boolean => {
         let result = true;
         if (!userName && userName.trim() === "") {
-        setUserNameError("Username is required");
+          setUserNameError(t('login.validate.name'));
         result = false;
         }
         if (!password && password.trim() === "") {
-        setPasswordError("Password is required");
+          setPasswordError(t('login.validate.password'));
         result = false;
         }
         return result;
@@ -47,7 +57,7 @@ const UserLoginForm: React.FC = () => {
         const response = await UserService.login(user);
     
         if (response.status === 200) {
-          setStatusMessages([{ message: "Login successful. Redirecting...", type: 'success' }]);
+          setStatusMessages([{ message: t('login.success'), type: 'success' }]);
 
           const user = await response.json();
           sessionStorage.setItem(
@@ -98,9 +108,11 @@ const UserLoginForm: React.FC = () => {
             </ul>
             </div>
         )}
+        <h1>{loaded ? t('login.title') : 'Login'}</h1>
+
         <form onSubmit={handleLogin}>
             <label htmlFor="nameInput">
-            Username:
+            {loaded ? t('login.label.username') : 'Username'}
             </label>
             <div>
             <input
@@ -115,8 +127,7 @@ const UserLoginForm: React.FC = () => {
             <div>
                 <label
                 htmlFor="passwordInput"
-                >
-                Password
+                >{loaded ? t('login.label.password') : 'Password'}
                 </label>
             </div>
             <div>
@@ -134,7 +145,7 @@ const UserLoginForm: React.FC = () => {
             <button
             type="submit"
             >
-            Login
+            {loaded ? t('login.button') : 'Login'}
             </button>
         </form>
         </div>

@@ -6,6 +6,7 @@ import RecordOverviewTable from "@components/records/RecordOverviewTable";
 import RecordService from "@services/RecordService";
 import AddRecord from "@components/records/AddRecord";
 import useCurrentPatient from "hook/useCurrentPatient";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Records: React.FC = () => {
 
@@ -74,4 +75,10 @@ const Records: React.FC = () => {
         </>
         );
     };
+
+    export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+      props: {
+        ...(await serverSideTranslations(locale ?? "en", ["common"])),
+      },
+    });
 export default Records;

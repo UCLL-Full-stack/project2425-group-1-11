@@ -4,6 +4,7 @@ import PatientService from "@services/PatientService";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import type { Patient } from "@types";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Patient: React.FC = () => {
 
@@ -44,4 +45,10 @@ const Patient: React.FC = () => {
         </>
         );
     };
+
+    export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+      props: {
+        ...(await serverSideTranslations(locale ?? "en", ["common"])),
+      },
+    });
 export default Patient;

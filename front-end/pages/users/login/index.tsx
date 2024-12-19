@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "@components/header";
 import UserLoginForm from "@components/login/UserLoginForm";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Login: React.FC = () => {
     const users = [
@@ -17,7 +18,6 @@ const Login: React.FC = () => {
             </Head>
             <Header />
             <main className="d-flex flex-column justify-content-center align-items-center">
-                <h1>Login</h1>
                 <section className="p-6 min-h-screen flex flex-col items-center">
                     <UserLoginForm />
                 </section>
@@ -45,4 +45,9 @@ const Login: React.FC = () => {
         </>
     );
 };
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? "en", ["common"])),
+  },
+});
 export default Login;

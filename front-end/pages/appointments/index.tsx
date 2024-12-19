@@ -3,6 +3,7 @@ import MakeAppointment from "@components/appointments/MakeAppointment";
 import Header from "@components/header";
 import AppointmentService from "@services/AppointmentService";
 import { Appointment } from "@types";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
@@ -63,4 +64,10 @@ const Appointments: React.FC = () => {
         </>
         );
     };
+
+    export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+      props: {
+        ...(await serverSideTranslations(locale ?? "en", ["common"])),
+      },
+    });
 export default Appointments;

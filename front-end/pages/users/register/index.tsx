@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Header from "@components/header";
 import RegisterForm from "@components/register/RegisterForm";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 
 const Register: React.FC = () => {
@@ -19,4 +20,10 @@ const Register: React.FC = () => {
         </>
     );
 };
+
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale ?? "en", ["common"])),
+  },
+});
 export default Register;

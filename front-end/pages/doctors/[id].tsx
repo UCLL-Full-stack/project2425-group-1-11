@@ -67,4 +67,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 };
 
+// export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+//   props: {
+//     ...(await serverSideTranslations(locale ?? "en", ["common"])),
+//   },
+// });
+
 export default DoctorDetails;

@@ -1,3 +1,53 @@
 {
-    "app.title": "LVMed App"
-}
+    "app.title": "LVMed App",
+    "header": {
+      "title": "LVMed App",
+      "nav": {
+        "home": "Home",
+        "appointments": "Afspraak",
+        "doctors": "Artsen",
+        "records": "Dossiers",
+        "patients": "Patiënten",
+        "clinics": "Clinieken",
+        "login": "Inloggen",
+        "register": "Registreren",
+        "logout": "Uitloggen",
+        "welcome": "Welkom, "
+      }
+    },
+    "login": {
+        "title": "Inloggen",
+        "button": "Inloggen",
+        "success": "Inloggen succesvol. Doorverwijzen naar de startpagina...",
+        "validate": {
+          "name": "Naam is verplicht",
+          "password": "Wachtwoord is verplicht"
+        },
+        "label": {
+          "username": "Gebruikersnaam:",
+          "password": "Wachtwoord:"
+        }
+      },
+      "register": {
+        "title": "Registreren",
+        "username": "Gebruikersnaam",
+        "email": "E-mail",
+        "firstName": "Voornaam",
+        "lastName": "Achternaam",
+        "password": "Wachtwoord",
+        "submit": "Registreren",
+        "validation": {
+          "usernameRequired": "Gebruikersnaam is vereist",
+          "emailRequired": "E-mail is vereist",
+          "firstNameRequired": "Voornaam is vereist",
+          "lastNameRequired": "Achternaam is vereist",
+          "passwordRequired": "Wachtwoord is vereist"
+        },
+        "status": {
+          "success": "Registratie succesvol",
+          "failure": "Registratie mislukt",
+          "error": "Er is een fout opgetreden bij de registratie"
+        }
+    }
+  }
+  

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ClinicService from "@services/ClinicService";
 import type { Clinic } from "@types"; // Adjust the import path as necessary
 import ClinicOverviewTable from "@components/clinics/ClinicOverviewTable";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Clinic: React.FC = () => {
 
@@ -44,4 +45,10 @@ const Clinic: React.FC = () => {
         </>
         );
     };
+
+    export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+      props: {
+        ...(await serverSideTranslations(locale ?? "en", ["common"])),
+      },
+    });
 export default Clinic;

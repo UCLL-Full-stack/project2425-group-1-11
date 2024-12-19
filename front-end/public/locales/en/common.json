@@ -1,3 +1,55 @@
 {
-    "app.title": "LVMed App"
-}
+    "app.title": "LVMed App",
+    "header": {
+      "title": "LVMed App",
+      "nav": {
+        "home": "Home",
+        "appointments": "Appointments",
+        "doctors": "Doctors",
+        "records": "Records",
+        "patients": "Patients",
+        "clinics": "Clinics",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "welcome": "Welcome, "
+      }
+    },
+    "login": {
+        "title": "Login",
+        "button": "Login",
+        "success": "Login successful. Redirecting to homepage...",
+        "validate": {
+          "name": "Name is required",
+          "password": "Password is required"
+        },
+        "label": {
+          "username": "Username:",
+          "password": "Password:"
+        }
+    },
+    
+    "register": {
+          "title": "Register",
+          "username": "Username",
+          "email": "Email",
+          "firstName": "First Name",
+          "lastName": "Last Name",
+          "password": "Password",
+          "submit": "Register",
+          "validation": {
+            "usernameRequired": "Username is required",
+            "emailRequired": "Email is required",
+            "firstNameRequired": "First name is required",
+            "lastNameRequired": "Last name is required",
+            "passwordRequired": "Password is required"
+          },
+          "status": {
+            "success": "Registration successful",
+            "failure": "Registration failed",
+            "error": "An error occurred during registration"
+          }
+    }
+      
+  }
+  
