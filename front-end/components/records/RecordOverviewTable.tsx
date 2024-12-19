@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Record } from '@types';
 import RecordService from '@services/RecordService';
-import { mutate } from 'swr';
+import useSWR, { mutate } from 'swr';
 import useCurrentPatient from 'hook/useCurrentPatient';
 
 type Props = {
@@ -82,6 +82,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
   return (
     <>
       {successMessage && <p className="text-green-500">{successMessage}</p>}
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       {patientRecords.length > 0 ? (
         <table className="table table-hover">
           <thead>
@@ -111,15 +112,15 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
 
 {isModalOpen && currentRecord && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white p-6 rounded shadow-md w-full max-w-md mx-auto">
-            <h4 className="text-xl font-semibold mb-4">Update {currentRecord.title}</h4>
+          <div className="bg-green-500 p-6 rounded-lg shadow-md w-full max-w-md mx-auto">
+            <h4 className="text-xl font-semibold mb-4 text-white">Update {currentRecord.title}</h4>
             <textarea
               value={newDescription}
               onChange={(e) => setNewDescription(e.target.value)}
               className="p-2 border rounded w-full mt-4"
             />
             <div className="flex justify-end mt-4">
-              <button onClick={handleUpdate} className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 mr-2">Save</button>
+              <button onClick={handleUpdate} className="btn btn-success mt-4">Save</button>
               <button onClick={handleCloseModal} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
             </div>
           </div>

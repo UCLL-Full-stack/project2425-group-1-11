@@ -23,14 +23,15 @@ const Home: React.FC = () => {
       <Header />
       <main className={styles.main}>
         {/* <span> */}
+        <h1>Welcome!</h1>
         <Image
             src="/images/LVMed_logo.png"
             alt="LVMed Logo"
-            width={350} 
-            height={350} 
+            width={250} 
+            height={250} 
             priority
           />
-          {/* <h1>Welcome!</h1> */}
+          
         {/* </span> */}
         <div>
           <p>

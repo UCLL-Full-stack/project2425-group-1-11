@@ -4,6 +4,7 @@ import DoctorService from '@services/DoctorService';
 import { Doctor } from '@types';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 type Props = {
   doctor: Doctor;
@@ -39,6 +40,7 @@ const DoctorDetails: React.FC<Props> = ({ doctor }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params!;
+  const { locale } = context;
 
   if (!id || !Number.isInteger(Number(id))) {
     return {
@@ -57,6 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       props: {
         doctor,
+        ...(await serverSideTranslations(locale ?? "en", ["common"])),
       },
     };
   } catch (error) {
@@ -66,11 +69,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   }
 };
-
-// export const getServerSideProps = async ({ locale }: { locale: string }) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale ?? "en", ["common"])),
-//   },
-// });
 
 export default DoctorDetails;
