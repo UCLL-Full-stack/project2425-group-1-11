@@ -101,6 +101,7 @@ const getRecordsByPatientId = async (id?: number): Promise<Record[]> => {
     }
 };
 
+
 export default {
     getAllRecords,
     deleteRecordById,
