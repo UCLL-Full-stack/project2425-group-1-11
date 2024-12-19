@@ -16,7 +16,12 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
   const [newDescription, setNewDescription] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [patientRecords, setPatientRecords] = useState<Record[]>([])
 
+  useEffect(() => {
+    console.log(patient)
+    setPatientRecords(patient?.records ?? []);
+  }, [patientRecords])
 
   const handleOpenModal = (record: Record) => {
     console.log("Opening modal for record:", record);
@@ -59,7 +64,6 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
       setErrorMessage("Error updating the record.");
     }
   };
-  
 
   const handleDelete = async (id: number) => {
     try {
@@ -75,9 +79,8 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
     } catch (error) {
       console.error("An error occurred while deleting the record", error);
     }
+    console.log(patientRecords)
   };
-
-  const patientRecords = patient?.records ?? [];
 
   return (
     <>

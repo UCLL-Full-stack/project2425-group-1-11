@@ -10,8 +10,8 @@ const getAllClinics = async () => {
   };
 
   
-  const ClinicService = {
-    getAllClinics
-  };
-  
+const ClinicService = {
+  getAllClinics
+};
+
 export default ClinicService;

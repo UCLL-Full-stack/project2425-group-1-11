@@ -45,8 +45,9 @@ const Patient: React.FC = () => {
                 <h1>Patients</h1>
                 {!isAuthorized ? (
                    <div className="text-center text-red-800">
-                   <h2>Unauthorized</h2>
-                   <p>You do not have permission to view this page.</p>
+                   <h2>Patients overview</h2>
+                   <p>Unauthorized to access this page.</p>
+                   {/* <p>You do not have permission to view this page.</p> */}
                  </div>
         ) : (
           <>
