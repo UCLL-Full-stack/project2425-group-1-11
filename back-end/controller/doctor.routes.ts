@@ -25,8 +25,6 @@ const doctorRouter = express.Router();
  *   get:
  *     tags:
  *       - Doctor
- *     security:
- *        - bearerAuth: []
  *     summary: Get a list of all doctors.
  *     description: Returns an array of doctors. Each item in the array is of type Doctor.
  *     responses:
@@ -54,8 +52,6 @@ doctorRouter.get('/', async (req: Request, res: Response) => {
  *   get:
  *     tags:
  *       - Doctor
- *     security:
- *        - bearerAuth: []
  *     summary: Get a list of all doctors.
  *     parameters:
  *       - in: path
