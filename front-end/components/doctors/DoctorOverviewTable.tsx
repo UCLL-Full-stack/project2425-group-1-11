@@ -29,7 +29,7 @@ const DoctorOverviewTable: React.FC<Props> = ({ doctors }: Props) => {
           </thead>
           <tbody>
           {doctors.map((doctor: Doctor) => (
-          <tr key={doctor.id}>
+          <tr key={doctor.id} data-testid={doctor.id}>
             <td>{doctor.user.firstName} {doctor.user.lastName}</td>
             <td>{doctor.department}</td>
             <td>

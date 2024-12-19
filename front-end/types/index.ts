@@ -12,7 +12,6 @@ export type Doctor = {
     id?: number;
     user: User;
     department: string;
-    description: string;
     appointments?: Appointment[];
 };
   

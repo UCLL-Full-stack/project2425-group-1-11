@@ -4,4 +4,7 @@ module.exports = {
     transform: {
     '\\.[jt]sx?$': 'esbuild-jest',
     },
+    moduleNameMapper: {
+        '^@components/(.*)$': '<rootDir>/components/$1',
+      },
     }
