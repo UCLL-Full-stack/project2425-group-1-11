@@ -25,8 +25,6 @@ const doctorRouter = express.Router();
  *   get:
  *     tags:
  *       - Doctor
- *     security:
- *        - bearerAuth: []
  *     summary: Get a list of all doctors.
  *     description: Returns an array of doctors. Each item in the array is of type Doctor.
  *     responses:

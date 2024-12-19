@@ -33,8 +33,6 @@ const clinicRouter = express.Router();
  *   get:
  *     tags:
  *       - Clinic
- *     security:
- *        - bearerAuth: []
  *     summary: Get a list of all clinics.
  *     description: Returns an array of clinics. Each item in the array is of type Clinic.
  *     responses:
