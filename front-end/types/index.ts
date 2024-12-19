@@ -43,6 +43,7 @@ export type Clinic = {
     address: string;
     contactNumber: number;
     rating: number;
+    doctors: Doctor[];
 };
 
 export type StatusMessage = {

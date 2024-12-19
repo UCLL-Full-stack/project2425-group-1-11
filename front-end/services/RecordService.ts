@@ -34,11 +34,25 @@ const getAllRecords = async () => {
         body: JSON.stringify(record),
     });
   };
+
+  const updateRecord = async (id: number, record: Record) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const token = sessionStorage.getItem("authToken");
+    return fetch(apiUrl + `/records/update/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(record),
+    });
+  };
   
   const RecordService = {
     getAllRecords,
     deleteRecord,
-    addRecord
+    addRecord,
+    updateRecord
   };
   
 export default RecordService;
