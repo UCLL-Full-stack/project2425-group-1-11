@@ -39,6 +39,14 @@ const MakeAppointment: React.FC<Props> = ({ onAppointmentCreated }) => {
     fetchDoctors();
   }, []);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      mutate('appointments');
+    }, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   const validate = () => {
     let valid = true;
     setStartError("");
