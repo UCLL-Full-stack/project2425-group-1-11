@@ -12,6 +12,14 @@ type Props = {
 
 const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }) => {
   const userId = useCurrentUserId();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      mutate('appointments');
+    }, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
   
   const handleDelete = async (id: number) => {
     const response = await AppointmentService.deleteAppointment(id);
@@ -55,8 +63,8 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
                   fontWeight: 'bold',
                 }}
               >                
-                <td>{new Date(appointment.startDate).toLocaleDateString()}</td>
-                <td>{new Date(appointment.endDate).toLocaleDateString()}</td>
+                <td>{new Date(appointment.startDate).toLocaleDateString()} {new Date(appointment.startDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
+                <td>{new Date(appointment.endDate).toLocaleDateString()} {new Date(appointment.endDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                 <td>{appointment.comment}</td>
                 <td>
                   {appointment.doctor && appointment.doctor.user

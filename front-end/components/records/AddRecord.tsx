@@ -2,7 +2,7 @@ import RecordService from "@services/RecordService";
 import useCurrentPatient from "hook/useCurrentPatient";
 
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { mutate } from "swr";
 
 type Props = {
@@ -18,6 +18,14 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
 
   const router = useRouter();
   const patient = useCurrentPatient();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      mutate('records');
+    }, 5000); // Refresh every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const validate = () => {
     let valid = true;
@@ -39,32 +47,32 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!validate()) {
       return;
     }
-
-    if (!patient || typeof patient.id !== 'number') {
+  
+    if (!patient || typeof patient.id !== "number") {
       console.error("Patient ID is invalid");
       return;
     }
-
+  
     const record = {
       title,
       description,
     };
-
+  
     try {
       const response = await RecordService.addRecord(record, patient.id);
-
-      const newRecord = await response.json();
-      onRecordCreated(newRecord); // Call the callback function
-      router.push("/records");
-
+  
       if (response.ok) {
-        // Revalidate the records data
-        mutate('records');
-        router.push("/records");
+        const newRecord = await response.json();
+        onRecordCreated(newRecord); // Call the callback function
+        //mutate('records'); // Optimistic update
+        mutate('records', (data: any) => [...(data || []), newRecord], false); // Optimistic update
+        setTitle(""); // Clear the form
+        setDescription("");
+        router.push("/records"); // Navigate to records page
       } else {
         console.error("Failed to add record");
       }
@@ -72,6 +80,8 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
       console.error("An error occurred while adding the record", error);
     }
   };
+  
+  
 
   return (
     <form onSubmit={handleSubmit}>
