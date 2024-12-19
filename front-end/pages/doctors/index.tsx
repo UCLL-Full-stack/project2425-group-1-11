@@ -45,7 +45,7 @@ const Doctors: React.FC = () => {
           <h2>Doctors overview</h2>
         </section>
 
-        {error && <div className="text-red-800"></div>}
+        {error && <div className="text-red-800">{error}</div>}
         {doctors && (
           <DoctorOverviewTable doctors={doctors}></DoctorOverviewTable>
         )}

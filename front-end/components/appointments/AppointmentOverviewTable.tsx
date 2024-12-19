@@ -12,14 +12,6 @@ type Props = {
 
 const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppointment }) => {
   const userId = useCurrentUserId();
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      mutate('appointments');
-    }, 5000); // Refresh every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
   
   const handleDelete = async (id: number) => {
     const response = await AppointmentService.deleteAppointment(id);

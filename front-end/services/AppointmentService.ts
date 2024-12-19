@@ -1,12 +1,15 @@
 import { Appointment } from "@types";
 
 const getAllAppointments = async () => {
+  const storedUser = sessionStorage.getItem("loggedInUser");
+  const token = storedUser ? JSON.parse(storedUser).token : null;
   const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/appointments`;
   
   return fetch(apiUrl, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     }
   });
 };

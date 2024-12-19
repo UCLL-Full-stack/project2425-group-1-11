@@ -5,22 +5,35 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import type { Patient } from "@types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useRouter } from "next/router";
 
 const Patient: React.FC = () => {
 
     const [patients, setPatients] = useState<Patient[]>([]);
-
-
-    const getAllPatients = async () => {
-        const response = await PatientService.getAllPatients();
-        const patientsData = await response.json();
-        setPatients(patientsData);
-    }
-
-
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
+    const router = useRouter();
+  
     useEffect(() => {
-        getAllPatients();
-    }, []);
+      const storedUser = sessionStorage.getItem("loggedInUser");
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.role === 'admin') {
+          setIsAdmin(true);
+          getAllPatients();
+        } else {
+          setIsAuthorized(false); // Set unauthorized state
+        }
+      } else {
+        setIsAuthorized(false); // Set unauthorized state if no user is logged in
+      }
+    }, [router]);
+  
+    const getAllPatients = async () => {
+      const response = await PatientService.getAllPatients();
+      const patientsData = await response.json();
+      setPatients(patientsData);
+    };
 
     return (
         <>
@@ -30,17 +43,21 @@ const Patient: React.FC = () => {
             <Header />
             <main className="d-flex flex-column justify-content-center align-items-center">
                 <h1>Patients</h1>
-                <section>
-                    <h2>Patients overview</h2>
-                </section>
-
-                {patients && (
-                    <PatientOverviewTable patients={patients}></PatientOverviewTable>
-                )}
-
-                
-                
-
+                {!isAuthorized ? (
+                   <div className="text-center text-red-800">
+                   <h2>Unauthorized</h2>
+                   <p>You do not have permission to view this page.</p>
+                 </div>
+        ) : (
+          <>
+            <section>
+              <h2>Patients overview</h2>
+            </section>
+            {patients && (
+              <PatientOverviewTable patients={patients}></PatientOverviewTable>
+            )}
+          </>
+        )}
             </main>
         </>
         );
