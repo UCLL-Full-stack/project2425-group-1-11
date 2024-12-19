@@ -38,6 +38,8 @@ const recordRouter = express.Router();
  *   get:
  *     tags:
  *       - Record
+ *     security:
+ *       - bearerAuth: []
  *     summary: Get a list of all records.
  *     description: Returns an array of records. Each item in the array is of type Records.
  *     responses:
@@ -59,7 +61,59 @@ recordRouter.get('/', async (req: Request, res: Response) => {
     }
 });
 
-
+/**
+ * @swagger
+ * 
+ * /records/{role}/{id}:
+ *   get:
+ *      tags:
+ *       - Record
+ *      security:
+ *       - bearerAuth: []
+ *      summary: Get record by role. For patient, a patient ID is required.
+ *      parameters:
+ *       - in: path
+ *         name: id
+ *         required: false
+ *         schema:
+ *           type: integer
+ *         description: The patient ID
+ *       - in: path
+ *         name: role
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The role (admin, doctor, patient)
+ *      responses:
+ *         200:
+ *            description: The records.
+ *            content:
+ *              application/json:
+ *                schema:
+ *                  $ref: '#/components/schemas/Record'
+ *         400:
+ *           description: Bad request. The input data is invalid.
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   status:
+ *                     type: string
+ *                     example: error
+ *                   errorMessage:
+ *                     type: string
+ *                     example: Invalid input data.
+ */
+recordRouter.get('/:role/:id', async (req: Request, res: Response) => {
+    try {
+        const { id, role } = req.params;
+        const records = await recordService.getAllRecordsByRole({ id: Number(id), role });
+        res.status(200).json(records);
+    } catch (error) {
+        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+    }
+});
 
 /**
  * @swagger
@@ -68,6 +122,8 @@ recordRouter.get('/', async (req: Request, res: Response) => {
  *   post:
  *      tags:
  *       - Record
+ *      security:
+ *       - bearerAuth: []
  *      summary: Create a new record for an existing patient.
  *      parameters:
  *       - in: path
@@ -120,6 +176,8 @@ recordRouter.post('/add/:id', async (req: Request, res: Response) => {
  *   put:
  *      tags:
  *       - Record
+ *      security:
+ *       - bearerAuth: []
  *      summary: Update a record.
  *      parameters:
  *       - in: path
@@ -171,6 +229,8 @@ recordRouter.put('/update/:id', async (req: Request, res: Response) => {
  *   delete:
  *     tags:
  *       - Record
+ *     security:
+ *       - bearerAuth: []
  *     summary: Delete an record by ID
  *     parameters:
  *       - in: path

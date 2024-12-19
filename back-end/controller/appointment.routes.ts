@@ -1,6 +1,11 @@
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *      type: http
+ *      scheme: bearer
+ *      bearerFormat: JWT
  *   schemas:
  *     Appointment:
  *       type: object
@@ -46,9 +51,10 @@
  *           type: number
  *           description: The ID of the doctor.
  */
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import appointmentService from '../service/appointment.service';
-import { AppointmentInput } from '../types';
+import generateJwtToken from '../util/jwt';
+import { AppointmentInput, UserInput } from '../types';
 
 const appointmentRouter = express.Router();
 
@@ -58,6 +64,8 @@ const appointmentRouter = express.Router();
  *   get:
  *     tags:
  *        - Appointment
+ *     security:
+ *        - bearerAuth: []
  *     summary: Get a list of all appointments.
  *     description: Returns an array of appointments. Each item in the array is of type Appointment.
  *     responses:
@@ -70,7 +78,7 @@ const appointmentRouter = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Appointment'
  */
-appointmentRouter.get('/', async (req: Request, res: Response) => {
+appointmentRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const appointments = await appointmentService.getAllAppointments();
         res.status(200).json(appointments);
@@ -85,6 +93,8 @@ appointmentRouter.get('/', async (req: Request, res: Response) => {
  *   get:
  *     tags:
  *       - Appointment
+ *     security:
+ *        - bearerAuth: []
  *     summary: Get all appointments by user ID
  *     parameters:
  *       - in: path
@@ -137,6 +147,8 @@ appointmentRouter.get('/:id', async (req: Request, res: Response) => {
  *   post:
  *      tags:
  *       - Appointment
+ *      security:
+ *        - bearerAuth: []
  *      summary: Create a new appointment for an existing patient.
  *      requestBody:
  *        required: true
@@ -181,6 +193,8 @@ appointmentRouter.post('/add', async (req: Request, res: Response) => {
  *   delete:
  *     tags:
  *       - Appointment
+ *     security:
+ *        - bearerAuth: []
  *     summary: Delete an appointment by ID
  *     parameters:
  *       - in: path

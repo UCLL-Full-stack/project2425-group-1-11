@@ -30,6 +30,8 @@ const patientRouter = express.Router();
  *   get:
  *     tags:
  *       - Patient
+ *     security:
+ *        - bearerAuth: []
  *     summary: Get a list of all patients.
  *     description: Returns an array of patients. Each item in the array is of type Patients.
  *     responses:
@@ -57,6 +59,8 @@ patientRouter.get('/', async (req: Request, res: Response) => {
  *   get:
  *     tags:
  *       - Patient
+ *     security:
+ *        - bearerAuth: []
  *     summary: Get patient by user ID
  *     parameters:
  *       - in: path

@@ -69,6 +69,8 @@ const userRouter = express.Router();
  *   get:
  *     tags:
  *        - User
+ *     security:
+ *        - bearerAuth: []
  *     summary: Get a list of all users.
  *     description: Returns an array of users. Each item in the array is of type Users.
  *     responses:

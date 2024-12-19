@@ -5,7 +5,6 @@ const generateJwtToken = ({ userName, role }: { userName: string, role: string }
     issuer: 'LVMed_app'
    }
     
-
     try {
         if (!process.env.JWT_SECRET) {
             throw new Error('JWT_SECRET is not defined');
