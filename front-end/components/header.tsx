@@ -1,6 +1,7 @@
 import { User } from '@types';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Language from './language/Language';
 
 const Header: React.FC = () => {
   const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -57,6 +58,7 @@ const Header: React.FC = () => {
               Welcome, {`${loggedInUser.firstName} ${loggedInUser.lastName}`}!
             </div>
         )}
+        <Language></Language>
       </nav>
     </header>
   );
