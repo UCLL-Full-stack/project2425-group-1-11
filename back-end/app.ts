@@ -11,8 +11,10 @@ import { patientRouter } from './controller/pacient.routes';
 import { clinicRouter } from './controller/clinic.routes';
 import { userRouter } from './controller/user.routes';
 import { expressjwt } from 'express-jwt';
+import helmet from 'helmet';
 
 const app = express();
+app.use(helmet());
 
 dotenv.config();
 const port = process.env.APP_PORT || 3000;

@@ -56,7 +56,7 @@ doctorRouter.get('/', async (req: Request, res: Response) => {
  *       - Doctor
  *     security:
  *        - bearerAuth: []
- *     summary: Get a list of all doctors.
+ *     summary: Get a doctor by id.
  *     parameters:
  *       - in: path
  *         name: id
@@ -64,10 +64,10 @@ doctorRouter.get('/', async (req: Request, res: Response) => {
  *         schema:
  *           type: integer
  *         description: The doctor ID
- *     description: Returns an array of doctors. Each item in the array is of type Doctor.
+ *     description: Returns the doctor.
  *     responses:
  *       200:
- *         description: A JSON array of doctor objects.
+ *         description: The doctor objecs.
  *         content:
  *           application/json:
  *             schema:
