@@ -86,7 +86,7 @@ const RegisterForm = () => {
         setStatus(t('register.status.success'));
         // Revalidate the user data
         mutate('users');
-        router.push("/login");
+        router.push("/users/login");
       } else {
         setStatus(t('register.status.failure'));
       }

@@ -1,3 +1,4 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
     testEnvironment: 'jsdom'
     ,
@@ -6,5 +7,6 @@ module.exports = {
     },
     moduleNameMapper: {
         '^@components/(.*)$': '<rootDir>/components/$1',
+        '^@services/(.*)$': '<rootDir>/services/$1',
       },
     }

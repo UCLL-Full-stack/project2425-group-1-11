@@ -43,6 +43,7 @@ const Patient: React.FC = () => {
         <>
             <Head>
                 <title>Patients</title>
+        <link rel="icon" href="/images/LVMed_logo.png" />
             </Head>
             <Header />
             <main className="d-flex flex-column justify-content-center align-items-center">

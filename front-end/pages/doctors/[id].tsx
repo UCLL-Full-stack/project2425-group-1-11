@@ -24,6 +24,7 @@ const DoctorDetails: React.FC<Props> = ({ doctor }) => {
           name="description"
           content={`Learn more about Dr. ${doctor.user.firstName} ${doctor.user.lastName}, a specialist in ${doctor.department}.`}
         />
+        <link rel="icon" href="/images/LVMed_logo.png" />
       </Head>
       <Header />
       <main className="d-flex flex-column justify-content-center align-items-center">
