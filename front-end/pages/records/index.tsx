@@ -16,6 +16,19 @@ const Records: React.FC = () => {
     const patient = useCurrentPatient();
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
 
+    const fetchRecords = async () => {
+        if (patient) {
+          const recordsData = await RecordService.getRecordsByPatientId(patient.id);
+          setRecords(recordsData);
+        }
+    };
+
+    useEffect(() => {
+        fetchRecords();
+        const interval = setInterval(fetchRecords, 5000); // Fetch records every 5 seconds
+        return () => clearInterval(interval); // Clear interval on component unmount
+      }, [patient]);
+
     const getAllRecords = async () => {
         const response = await RecordService.getAllRecords();
 
