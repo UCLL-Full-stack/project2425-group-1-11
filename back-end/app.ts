@@ -36,6 +36,7 @@ app.use(
             '/clinics', 
             '/doctors',
             /^\/doctors\/.*/,
+            /^\/doctors\/user\/.*/,
         ],
     })
 );

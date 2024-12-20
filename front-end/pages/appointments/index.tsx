@@ -6,7 +6,6 @@ import { Appointment } from "@types";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { mutate } from "swr";
 
 const Appointments: React.FC = () => {
 
@@ -24,6 +23,7 @@ const Appointments: React.FC = () => {
           } else {
             const appointmentsData = await response.json();
             setAppointments(appointmentsData);
+            setIsAuthorized(true)
         }
     };
 

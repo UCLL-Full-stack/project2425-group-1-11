@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 const Patient: React.FC = () => {
 
     const [patients, setPatients] = useState<Patient[]>([]);
-    const [isAdmin, setIsAdmin] = useState<boolean>(false);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
     const router = useRouter();
   
@@ -19,10 +18,11 @@ const Patient: React.FC = () => {
       if (storedUser) {
         const user = JSON.parse(storedUser);
         if (user.role === 'admin') {
-          setIsAdmin(true);
           getAllPatients();
-        } else {
-          setIsAuthorized(false); // Set unauthorized state
+        } else if ( user.role === "doctor"){
+          setIsAuthorized(true); // Set unauthorized state
+        } else if ( user.role === "patient") {
+          setIsAuthorized(false)
         }
       } else {
         setIsAuthorized(false); // Set unauthorized state if no user is logged in
@@ -34,6 +34,10 @@ const Patient: React.FC = () => {
       const patientsData = await response.json();
       setPatients(patientsData);
     };
+
+    useEffect(() => {
+      getAllPatients()
+    }, [patients])
 
     return (
         <>

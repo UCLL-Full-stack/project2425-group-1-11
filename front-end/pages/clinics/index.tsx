@@ -37,10 +37,6 @@ const Clinic: React.FC = () => {
                 {clinics && (
                     <ClinicOverviewTable clinics={clinics}></ClinicOverviewTable>
                 )}
-
-                
-                
-
             </main>
         </>
         );

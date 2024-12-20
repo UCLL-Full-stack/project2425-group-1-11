@@ -16,12 +16,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
   const [newDescription, setNewDescription] = useState('');
   const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [patientRecords, setPatientRecords] = useState<Record[]>([])
-
-  useEffect(() => {
-    console.log(patient)
-    setPatientRecords(patient?.records ?? []);
-  }, [patientRecords])
+  const [allRecords, setAllRecords] = useState<Record[]>([])
 
   const handleOpenModal = (record: Record) => {
     console.log("Opening modal for record:", record);
@@ -35,7 +30,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
     setCurrentRecord(null);
     setNewDescription('');
   };
-
+  
   const handleUpdate = async () => {
     if (!currentRecord) return;
   
@@ -51,10 +46,20 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
         const response = await RecordService.updateRecord(currentRecord.id, updatedRecord);
         if (!response.ok) {
           setErrorMessage("Failed to update the record.");
+        // } else {
+        //   setSuccessMessage("Record updated successfully.");
+        //   handleCloseModal();
+        //   mutate('records'); // Refresh the records list
+        //   window.location.reload();
+        // }
         } else {
           setSuccessMessage("Record updated successfully.");
+          setAllRecords((prevRecords) =>
+            prevRecords.map((record) =>
+              record.id === currentRecord.id ? { ...record, description: newDescription } : record
+            )
+          );
           handleCloseModal();
-          mutate('records'); // Refresh the records list
         }
       } else {
         setErrorMessage("Record ID is undefined.");
@@ -81,14 +86,20 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
     } catch (error) {
       console.error("An error occurred while deleting the record", error);
     }
-    console.log(patientRecords)
+    console.log(allRecords)
   };
+
+  useEffect(() => {
+    setAllRecords(records);
+  }, [records])
+
+
 
   return (
     <>
       {successMessage && <p className="text-green-500">{successMessage}</p>}
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      {patientRecords.length > 0 ? (
+      {allRecords.length > 0 ? (
         <table className="table table-hover">
           <thead>
             <tr>
@@ -99,7 +110,7 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
             </tr>
           </thead>
           <tbody>
-          {patientRecords.map((record: Record) => (
+          {allRecords.map((record: Record) => (
           <tr key={record.id}>
             <td>{record.title}</td>
             <td>{record.description}</td>

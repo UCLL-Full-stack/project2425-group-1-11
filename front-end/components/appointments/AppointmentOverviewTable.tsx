@@ -34,7 +34,7 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
     return new Date(startDate) > new Date();
   };
 
-  const userAppointments = appointments.filter(appointment => (appointment.patient && appointment.patient.id === userId) || (appointment.doctor && appointment.doctor.id === userId));
+  const userAppointments = appointments.filter(appointment => (appointment.patient && appointment.patient.user.id === userId) || (appointment.doctor && appointment.doctor.user.id === userId));
 
   return (
     <>

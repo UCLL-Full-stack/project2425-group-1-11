@@ -7,7 +7,6 @@ import RecordService from "@services/RecordService";
 import AddRecord from "@components/records/AddRecord";
 import useCurrentPatient from "hook/useCurrentPatient";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { mutate } from "swr";
 
 const Records: React.FC = () => {
 
@@ -25,10 +24,7 @@ const Records: React.FC = () => {
             }
         }
         const recordsData = await response.json();
-        if (patient) {
-            const patientRecords = recordsData.filter((record: Record) => record.patientId === patient.id);
-            setRecords(patientRecords);
-        }
+        setRecords(recordsData)
     }
 
     const handleRecordCreated = (newRecord: Record) => {

@@ -31,7 +31,24 @@ const getDoctorById = async ({ id }: { id: number }): Promise<Doctor | null> => 
     }
 };
 
+const getDoctorByUserId = async ({ userId }: { userId: number }): Promise<Doctor | null> => {
+    try {
+        const doctorPrisma = await database.doctor.findUnique({
+            where: { userId },
+            include: {
+                user: true,
+            },
+        });
+
+        return doctorPrisma ? Doctor.from(doctorPrisma) : null;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Database Patient error. See server log for details.');
+    }
+};
+
 export default {
     getAllDoctors,
     getDoctorById,
+    getDoctorByUserId,
 };

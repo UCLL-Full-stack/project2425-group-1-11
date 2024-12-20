@@ -9,7 +9,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const Doctors: React.FC = () => {
   const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState<string>();
 
   const getAllDoctors = async () => {
@@ -26,7 +25,6 @@ const Doctors: React.FC = () => {
       const doctors = await response.json();
       setDoctors(doctors);
     }
-    setLoaded(true);
   };
 
   useEffect(() => {
