@@ -70,6 +70,8 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
       const response = await RecordService.deleteRecord(id);
       if (response.ok) {
         mutate('records');
+        mutate('records', (records: Record[] = []) => 
+          records.filter((record) => record.id !== id), false);
         deleteRecord(id);
       } else {
         const errorText = await response.text();
