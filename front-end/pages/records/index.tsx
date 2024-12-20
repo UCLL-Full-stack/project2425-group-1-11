@@ -14,6 +14,8 @@ const Records: React.FC = () => {
     const [showRecordForm, setShowRecordForm] = useState<boolean>(false);
     const patient = useCurrentPatient();
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
+    const [isPatient, setIsPatient] = useState<boolean>(false);
+
     
     const getAllRecords = async () => {
         const response = await RecordService.getAllRecords();
@@ -36,8 +38,15 @@ const Records: React.FC = () => {
     }
 
     useEffect(() => {
+        const storedUser = sessionStorage.getItem("loggedInUser");
+        if (storedUser) {
+          const user = JSON.parse(storedUser);
+          if (user.role === "patient") {
+            setIsPatient(true);
+          }
+        }
         getAllRecords();
-    }, [patient]);
+      }, [patient]);
 
     return (
         <>
@@ -63,18 +72,25 @@ const Records: React.FC = () => {
                     <RecordOverviewTable records={records} deleteRecord={handleDelete}></RecordOverviewTable>
                 )}
 
-                <button
+                {/* <button
                     onClick={() => setShowRecordForm(!showRecordForm)}
                     
                 >
                   Add Record
+                </button> */}
+
+
+            {isPatient && (
+              <>
+                <button onClick={() => setShowRecordForm(!showRecordForm)}>
+                  {showRecordForm ? "Hide Form" : "Add Record"}
                 </button>
 
                 {showRecordForm && (
-                  <div className="w-full max-w-md">
-                    <AddRecord onRecordCreated={handleRecordCreated}></AddRecord>
-                  </div>
+                  <AddRecord onRecordCreated={handleRecordCreated} />
                 )}
+              </>
+            )}
               </>
               )}
             </main>

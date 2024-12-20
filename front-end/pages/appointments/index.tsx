@@ -12,6 +12,7 @@ const Appointments: React.FC = () => {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [showAppointmentForm, setShowAppointmentForm] = useState<boolean>(false);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
+    const [isPatient, setIsPatient] = useState<boolean>(false);
 
     const getAllAppointments = async () => {
         const response = await AppointmentService.getAllAppointments();
@@ -36,7 +37,14 @@ const Appointments: React.FC = () => {
     }
 
     useEffect(() => {
-        getAllAppointments();
+      const storedUser = sessionStorage.getItem("loggedInUser");
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        if (user.role === "patient") {
+          setIsPatient(true);
+        }
+      }
+      getAllAppointments();
     }, []);
 
     return (
@@ -62,18 +70,24 @@ const Appointments: React.FC = () => {
                     {appointments && (
                         <AppointmentOverviewTable appointments={appointments} deleteAppointment={handleDelete}></AppointmentOverviewTable>
                     )}
-
+{/* 
                     <button
                       onClick={() => setShowAppointmentForm(!showAppointmentForm)}  
                     >
                       Make Appointment
-                    </button>
+                    </button> */}
 
-                    {showAppointmentForm && (
-                      <div className="w-full max-w-md">
-                        <MakeAppointment onAppointmentCreated={handleAppointmentCreated}></MakeAppointment>
-                      </div>
-                    )}
+              {isPatient && (
+              <>
+                <button onClick={() => setShowAppointmentForm(!showAppointmentForm)}>
+                  {showAppointmentForm ? "Hide Form" : "Make Appointment"}
+                </button>
+
+                {showAppointmentForm && (
+                  <MakeAppointment onAppointmentCreated={handleAppointmentCreated} />
+                )}
+              </>
+            )}
                   </>
                 )}
           </main>
