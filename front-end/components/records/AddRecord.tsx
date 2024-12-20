@@ -63,7 +63,7 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
         router.push("/records");
         setTitle(""); // Clear the form
         setDescription("");
-        router.push("/records"); // Navigate to records page
+        mutate("records");
       } else {
         console.error("Failed to add record");
       }
