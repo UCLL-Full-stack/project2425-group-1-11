@@ -12,11 +12,15 @@ const patients = [
 ];
 
 let mockPatientDbGetAllPatients: jest.Mock;
+let mockPatientDbGetPatientByUserId: jest.Mock;
 
 beforeEach(() => {
     mockPatientDbGetAllPatients = jest.fn().mockReturnValue(patients);
+    mockPatientDbGetPatientByUserId = jest.fn().mockReturnValue(patient);
 
     patientDb.getAllPatients = mockPatientDbGetAllPatients;
+    patientDb.getPatientByUserId = mockPatientDbGetPatientByUserId;
+    
 });
 
 afterEach(() => {
@@ -27,4 +31,11 @@ test('given: a list of doctors, when: doctors are called, then: doctors list is 
     const result = patientService.getAllPatients();
 
     expect(result).toEqual(patients);
+});
+
+test('given: a userId, when: getDoctorByUserId is called, then: the doctor is returned', async () => {
+    const result = await patientService.getPatientByUserId({ userId: 1 });
+
+    expect(result).toEqual(patient);
+    expect(mockPatientDbGetPatientByUserId).toHaveBeenCalledWith({ userId: 1 });
 });

@@ -41,7 +41,7 @@ beforeEach(() => {
     doctorDb.getDoctorById = mockDoctorDbGetDoctorById;
 });
 
-afterEach(() => {
+afterEach(() => { 
     jest.clearAllMocks();
 })
 
