@@ -494,7 +494,7 @@ const main = async () => {
     const clinic2 = await prisma.clinic.create({
         data: {
             doctors: {
-                connect: [{ id: doctor3.id }, { id: doctor4.id }],
+                connect: [{ id: doctor1.id }, { id: doctor4.id }],
             },            
             address: 'Kortestraat 7/9, 3000 Leuven',
             contactNumber: 16200752,
