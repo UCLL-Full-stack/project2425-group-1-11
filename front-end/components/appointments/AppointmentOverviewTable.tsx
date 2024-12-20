@@ -17,6 +17,9 @@ const AppointmentOverviewTable: React.FC<Props> = ({ appointments, deleteAppoint
     const response = await AppointmentService.deleteAppointment(id);
     if (response.ok) {
       deleteAppointment(id)
+      mutate('appointments', (appointments: Appointment[] = []) => 
+        appointments.filter((appointment) => appointment.id !== id)
+      , false);
 
       // Trigger SWR to re-fetch appointments and update the UI automatically
       mutate('appointments'); // Ensure this key matches your SWR fetching key

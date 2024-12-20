@@ -39,14 +39,6 @@ const MakeAppointment: React.FC<Props> = ({ onAppointmentCreated }) => {
     fetchDoctors();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      mutate('appointments');
-    }, 5000); // Refresh every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   const validate = () => {
     let valid = true;
     setStartError("");
@@ -106,6 +98,12 @@ const MakeAppointment: React.FC<Props> = ({ onAppointmentCreated }) => {
         onAppointmentCreated(newAppointment); // Call the callback function
         setSuccessMessage("Appointment successfully created!");
         router.push("/appointments");
+
+        // Clear the form
+        setStart("");
+        setEnd("");
+        setComments("");
+        setDoctor("");
       } else {
         const errorData = await response.json();
         if (errorData.message === "Doctor unavailable") {

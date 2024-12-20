@@ -19,14 +19,6 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
   const router = useRouter();
   const patient = useCurrentPatient();
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      mutate('records');
-    }, 5000); // Refresh every 5 seconds
-
-    return () => clearInterval(interval);
-  }, []);
-
   const validate = () => {
     let valid = true;
     setTitleError("");
@@ -68,8 +60,7 @@ const AddRecord: React.FC<Props> = ({ onRecordCreated }) => {
       if (response.ok) {
         const newRecord = await response.json();
         onRecordCreated(newRecord); // Call the callback function
-        //mutate('records'); // Optimistic update
-        mutate('records', (data: any) => [...(data || []), newRecord], false); // Optimistic update
+        router.push("/records");
         setTitle(""); // Clear the form
         setDescription("");
         router.push("/records"); // Navigate to records page

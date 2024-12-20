@@ -14,14 +14,6 @@ const Appointments: React.FC = () => {
     const [showAppointmentForm, setShowAppointmentForm] = useState<boolean>(false);
     const [isAuthorized, setIsAuthorized] = useState<boolean>(true);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-          mutate('appointments');
-        }, 5000); // Refresh every 5 seconds
-    
-        return () => clearInterval(interval);
-      }, []);
-
     const getAllAppointments = async () => {
         const response = await AppointmentService.getAllAppointments();
 
