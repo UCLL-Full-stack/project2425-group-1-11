@@ -26,9 +26,9 @@
  *            type: string
  *            description: Description of the record.
  */
-import express, { Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import recordService from '../service/record.service';
-import { RecordInput } from '../types';
+import { RecordInput, Role } from '../types';
 
 const recordRouter = express.Router();
 
@@ -52,66 +52,14 @@ const recordRouter = express.Router();
  *               items:
  *                 $ref: '#/components/schemas/Record'
  */
-recordRouter.get('/', async (req: Request, res: Response) => {
+recordRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const records = await recordService.getAllRecords();
+        const  request = req as Request & {auth: {role: string, userName: string}};
+        console.log(request.auth.userName, request.auth.role)
+        const records = await recordService.getAllRecords(request.auth.userName, request.auth.role)
         res.status(200).json(records);
     } catch (error) {
-        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
-    }
-});
-
-/**
- * @swagger
- * 
- * /records/{role}/{id}:
- *   get:
- *      tags:
- *       - Record
- *      security:
- *       - bearerAuth: []
- *      summary: Get record by role. For patient, a patient ID is required.
- *      parameters:
- *       - in: path
- *         name: id
- *         required: false
- *         schema:
- *           type: integer
- *         description: The patient ID
- *       - in: path
- *         name: role
- *         required: true
- *         schema:
- *           type: string
- *         description: The role (admin, doctor, patient)
- *      responses:
- *         200:
- *            description: The records.
- *            content:
- *              application/json:
- *                schema:
- *                  $ref: '#/components/schemas/Record'
- *         400:
- *           description: Bad request. The input data is invalid.
- *           content:
- *             application/json:
- *               schema:
- *                 type: object
- *                 properties:
- *                   status:
- *                     type: string
- *                     example: error
- *                   errorMessage:
- *                     type: string
- *                     example: Invalid input data.
- */
-recordRouter.get('/:role/:id', async (req: Request, res: Response) => {
-    try {
-        const { id, role } = req.params;
-        const records = await recordService.getAllRecordsByRole({ id: Number(id), role });
-        res.status(200).json(records);
-    } catch (error) {
-        res.status(400).json({status: 'error', errorMessage: (error as Error).message});
+        next(error);
     }
 });
 

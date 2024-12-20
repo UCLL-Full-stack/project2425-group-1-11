@@ -117,30 +117,30 @@ const RecordOverviewTable: React.FC<Props> = ({ records, deleteRecord }) => {
 
 {isModalOpen && currentRecord && (
         <div className="modal-overlay">
-        <div className="modal-container">
-          <h4 className="modal-title">Update {currentRecord.title}</h4>
-          <textarea
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-            className="modal-textarea"
-            rows={4}
-          />
-          <div className="modal-actions">
-            <button
-              onClick={handleUpdate}
-              className="modal-button modal-button-save"
-            >
-              Save
-            </button>
-            <button
-              onClick={handleCloseModal}
-              className="modal-button modal-button-cancel"
-            >
-              Cancel
-            </button>
+          <div className="modal-container">
+            <h4 className="modal-title">Update {currentRecord.title}</h4>
+            <textarea
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              className="modal-textarea"
+              rows={4}
+            />
+            <div className="modal-actions">
+              <button
+                onClick={handleUpdate}
+                className="modal-button modal-button-save"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCloseModal}
+                className="modal-button modal-button-cancel"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
-      </div>
       )}
     </>
   );

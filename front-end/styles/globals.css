@@ -129,12 +129,12 @@ button {
   }
   
   .modal-button-save {
-    background-color: #3b82f6;
+    background-color: green;
     color: white;
   }
   
   .modal-button-save:hover {
-    background-color: #2563eb;
+    background-color: darkgreen;
   }
   
   .modal-button-cancel {

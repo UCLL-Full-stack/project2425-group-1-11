@@ -3,16 +3,14 @@ import { Record } from "../model/record";
 import recordDb from "../repository/record.db";
 import { RecordInput } from "../types";
 
-const getAllRecords = (): Promise<Record[]> => recordDb.getAllRecords();
+// const getAllRecords = (): Promise<Record[]> => recordDb.getAllRecords();
 
-const getAllRecordsByRole = async ({ id, role }: { id?: number, role: string }): Promise<Record[]> => {
+const getAllRecords = async (userName: string, role: string): Promise<Record[]> => {
+    console.log("service" + userName, role)
     if (role === 'admin' || role === 'doctor') {
         return recordDb.getAllRecords();
     } else if (role === 'patient') {
-        if (id === undefined) {
-            throw new Error("Patient ID is required for patients.");
-        }
-        return recordDb.getRecordsByPatientId(id);
+        return recordDb.getRecordsByPatientUserName({ userName });
     } else {
         throw new UnauthorizedError("credentials_required", 
             {message:"You are not authorized to access this record."});
@@ -51,5 +49,4 @@ export default {
     deleteRecordById,
     makeRecord,
     updateRecord,
-    getAllRecordsByRole,
 }

@@ -88,13 +88,13 @@ const updateRecord = async ({ recordId, record }: { recordId: number, record: Re
     }
 };
 
-const getRecordsByPatientId = async (id?: number): Promise<Record[]> => {
+const getRecordsByPatientUserName = async ({ userName }: { userName: string }): Promise<Record[]> => {
     try {
-        const patientPrisma = await database.patient.findUnique({
-            where: { id },
+        const patientPrisma = await database.patient.findMany({
+            where: { user: { userName: userName } },
             include: { records: true }
         });
-        return patientPrisma?.records.map(record => Record.from(record)) || [];
+        return patientPrisma.flatMap(patient => patient.records.map(record => Record.from(record))) || [];
     } catch (error) {
         console.error('Error fetching records for patient:', error);
         throw new Error('Database Record error. See server log for details.');
@@ -108,5 +108,5 @@ export default {
     saveRecord,
     addRecordToPatient,
     updateRecord,
-    getRecordsByPatientId,
+    getRecordsByPatientUserName,
 }
